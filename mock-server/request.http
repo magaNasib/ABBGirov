@@ -3,4 +3,4 @@
 
 //list of test
 
-GET http://localhost:8082/test/v1/list?page-number=1&page-size=12
+GET http://localhost:8082/test
