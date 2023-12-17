@@ -1,7 +1,6 @@
 import * as React from "react";
-import { Image, Select } from '@chakra-ui/react'
-import leftIcon from "../../icons/left-icon.png"
-import rightIcon from "../../icons/right-icon.png"
+import { Select } from '@chakra-ui/react'
+//Güllü Amal
 import {
   
   Box,
@@ -22,7 +21,7 @@ import {
 } from '@chakra-ui/react'
 function DepositInfo() {
     return (
-        <Box bg="white" w="100%" p={26} color="black">
+        <Box  w={"100%"} bg="white"  p={26} color="black">
           <Text as="b" fontSize="24px">
             Əmanət məlumatları
           </Text>
@@ -72,8 +71,8 @@ function DepositInfo() {
     <Box display="flex" pl="60%">
       <Text>2-2 /</Text>
       <Text color="#000000A3">1 </Text>
-      <Image src={leftIcon} alt="Left Arrow" />
-      <Image src={rightIcon} alt="Right Arrow" />
+      {/* <Image src={leftIcon} alt="Left Arrow" />
+      <Image src={rightIcon} alt="Right Arrow" /> */}
     </Box>
   </Box>
           </Box>

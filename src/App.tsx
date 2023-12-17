@@ -1,9 +1,8 @@
-import { ChakraProvider } from '@chakra-ui/react';
-import EditSelection from 'components/EditSelection';
 import { Layout } from 'Layout';
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { RouteLoading } from 'RouteLoading';
+import { CreatePledge } from 'pages/Create';
 
 const App: React.FC = () => {
   return (
@@ -13,7 +12,7 @@ const App: React.FC = () => {
           index
           element={
             <React.Suspense fallback={<RouteLoading />}>
-              <ChakraProvider><EditSelection/></ChakraProvider>
+              <CreatePledge/>              
             </React.Suspense>
           }
         />

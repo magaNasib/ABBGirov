@@ -14,10 +14,11 @@ function EditOtherInformation() {
     return (
         <>
             <Box
+             w={"100%"}
                 padding="24px"
                 bg="white"
                 borderRadius="12px"
-                margin="0 44px"
+                
             >
                 <Grid templateColumns="repeat(3, 1fr)" gap="24px">
                     <GridItem colSpan={3}>

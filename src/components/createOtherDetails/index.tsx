@@ -19,6 +19,7 @@ function OtherInformation() {
                 borderRadius="12px"
                 margin="0 44px"
                 mt="20px"
+                w={"100%"}
             >
                 <Grid templateColumns="repeat(3, 1fr)" gap="24px">
                     <GridItem colSpan={3}>
@@ -96,6 +97,7 @@ function OtherInformation() {
                     </GridItem>
                 </Grid>
             </Box>
+           
         </>
     );
 }
