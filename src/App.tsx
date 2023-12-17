@@ -1,5 +1,6 @@
+import { ChakraProvider } from '@chakra-ui/react';
+import CreateSuccessComponent from 'components/createSuccess';
 import { Layout } from 'Layout';
-import { Home } from 'pages/Home';
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { RouteLoading } from 'RouteLoading';
@@ -12,7 +13,7 @@ const App: React.FC = () => {
           index
           element={
             <React.Suspense fallback={<RouteLoading />}>
-              <Home />
+              <ChakraProvider><CreateSuccessComponent/></ChakraProvider>
             </React.Suspense>
           }
         />
