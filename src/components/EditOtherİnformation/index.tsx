@@ -10,16 +10,15 @@ import {
     Heading,
 } from "@chakra-ui/react";
 
-function OtherInformation() {
+function EditOtherInformation() {
     return (
         <>
             <Box
+             w={"100%"}
                 padding="24px"
                 bg="white"
                 borderRadius="12px"
-                margin="0 44px"
-                mt="20px"
-                w={"100%"}
+                
             >
                 <Grid templateColumns="repeat(3, 1fr)" gap="24px">
                     <GridItem colSpan={3}>
@@ -29,7 +28,70 @@ function OtherInformation() {
                     </GridItem>
                     <GridItem colSpan={1}>
                         <FormControl>
-                            <FormLabel>Daşınmaz əmlakın növü</FormLabel>
+                            <FormLabel>Girov qoyanin ailə vəziyyəti</FormLabel>
+                            <Select placeholder="Seçin">
+                                <option>Subay</option>
+                                <option>Evli evi</option>
+                            </Select>
+                        </FormControl>
+                    </GridItem>
+                    <GridItem colSpan={1}>
+                        <FormControl>
+                            <FormLabel>Girov qoyanın doğum tarixi</FormLabel>
+                            <Input type="date" placeholder="GG/AA/İİ" />
+                        </FormControl>
+                    </GridItem>
+                    <GridItem colSpan={1}>
+                        <FormControl>
+                            <FormLabel>ID kodu və ya VÖEN</FormLabel>
+                            <Input type="text" placeholder="Daxil edin" />
+                        </FormControl>
+                    </GridItem>
+                    <GridItem colSpan={1}>
+                        <FormControl>
+                            <FormLabel>Şəxsiyyət vəsigəsinin FİN kodu</FormLabel>
+                            <Input type="text" placeholder="Daxil edin" />
+                        </FormControl>
+                    </GridItem>
+                    <GridItem colSpan={1}>
+                        <FormControl>
+                            <FormLabel>Dep. müqavilə nömrəsi</FormLabel>
+                            <Input type="text" placeholder="Daxil edin" />
+                        </FormControl>
+                    </GridItem>
+                    <GridItem colSpan={1}>
+                        <FormControl>
+                            <FormLabel>Dep. müqavilə nömrəsi</FormLabel>
+                            <Input type="text" placeholder="Daxil edin" />
+                        </FormControl>
+                    </GridItem>
+                    <GridItem colSpan={1}>
+                        <FormControl>
+                            <FormLabel>Dep. AeS-də referensi</FormLabel>
+                            <Input type="text" placeholder="Daxil edin" />
+                        </FormControl>
+                    </GridItem>
+                    <GridItem colSpan={1}>
+                        <FormControl>
+                            <FormLabel>Dep. AeS-də block referensi</FormLabel>
+                            <Input type="text" placeholder="Daxil edin" />
+                        </FormControl>
+                    </GridItem>
+                    <GridItem colSpan={1}>
+                        <FormControl>
+                            <FormLabel>Blockda olan cari hesab</FormLabel>
+                            <Input type="text" placeholder="Daxil edin" />
+                        </FormControl>
+                    </GridItem>
+                    <GridItem colSpan={1}>
+                        <FormControl>
+                            <FormLabel>Girovun məbləği</FormLabel>
+                            <Input type="text" placeholder="Daxil edin" />
+                        </FormControl>
+                    </GridItem>
+                    <GridItem colSpan={1}>
+                        <FormControl>
+                            <FormLabel>Məhkəmə/Vəfat edib</FormLabel>
                             <Select placeholder="Seçin">
                                 <option>Həyət evi</option>
                                 <option>Bina evi</option>
@@ -37,69 +99,10 @@ function OtherInformation() {
                             </Select>
                         </FormControl>
                     </GridItem>
-                    <GridItem colSpan={1}>
-                        <FormControl>
-                            <FormLabel>Mülkiyyətçi</FormLabel>
-                            <Input type="text" placeholder="Daxil edin" />
-                        </FormControl>
-                    </GridItem>
-                    <GridItem colSpan={1}>
-                        <FormControl>
-                            <FormLabel>Əmlak - ümumi məlumat</FormLabel>
-                            <Input type="text" placeholder="Daxil edin" />
-                        </FormControl>
-                    </GridItem>
-                    <GridItem colSpan={1}>
-                        <FormControl>
-                            <FormLabel>Tikinti şirkətin adı</FormLabel>
-                            <Input type="text" placeholder="Daxil edin" />
-                        </FormControl>
-                    </GridItem>
-                    <GridItem colSpan={1}>
-                        <FormControl>
-                            <FormLabel>Şəhər</FormLabel>
-                            <Select placeholder="Seçin">
-                                <option>Bakı</option>
-                                <option>Sumqayıt</option>
-                                <option>Gəncə</option>
-                            </Select>
-                        </FormControl>
-                    </GridItem>
-                    <GridItem colSpan={1}>
-                        <FormControl>
-                            <FormLabel>Rayon</FormLabel>
-                            <Input type="text" placeholder="Daxil edin" />
-                        </FormControl>
-                    </GridItem>
-                    <GridItem colSpan={1}>
-                        <FormControl>
-                            <FormLabel>Bələdiyyə</FormLabel>
-                            <Input type="text" placeholder="Daxil edin" />
-                        </FormControl>
-                    </GridItem>
-                    <GridItem colSpan={1}>
-                        <FormControl>
-                            <FormLabel>Qəsəbə/kənd</FormLabel>
-                            <Input type="text" placeholder="Daxil edin" />
-                        </FormControl>
-                    </GridItem>
-                    <GridItem colSpan={1}>
-                        <FormControl>
-                            <FormLabel>Tikintinin layihəsi</FormLabel>
-                            <Input type="text" placeholder="Daxil edin" />
-                        </FormControl>
-                    </GridItem>
-                    <GridItem colSpan={1}>
-                        <FormControl>
-                            <FormLabel>Torpaq təyinatı</FormLabel>
-                            <Input type="text" placeholder="Daxil edin" />
-                        </FormControl>
-                    </GridItem>
                 </Grid>
             </Box>
-           
         </>
     );
 }
 
-export default OtherInformation;
+export default EditOtherInformation;

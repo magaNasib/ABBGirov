@@ -1,11 +1,8 @@
-import { ChakraProvider } from '@chakra-ui/react';
-import CreateMain from 'components/createMain';
-import OtherInformation from 'components/createOtherDetails';
-// import CreateSuccessComponent from 'components/createSuccess';
 import { Layout } from 'Layout';
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { RouteLoading } from 'RouteLoading';
+import { CreatePledge } from 'pages/Create';
 
 const App: React.FC = () => {
   return (
@@ -15,11 +12,7 @@ const App: React.FC = () => {
           index
           element={
             <React.Suspense fallback={<RouteLoading />}>
-              <ChakraProvider>
-                <CreateMain/>
-                {/* <CreateSuccessComponent/> */}
-                <OtherInformation/>
-              </ChakraProvider>
+              <CreatePledge/>              
             </React.Suspense>
           }
         />
