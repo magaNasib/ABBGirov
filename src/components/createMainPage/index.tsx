@@ -1,6 +1,6 @@
 import React from "react";
-import { Box, Grid, GridItem, FormControl, FormLabel, Select, Input, Heading } from "@chakra-ui/react";
-import { Path, useForm, UseFormRegister, SubmitHandler, Controller } from "react-hook-form"
+import { Box, Grid, GridItem, FormControl, FormLabel, Input, Heading, Select, Text } from "@chakra-ui/react";
+import { useForm, SubmitHandler, Controller, Noop } from "react-hook-form"
 import { Footer } from "Layout/Footer";
 
 
@@ -16,44 +16,24 @@ interface IFormValues {
     'Bitmə tarixi': string
 }
 type InputProps = {
-    label: Path<IFormValues>
-    register: UseFormRegister<IFormValues>
-    required: boolean
-    readOnly?: boolean
-    placeHolder?: string
+    placeholder?: string
     type?: string
+    label: string
     disabled?: boolean
-
-}
-interface MySelectProps {
-    label: string;
-    options: { value: string; label: string }[];
-    required: boolean
-
+    onBlur: Noop
+    onChange: () => void
 }
 
 function CreateMain() {
-    const { register, handleSubmit,control } = useForm<IFormValues>()
+    const { handleSubmit, control, formState: { errors } } = useForm<IFormValues>()
 
-    const MyInput = ({ label, register, required, readOnly, type = 'text', placeHolder = 'Daxil edin', disabled }: InputProps) => (
+    const MyInput = ({ label, ...props }: InputProps) => (
         <FormControl>
             <FormLabel>{label}</FormLabel>
-            <Input placeholder={placeHolder} type={type} {...register(label, { required })} readOnly={readOnly} disabled={disabled} />
+            <Input {...props} />
         </FormControl>
     )
 
-    const MySelect = React.forwardRef<HTMLSelectElement, MySelectProps>(({ label, options, required }, ref) => (
-        <FormControl>
-            <FormLabel>{label}</FormLabel>
-            <Select ref={ref} placeholder="Seçin">
-                {options.map((option) => (
-                    <option key={option.value} value={option.value}>
-                        {option.label}
-                    </option>
-                ))}
-            </Select>
-        </FormControl>
-    ));
 
     const onSubmit: SubmitHandler<IFormValues> = (data) => {
         console.log(data)
@@ -71,66 +51,238 @@ function CreateMain() {
                 >
                     <Grid templateColumns="repeat(3, 1fr)" gap="24px">
                         <GridItem colSpan={3}>
-                            <Heading as="h3" size="lg">
-                                Girovun yaradılması
-                            </Heading>
-                        </GridItem>
-                        <GridItem colSpan={1}>
-                            <MyInput label="Müştəri nömrəsi" register={register} required />
-                        </GridItem>
-                        <GridItem colSpan={1}>
-                            <MyInput label="Müştərinin adı" placeHolder="Ad Soyad Ata adı" register={register} required readOnly />
+                            <Heading as="h3" size="lg">Girovun yaradılması</Heading>
                         </GridItem>
                         <GridItem colSpan={1}>
                             <Controller
-                                name="Girovun kateqoriyası"
                                 control={control}
+                                rules={{
+                                    required: 'This field is required',
+                                    pattern: /^\d{7}$/,
+                                    minLength: { value: 7, message: 'Customer number must be 7 digits long' },
+                                    maxLength: { value: 7, message: 'Customer number must be 7 digits long' }
+                                }}
+                                name='Müştəri nömrəsi'
                                 render={({ field }) => (
-                                    <MySelect
-                                        label="Girovun kateqoriyası"
-                                        options={[
-                                            { value: '1', label: '1' },
-                                            { value: '2', label: '2' },
-                                            { value: '3', label: '3' },
-                                        ]}
-                                        required={true}
+                                    <MyInput
+                                        placeholder="Daxil edin"
                                         {...field}
+                                        label='Müştəri nömrəsi'
                                     />
                                 )}
                             />
-                        </GridItem>
-                        <GridItem colSpan={1}>
-                            <MyInput label="Məhsul" register={register} placeHolder="" disabled required readOnly />
-                        </GridItem>
-                        <GridItem colSpan={1}>
-                            <MyInput label="Girovun dəyəri" register={register} required />
-                        </GridItem>
-                        <GridItem colSpan={1}>
-                            <MyInput label="Girovun təsviri" register={register} required />
+                            {
+                                errors["Müştəri nömrəsi"] &&
+                                <Text color={'red'} fontSize={'14px'}>
+                                    {
+                                        errors["Müştəri nömrəsi"].message
+                                    }
+                                </Text>
+                            }
                         </GridItem>
                         <GridItem colSpan={1}>
                             <Controller
-                                name="Girovun valyutası"
                                 control={control}
+                                rules={{
+                                    required: 'This field is required',
+                                }}
+                                name='Müştərinin adı'
                                 render={({ field }) => (
-                                    <MySelect
-                                        label="Girovun valyutası"
-                                        options={[
-                                            { value: 'AZN', label: 'AZN' },
-                                            { value: 'USD', label: 'USD' },
-                                            { value: 'EUR', label: 'EUR' },
-                                        ]}
-                                        required={true}
+                                    <MyInput
                                         {...field}
+                                        placeholder="Ad Soyad Ata adı"
+                                        disabled
+                                        label='Müştərinin adı'
+
                                     />
                                 )}
                             />
+                            {
+                                errors["Müştərinin adı"] &&
+                                <Text color={'red'} fontSize={'14px'}>
+                                    {
+                                        errors["Müştərinin adı"].message
+                                    }
+                                </Text>
+                            }
                         </GridItem>
                         <GridItem colSpan={1}>
-                            <MyInput label="Başlama tarixi" register={register} required type="datetime-local" />
+                            <FormControl>
+                                <FormLabel>Girovun kateqoriyası</FormLabel>
+                                <Controller
+                                    control={control}
+                                    rules={{
+                                        required: 'This field is required',
+                                    }}
+                                    name='Girovun kateqoriyası'
+                                    render={({ field: { onChange, onBlur, value } }) => (
+                                        <Select placeholder="Seçin" onChange={onChange} onBlur={onBlur} value={value}>
+                                            <option value='1'>1</option>
+                                            <option value='2'>2</option>
+                                        </Select>
+                                    )}
+                                />
+                                {
+                                    errors["Girovun kateqoriyası"] &&
+                                    <Text color={'red'} fontSize={'14px'}>
+                                        {
+                                            errors["Girovun kateqoriyası"].message
+                                        }
+                                    </Text>
+                                }
+                            </FormControl>
                         </GridItem>
                         <GridItem colSpan={1}>
-                            <MyInput label="Bitmə tarixi" register={register} required type="datetime-local" />
+                            <Controller
+                                control={control}
+                                rules={{
+                                    required: 'This field is required',
+                                }}
+                                name='Məhsul'
+                                render={({ field }) => (
+                                    <MyInput
+                                        {...field}
+                                        disabled={true}
+                                        label='Məhsul'
+                                    />
+                                )}
+                            />
+                            {
+                                errors.Məhsul &&
+                                <Text color={'red'} fontSize={'14px'}>
+                                    {
+                                        errors.Məhsul.message
+                                    }
+                                </Text>
+                            }
+                        </GridItem>
+                        <GridItem colSpan={1}>
+                            <Controller
+                                control={control}
+                                rules={{
+                                    required: 'This field is required',
+                                }}
+                                name='Girovun dəyəri'
+                                render={({ field }) => (
+                                    <MyInput
+                                        placeholder="Daxil edin"
+                                        {...field}
+                                        label='Girovun dəyəri'
+                                    />
+                                )}
+                            />
+                            {
+                                errors["Girovun dəyəri"] &&
+                                <Text color={'red'} fontSize={'14px'}>
+                                    {
+                                        errors["Girovun dəyəri"].message
+                                    }
+                                </Text>
+                            }
+                        </GridItem>
+                        <GridItem colSpan={1}>
+                            <Controller
+                                control={control}
+                                rules={{
+                                    required: 'This field is required',
+                                }}
+                                name='Girovun təsviri'
+                                render={({ field }) => (
+                                    <MyInput
+                                        placeholder="Daxil edin"
+                                        {...field}
+                                        label='Girovun təsviri'
+
+                                    />
+                                )}
+                            />
+                            {
+                                errors["Girovun təsviri"] &&
+                                <Text color={'red'} fontSize={'14px'}>
+                                    {
+                                        errors["Girovun təsviri"].message
+                                    }
+                                </Text>
+                            }
+                        </GridItem>
+                        <GridItem colSpan={1}>
+                            <FormControl>
+                                <FormLabel>Girovun valyutası</FormLabel>
+
+                                <Controller
+                                    control={control}
+                                    rules={{
+                                        required: 'This field is required',
+                                    }}
+                                    name='Girovun valyutası'
+                                    render={({ field: { onChange, onBlur, value } }) => (
+                                        <Select placeholder="Seçin" onChange={onChange} onBlur={onBlur} value={value}>
+                                            <option value='1'>AZN</option>
+                                            <option value='2'>USD</option>
+                                        </Select>
+                                    )}
+                                />
+                                {
+                                    errors["Girovun valyutası"] &&
+                                    <Text color={'red'} fontSize={'14px'}>
+                                        {
+                                            errors["Girovun valyutası"].message
+                                        }
+                                    </Text>
+                                }
+                            </FormControl>
+                        </GridItem>
+                        <GridItem colSpan={1}>
+                            <Controller
+                                control={control}
+                                rules={{
+                                    required: 'This field is required',
+                                }}
+                                name='Başlama tarixi'
+                                render={({ field }) => (
+                                    <MyInput
+                                        placeholder="Daxil edin"
+                                        {...field}
+                                        type="datetime-local"
+                                        label='Başlama tarixi'
+
+                                    />
+                                )}
+                            />
+                            {
+                                errors["Başlama tarixi"] &&
+                                <Text color={'red'} fontSize={'14px'}>
+                                    {
+                                        errors["Başlama tarixi"].message
+                                    }
+                                </Text>
+                            }
+                        </GridItem>
+                        <GridItem colSpan={1}>
+                            <Controller
+                                control={control}
+                                rules={{
+                                    required: 'This field is required',
+                                }}
+                                name='Bitmə tarixi'
+                                render={({ field }) => (
+                                    <MyInput
+                                        placeholder="Daxil edin"
+                                        {...field}
+                                        type="datetime-local"
+                                        label='Bitmə tarixi'
+
+                                    />
+                                )}
+                            />
+                            {
+                                errors["Bitmə tarixi"] &&
+                                <Text color={'red'} fontSize={'14px'}>
+                                    {
+                                        errors["Bitmə tarixi"].message
+                                    }
+                                </Text>
+                            }
                         </GridItem>
                     </Grid>
                 </Box>
