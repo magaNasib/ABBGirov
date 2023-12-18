@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Grid, GridItem, FormControl, FormLabel, Input, Heading, Select, Text } from "@chakra-ui/react";
-import { useForm, SubmitHandler, Controller, Noop } from "react-hook-form"
+import { useForm, SubmitHandler, Controller } from "react-hook-form"
 import { Footer } from "Layout/Footer";
-
+import useSWR from "swr";
 
 interface IFormValues {
     'Müştəri nömrəsi': number
@@ -15,14 +15,23 @@ interface IFormValues {
     'Girovun kateqoriyası': string
     'Bitmə tarixi': string
 }
+interface IProps {
+    setOtherDetailsOpen?: (open: boolean) => void;
+    otherDetailsOpen?: boolean;
+    colletralCode?: string;
+    setCollettralCode?: any;
+}
+
 export type InputProps = {
     placeholder?: string
     type?: string
     label: string
     disabled?: boolean
-    onBlur: Noop
-    onChange: () => void
+    value?: string | number
+    onChange: any
+    // onBlur: Noop
 }
+
 
 export const MyInput = ({ label, ...props }: InputProps) => (
     <FormControl>
@@ -30,18 +39,66 @@ export const MyInput = ({ label, ...props }: InputProps) => (
         <Input {...props} />
     </FormControl>
 )
+const fetchCustomerData = async (url) => {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+};
 
-function CreateMain() {
+const fetchProductData = async (url) => {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+};
+
+
+const CreateMain: React.FC<IProps> = ({ setOtherDetailsOpen, otherDetailsOpen, colletralCode, setCollettralCode }) => {
     const { handleSubmit, control, formState: { errors } } = useForm<IFormValues>()
 
 
+    console.log('colletralCodeCreateMain', colletralCode);
+    const [customerId, setCustomerId] = React.useState('');
+    const apiUrl = `http://localhost:8082/customers/flex-customer-reader/v3/individual-customer-controller/getIndividualCustomerByCifUsingGET_1/${customerId}`;
+    const { data, error } = useSWR(customerId ? apiUrl : null, fetchCustomerData);
+    const { data: productData, error: productDataError } = useSWR(
+        colletralCode ? `http://localhost:8082/products/product-code/${colletralCode}` : null,
+        fetchProductData
+    );
+    // const [{ isCreateButttonExist }] = useAppContext();
+    // const [{ setIsCreateButtonExist }] = useAppContext();
 
+
+    const handleInputChange = (event) => {
+        setCustomerId(event.target.value);
+    };
+    const handleSelectChange = (event) => {
+        console.log(event.target);
+
+        setCollettralCode(event.target.value);
+    };
+
+    // const handleCreateButton = () => {
+    //     setOtherDetailsOpen(true);
+    //     setIsCreateButtonExist(false)
+
+    // };
+
+    let [isError,setIsError]=useState(false)
+    useEffect(() => {
+        setIsError(()=>{
+            return Object.keys(errors).length > 0 ? true : false
+        })
+        
+    },[errors])
 
     const onSubmit: SubmitHandler<IFormValues> = (data) => {
         console.log(data)
     }
     return (
         <>
+            {error && <div>Error fetching customer data</div>}
+            {productDataError && <div>Error !</div>}
+
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Box
                     padding="24px"
@@ -65,11 +122,14 @@ function CreateMain() {
                                     maxLength: { value: 7, message: 'Customer number must be 7 digits long' }
                                 }}
                                 name='Müştəri nömrəsi'
-                                render={({ field }) => (
+                                render={({ field: { onChange } }) => (
                                     <MyInput
-                                        placeholder="Daxil edin"
-                                        {...field}
                                         label='Müştəri nömrəsi'
+                                        placeholder="Daxil edin"
+                                        onChange={(e) => {
+                                            handleInputChange(e)
+                                            onChange(e)
+                                        }}
                                     />
                                 )}
                             />
@@ -92,6 +152,7 @@ function CreateMain() {
                                 render={({ field }) => (
                                     <MyInput
                                         {...field}
+                                        value={data ? data.fullname : 'Müştəri'}
                                         placeholder="Ad Soyad Ata adı"
                                         disabled
                                         label='Müştərinin adı'
@@ -117,10 +178,14 @@ function CreateMain() {
                                         required: 'This field is required',
                                     }}
                                     name='Girovun kateqoriyası'
-                                    render={({ field: { onChange, onBlur, value } }) => (
-                                        <Select placeholder="Seçin" onChange={onChange} onBlur={onBlur} value={value}>
-                                            <option value='1'>1</option>
-                                            <option value='2'>2</option>
+                                    render={({ field: { onChange } }) => (
+                                        <Select placeholder="Seçin"
+                                            onChange={(e) => {
+                                                handleSelectChange(e)
+                                                onChange(e)
+                                            }} >
+                                            <option>99743</option>
+                                            <option>99745</option>
                                         </Select>
                                     )}
                                 />
@@ -145,6 +210,7 @@ function CreateMain() {
                                     <MyInput
                                         {...field}
                                         disabled={true}
+                                        value={productData ? productData.product : 'Müştəri'}
                                         label='Məhsul'
                                     />
                                 )}
@@ -167,8 +233,8 @@ function CreateMain() {
                                 name='Girovun dəyəri'
                                 render={({ field }) => (
                                     <MyInput
-                                        placeholder="Daxil edin"
                                         {...field}
+                                        placeholder="Daxil edin"
                                         label='Girovun dəyəri'
                                     />
                                 )}
@@ -288,7 +354,7 @@ function CreateMain() {
                         </GridItem>
                     </Grid>
                 </Box>
-                <Footer />
+                {isError && <Footer />}
             </form>
         </>
     );
