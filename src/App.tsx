@@ -12,7 +12,7 @@ const App: React.FC = () => {
           index
           element={
             <React.Suspense fallback={<RouteLoading />}>
-              <CreatePledge/>              
+              <CreatePledge/>  
             </React.Suspense>
           }
         />
