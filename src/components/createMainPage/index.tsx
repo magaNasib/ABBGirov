@@ -1,6 +1,6 @@
 import React from "react";
-import { Box, Grid, GridItem, FormControl, FormLabel, Input, Heading, Select, Text } from "@chakra-ui/react";
-import { useForm, SubmitHandler, Controller, Noop } from "react-hook-form"
+import { Box, Grid, GridItem, FormControl, FormLabel, Select, Input, Heading } from "@chakra-ui/react";
+import { Path, useForm, UseFormRegister, SubmitHandler, Controller } from "react-hook-form"
 import { Footer } from "Layout/Footer";
 
 

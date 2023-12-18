@@ -7,8 +7,9 @@ const pledgesData = [
   {
     customerCIF:"1234567",
     fullname:"Ismayil Hasanov Rashad",
+    colletralCode: "99743",
     customerPledge:{
-        colletralCode: "1234567",
+        
         describe:"12345",
         pledgesValue:100.00,
         pledgedCurrency:"AZN",
@@ -78,11 +79,11 @@ const pledgesData = [
                   type: 'select',
                   items: [
                     {
-                      key: 'mainCity',
+                      key: 'City',
                       value: 'Baku'
                     },
                     {
-                      key: 'secondCity',
+                      key: 'City',
                       value: 'Sumqayit'
                     }
                   ]
@@ -137,9 +138,144 @@ const pledgesData = [
               ]
         }
     ]
+  },
+  {
+    customerCIF:"7654321",
+    fullname:"Ferid Hasanov Rashad",
+    colletralCode: "99745",
+    customerPledge:{
+     
+        describe:"12345",
+        pledgesValue:100.00,
+        pledgedCurrency:"AZN",
+        startDate:new Date(),
+        endDate:new Date()
+    },
+    data:[
+        {
+            "productCode": "CKLL",
+            deposit:[],
+            questions: [
+                {
+                  key: 'familyStatus',
+                  value: 'Girov Qoyanın Ailə Vəziyyəti',
+                  type: 'select',
+                  items: [
+                    {
+                      key: 'married',
+                      value: 'Evli'
+                    },
+                    {
+                      key: 'single',
+                      value: 'Subay'
+                    }
+                  ]
+                },
+                {
+                  key: 'birthday',
+                  value: 'Girov qoyanın doğum tarixi',
+                  type: 'text',
+                  items: [],
+                  maxLenght: 60,
+                  minLenght: 5
+                },
+                {
+                  key: 'IdCode',
+                  value: 'Id kodu və ya VÖEN',
+                  type: 'text',
+                  items: [],
+                  maxLenght: 60,
+                  minLenght: 5
+                },
+                {
+                  key: 'FIN',
+                  value: 'Şəxsiyyət vəsiqəsinin fin kodu',
+                  type: 'text',
+                  items: [],
+                  maxLenght: 60,
+                  minLenght: 5
+                },
+             
+             
+                {
+                  key: 'contractNumber',
+                  value: 'Girov qoyanın doğum tarixi',
+                  type: 'text',
+                  items: [],
+                  maxLenght: 60,
+                  minLenght: 5
+                },
+                {
+                  key: 'reference',
+                  value: 'Dep. AeS-də referensi',
+                  type: 'text',
+                  items: [],
+                  maxLenght: 60,
+                  minLenght: 5
+                },
+                {
+                  key: 'blockReference',
+                  value: 'Dep. AeS-də blok referensi',
+                  type: 'text',
+                  items: [],
+                  maxLenght: 60,
+                  minLenght: 5
+                },
+                {
+                  key: 'currentValue',
+                  value: 'Blokda olan cari hesab',
+                  type: 'text',
+                  items: [],
+                  maxLenght: 60,
+                  minLenght: 5
+                },
+                {
+                  key: 'amountValue',
+                  value: 'Girovun məbləği',
+                  type: 'text',
+                  items: [],
+                  maxLenght: 60,
+                  minLenght: 5
+                },
+                {
+                  key: 'liveStatus',
+                  value: 'Məhkəmə/Vəfat edib',
+                  type: 'text',
+                  items: [],
+                  maxLenght: 60,
+                  minLenght: 5
+                },
+                
+              ]
+        }
+    ]
   }
 ]
 
+router.get('/', (req, res) => {
+
+  res.json(pledgesData);
+
+});
 
 
-router.post("")
+router.get('/:colletralCode', (req, res) => {
+  const colletralCode = req.params.colletralCode
+  const pledge = pledgesData.find((p) => p.colletralCode === colletralCode )
+  
+  if(pledge)
+  {
+      res.json(pledge)
+  }
+ else{
+  res.status(404).json({error:"user not found"})
+ }
+});
+
+
+
+export default router; 
+
+
+
+
