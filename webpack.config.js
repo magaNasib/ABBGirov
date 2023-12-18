@@ -63,7 +63,7 @@ module.exports = (_, { mode }) => {
       hot: true,
       https: false,
       allowedHosts: 'all',
-      historyApiFallback: true,
+      historyApiFallback: { index: '/abb-mf-remote/' },
       port: 3001,
       headers: {
         'Access-Control-Allow-Origin': '*',

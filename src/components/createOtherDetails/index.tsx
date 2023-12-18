@@ -26,7 +26,7 @@ interface IFormValues {
     'Tikintinin layihəsi': string
     'Torpaq təyinatı': string
 }
-function OtherInformation() {
+function OtherInformation({ data, error }) {
     const { handleSubmit, control, formState: { errors } } = useForm<IFormValues>()
 
     const onSubmit: SubmitHandler<IFormValues> = (data) => {

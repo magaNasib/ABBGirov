@@ -21,7 +21,7 @@ import {
 } from '@chakra-ui/react'
 function DepositInfo() {
     return (
-        <Box  w={"100%"} bg="white"  p={26} color="black">
+        <Box mt={"20px"} w={"100%"} bg="white"  p={26} color="black">
           <Text as="b" fontSize="24px">
             Əmanət məlumatları
           </Text>
