@@ -3,6 +3,7 @@ import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { RouteLoading } from 'RouteLoading';
 import { CreatePledge } from 'pages/Create';
+import OtherInformation from 'components/createOtherDetails';
 
 const App: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ const App: React.FC = () => {
           element={
             <React.Suspense fallback={<RouteLoading />}>
               <CreatePledge/>  
+              <OtherInformation/>  
             </React.Suspense>
           }
         />

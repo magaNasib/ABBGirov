@@ -15,7 +15,7 @@ interface IFormValues {
     'Girovun kateqoriyası': string
     'Bitmə tarixi': string
 }
-type InputProps = {
+export type InputProps = {
     placeholder?: string
     type?: string
     label: string
@@ -24,15 +24,15 @@ type InputProps = {
     onChange: () => void
 }
 
+export const MyInput = ({ label, ...props }: InputProps) => (
+    <FormControl>
+        <FormLabel>{label}</FormLabel>
+        <Input {...props} />
+    </FormControl>
+)
+
 function CreateMain() {
     const { handleSubmit, control, formState: { errors } } = useForm<IFormValues>()
-
-    const MyInput = ({ label, ...props }: InputProps) => (
-        <FormControl>
-            <FormLabel>{label}</FormLabel>
-            <Input {...props} />
-        </FormControl>
-    )
 
 
 
