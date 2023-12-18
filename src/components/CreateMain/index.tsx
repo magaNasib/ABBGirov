@@ -21,7 +21,11 @@ interface IProps {
   setCollettralCode?: any;
 }
 
-const CreateMain: React.FC<IProps> = ({ setOtherDetailsOpen, otherDetailsOpen, colletralCode, setCollettralCode }) => {
+
+// -----------------------------------------------------Ismail-------------------------------------------------
+
+
+const CreateMainIsmail: React.FC<IProps> = ({ setOtherDetailsOpen, otherDetailsOpen, colletralCode, setCollettralCode }) => {
   console.log('colletralCodeCreateMain', colletralCode);
   const [customerId, setCustomerId] = React.useState('');
   const apiUrl = `http://localhost:8082/customers/flex-customer-reader/v3/individual-customer-controller/getIndividualCustomerByCifUsingGET_1/${customerId}`;
@@ -150,4 +154,4 @@ const [{setIsCreateButtonExist}] = useAppContext();
   );
 };
 
-export default CreateMain;
+export default CreateMainIsmail;
