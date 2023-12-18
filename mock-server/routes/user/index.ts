@@ -34,5 +34,6 @@ router.get('/flex-customer-reader/v3/individual-customer-controller/getIndividua
 router.post('/',(req,res) =>  {
 
 })
-  export default router;
+
+export default router;
 
