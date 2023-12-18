@@ -16,29 +16,33 @@ const OtherInformation: React.FC<IProps> = ({ data, error }) => {
               Digər məlumatlar
             </Heading>
           </GridItem>
-      
-          {data.data[0].questions.map((question,index) => (
-            question.type === "select" ?  <GridItem key={index} colSpan={1}>
-            <FormControl>
-              <FormLabel>{question.value}</FormLabel>
-              <Select  placeholder="Daxil edin" >
-                {question.items.map(({key,value}) => (
-                    <option key={key} value={value}>{value}</option>
-                ))}
-           
-              </Select>
-            </FormControl>
-          </GridItem>  : <GridItem key={index} colSpan={1}>
-            <FormControl>
-              <FormLabel>{question.value}</FormLabel>
-              <Input type={question.type} placeholder="Daxil edin" />
-            </FormControl>
-          </GridItem>
-           
-          ))}
-      </Grid>
 
-      {data.data[0].deposit.length && <DepositInfo/>}
+          {data.data[0].questions.map((question, index) =>
+            question.type === 'select' ? (
+              <GridItem key={index} colSpan={1}>
+                <FormControl>
+                  <FormLabel>{question.value}</FormLabel>
+                  <Select placeholder="Daxil edin">
+                    {question.items.map(({ key, value }) => (
+                      <option key={key} value={value}>
+                        {value}
+                      </option>
+                    ))}
+                  </Select>
+                </FormControl>
+              </GridItem>
+            ) : (
+              <GridItem key={index} colSpan={1}>
+                <FormControl>
+                  <FormLabel>{question.value}</FormLabel>
+                  <Input type={question.type} placeholder="Daxil edin" />
+                </FormControl>
+              </GridItem>
+            )
+          )}
+        </Grid>
+
+        {data.data[0].deposit.length && <DepositInfo />}
       </Box>
     </>
   );
