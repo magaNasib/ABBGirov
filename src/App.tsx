@@ -40,6 +40,7 @@ const App: React.FC = () => {
             </React.Suspense>
           }
         />
+      
 
         <Route path='/sub' element={<h1>salam</h1>}/>
       </Route>
