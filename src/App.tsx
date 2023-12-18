@@ -13,11 +13,12 @@ const App: React.FC = () => {
           index
           element={
             <React.Suspense fallback={<RouteLoading />}>
-              <CreatePledge/>  
-              <OtherInformation/>  
+              <CreatePledge />
+              <OtherInformation />
             </React.Suspense>
           }
         />
+      
         <Route path="/sub" element={<h1>MF SUB Route</h1>} />
         <Route path="*" element={<Navigate to="/404" />} />
       </Route>
