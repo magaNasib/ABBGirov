@@ -1,6 +1,6 @@
 import { Select } from '@chakra-ui/react';
 //Güllü Amal
-import { Box, Radio, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
+import { Box,  Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 import { FormControl, FormLabel, Input } from '@chakra-ui/react';
 import * as React from 'react';
 
@@ -25,7 +25,7 @@ function DepositInfo() {
             <Tbody>
               <Tr>
                 <Td>
-                  <Radio value="option1" id="radio1" />
+                  <input type='radio' value="option1" id="radio1" name='radio' />
                 </Td>
                 <Td>121</Td>
                 <Td>1231239102391212312</Td>
@@ -33,7 +33,7 @@ function DepositInfo() {
               </Tr>
               <Tr>
                 <Td>
-                  <Radio value="option2" id="radio2" />
+                  <input type='radio' value="option2" id="radio2" name='radio' />
                 </Td>
                 <Td>121</Td>
                 <Td>1231239102391212312</Td>
