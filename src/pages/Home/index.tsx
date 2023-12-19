@@ -32,7 +32,7 @@ export const Home = () => {
           <Avatar name="Christian Nwamba" src="https://bit.ly/code-beast" />
           <Avatar name="Segun Adebayo" src="https://bit.ly/sage-adebayo" />
         </Stack>
-        <Badge>asd</Badge>
+        <Badge>sdvnsbj kfjdbv k</Badge>
         <Text variant="body1">Test</Text>
         <Button size="xs" colorScheme="brand" variant="gray">
           Test
