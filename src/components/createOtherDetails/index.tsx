@@ -1,11 +1,11 @@
-import React from 'react';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-
 import { Box, Grid, GridItem, Heading, Select, Text } from '@chakra-ui/react';
-import { Footer } from 'Layout/Footer';
-import DepositInfo from 'components/DepositInfo';
 import { MyInput } from 'components/createMainPage';
-import { useNavigate } from 'react-router-dom';
+import DepositInfo from 'components/DepositInfo';
+// import DepositInfo from 'components/DepositInfo';
+import { Footer } from 'Layout/Footer';
+import React from 'react';
+import { Controller, FormProvider, useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
 
 interface IFormValues {
   'Daşınmaz əmlakın növü': string;
@@ -19,21 +19,28 @@ interface IFormValues {
   'Tikintinin layihəsi': string;
   'Torpaq təyinatı': string;
 }
-function OtherInformation({ data, error }) {
-    const navigate = useNavigate();
-  const {
-    handleSubmit,
-    control,
-    formState: { errors }
-  } = useForm<IFormValues>();
 
-  const onSubmit: SubmitHandler<IFormValues> = (data) => {
-    navigate("/abb-mf-remote/successPage")
-  };
+import useSWR from 'swr';
+
+const fetchPledgesData = async (url) => {
+  const response = await fetch(url);
+  return await response.json();
+};
+
+function OtherInformation() {
+  const { colletralCode } = useParams();
+  const { data: pledgeData } = useSWR(`http://localhost:8082/pledges/${colletralCode}`, fetchPledgesData);
+
+  const methods = useForm<IFormValues>();
+
+  const onSubmitHandler = methods.handleSubmit((data) => {
+    console.log({ data });
+  });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Box padding="24px" w={'100%'} bg="white" borderRadius="12px" margin="0 auto" mt="20px">
+    <FormProvider {...methods}>
+      {pledgeData?.data[0].deposit.length && <DepositInfo />}
+      <Box padding="24px" w={'100%'} bg="white" borderRadius="12px" margin="0 auto">
         <Grid templateColumns="repeat(3, 1fr)" gap="24px">
           <GridItem colSpan={3}>
             <Heading as="h3" size="lg">
@@ -41,63 +48,58 @@ function OtherInformation({ data, error }) {
             </Heading>
           </GridItem>
 
-          {data.data[0].questions.map((question, index) =>{
+          {pledgeData?.data[0].questions.map((question, index) => {
             console.log();
-            
+
             return question.type === 'select' ? (
               <GridItem key={index} colSpan={1}>
                 <Controller
-                  control={control}
+                  control={methods.control}
                   rules={{
                     required: 'This field is required'
                   }}
-                  name={question.value}
+                  //
+                  name={question.key}
                   render={({ field }) => (
                     <>
-                        <label >{question.value}</label>
-                        <Select placeholder="Seçin" {...field} >
-                      {question.items.map(({ key, value }) => (
-                        <option key={key}>{value}</option>
-                      ))}
-
-                 
-                    </Select>
+                      <label>{question.value}</label>
+                      <Select placeholder="Seçin" {...field}>
+                        {question.items.map(({ key, value }) => (
+                          <option key={key}>{value}</option>
+                        ))}
+                      </Select>
                     </>
-                  
                   )}
                 />
-                {errors['Daşınmaz əmlakın növü'] && (
+                {methods.formState.errors['Daşınmaz əmlakın növü'] && (
                   <Text color={'red'} fontSize={'14px'}>
-                    {errors['Daşınmaz əmlakın növü'].message}
+                    {methods.formState.errors['Daşınmaz əmlakın növü'].message}
                   </Text>
                 )}
               </GridItem>
             ) : (
               <GridItem key={index} colSpan={1}>
                 <Controller
-                  control={control}
+                  control={methods.control}
                   rules={{
                     required: 'This field is required'
                   }}
-                  name={question.value}
+                  name={question.key}
                   render={({ field }) => <MyInput {...field} placeholder="Daxil edin" label={question.value} />}
                 />
-                {errors[question.value] && (
+                {methods.formState.errors[question.value] && (
                   <Text color={'red'} fontSize={'14px'}>
-                    {errors[question.value].message}
+                    {methods.formState.errors[question.value].message}
                   </Text>
                 )}
               </GridItem>
-            )}
-          )}
+            );
+          })}
         </Grid>
-
-        {data.data[0].deposit.length && <DepositInfo />}
       </Box>
 
-
-      <Footer />
-    </form>
+      <Footer onSubmitHandler={onSubmitHandler} />
+    </FormProvider>
   );
 }
 
