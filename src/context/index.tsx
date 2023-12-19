@@ -3,14 +3,13 @@ import React from 'react';
 const AppContext = React.createContext([]);
 
 function AppProvider({ children }) {
-  const [isCreateButttonExist,setIsCreateButtonExist] = React.useState(true)
  
-
+  const [isCreatedButtonClicked,setIsCreateButtonExist] = React.useState(false);
 
 
 
   return (
-    <AppContext.Provider value={[{isCreateButttonExist,setIsCreateButtonExist}]}>
+    <AppContext.Provider value={[{isCreatedButtonClicked,setIsCreateButtonExist}]}>
       {children}
     </AppContext.Provider>
   );
