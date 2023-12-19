@@ -88,12 +88,14 @@ const CreateMain: React.FC<IProps> = ({ setOtherDetailsOpen, otherDetailsOpen, c
         setIsError(()=>{
             return Object.keys(errors).length > 0 ? true : false
         })
-        
-    },[errors])
+        console.log(errors);
+    })
 
     const onSubmit: SubmitHandler<IFormValues> = (data) => {
         console.log(data)
     }
+   
+    
     return (
         <>
             {error && <div>Error fetching customer data</div>}
@@ -206,9 +208,9 @@ const CreateMain: React.FC<IProps> = ({ setOtherDetailsOpen, otherDetailsOpen, c
                                     // required: 'This field is required',
                                 }}
                                 name='Məhsul'
-                                render={({ field }) => (
+                                render={({ field: { onChange } }) => (
                                     <MyInput
-                                        {...field}
+                                        onChange={onChange}
                                         disabled={true}
                                         value={productData ? productData.product : 'Müştəri'}
                                         label='Məhsul'
@@ -231,9 +233,9 @@ const CreateMain: React.FC<IProps> = ({ setOtherDetailsOpen, otherDetailsOpen, c
                                     required: 'This field is required',
                                 }}
                                 name='Girovun dəyəri'
-                                render={({ field }) => (
+                                render={({ field: { onChange } }) => (
                                     <MyInput
-                                        {...field}
+                                        onChange={onChange}
                                         placeholder="Daxil edin"
                                         label='Girovun dəyəri'
                                     />
@@ -255,10 +257,10 @@ const CreateMain: React.FC<IProps> = ({ setOtherDetailsOpen, otherDetailsOpen, c
                                     required: 'This field is required',
                                 }}
                                 name='Girovun təsviri'
-                                render={({ field }) => (
+                                render={({ field: { onChange } }) => (
                                     <MyInput
                                         placeholder="Daxil edin"
-                                        {...field}
+                                        onChange={onChange}
                                         label='Girovun təsviri'
 
                                     />
@@ -307,10 +309,10 @@ const CreateMain: React.FC<IProps> = ({ setOtherDetailsOpen, otherDetailsOpen, c
                                     required: 'This field is required',
                                 }}
                                 name='Başlama tarixi'
-                                render={({ field }) => (
+                                render={({ field: { onChange } }) => (
                                     <MyInput
                                         placeholder="Daxil edin"
-                                        {...field}
+                                        onChange={onChange}
                                         type="datetime-local"
                                         label='Başlama tarixi'
 
@@ -333,10 +335,10 @@ const CreateMain: React.FC<IProps> = ({ setOtherDetailsOpen, otherDetailsOpen, c
                                     required: 'This field is required',
                                 }}
                                 name='Bitmə tarixi'
-                                render={({ field }) => (
+                                render={({ field: { onChange } }) => (
                                     <MyInput
                                         placeholder="Daxil edin"
-                                        {...field}
+                                        onChange={onChange}
                                         type="datetime-local"
                                         label='Bitmə tarixi'
 
