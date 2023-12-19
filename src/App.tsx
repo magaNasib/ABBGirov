@@ -2,6 +2,7 @@ import { Layout } from 'Layout';
 import { RouteLoading } from 'RouteLoading';
 import CreateMain from 'components/createMainPage';
 import OtherInformation from 'components/createOtherDetails';
+import CreateSuccessComponent from 'components/createSuccess';
 import { AppProvider } from 'context';
 import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
@@ -33,7 +34,7 @@ const App: React.FC = () => {
                 {/* <CreateMainIsmail
                   colletralCode={colletralCode}
                   setCollettralCode={setCollettralCode}
-                  setOtherDetailsOpen={setOtherDetailsOpen}
+                  setOtherDetailsOpen={setOtherDetailsOpen} 
                   otherDetailsOpen={otherDetailsOpen}
                 /> */}
                 <CreateMain
@@ -48,7 +49,7 @@ const App: React.FC = () => {
           />
 
 
-          <Route path='/sub' element={<h1>salam</h1>} />
+          <Route path='/successPage' element={<CreateSuccessComponent/>} />
         </Route>
       </Routes>
     </AppProvider>

@@ -9,7 +9,7 @@ const productData = [
         product:"CCL3"
     },
     {
-        colletralCode:"99746",
+        colletralCode:"99745",
         product:"CCL6"
     }
 ]
