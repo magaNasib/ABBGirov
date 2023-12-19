@@ -6,7 +6,7 @@ import App from './App';
 
 export const dashboardRemoteAppRoutes = () => [
   {
-    path: 'abb-mf-remote/*',
+    path: 'abb-mf-pledge/*',
     element: <App />
   }
 ];
