@@ -1,28 +1,13 @@
-import { Layout } from 'Layout';
-import { RouteLoading } from 'RouteLoading';
-import CreateMain from 'components/createMainPage';
 import OtherInformation from 'components/createOtherDetails';
 import CreateSuccessComponent from 'components/createSuccess';
 import { AppProvider } from 'context';
-import React, { useState } from 'react';
+import { Layout } from 'Layout';
+import { CreatePledge } from 'pages/Create';
+import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import useSWR from 'swr';
-
-const fetchPledgesData = async (url) => {
-  const response = await fetch(url);
-  const data = await response.json();
-  return data;
-};
+import { RouteLoading } from 'RouteLoading';
 
 const App: React.FC = () => {
-  const [otherDetailsOpen, setOtherDetailsOpen] = useState(false);
-  const [colletralCode, setCollettralCode] = React.useState('');
-  const { data: pledgeData, error: pledgeError } = useSWR(
-    `http://localhost:8082/pledges/${colletralCode}`,
-    fetchPledgesData
-  );
-
-
   return (
     <AppProvider>
       <Routes>
@@ -31,25 +16,20 @@ const App: React.FC = () => {
             index
             element={
               <React.Suspense fallback={<RouteLoading />}>
-                {/* <CreateMainIsmail
-                  colletralCode={colletralCode}
-                  setCollettralCode={setCollettralCode}
-                  setOtherDetailsOpen={setOtherDetailsOpen} 
-                  otherDetailsOpen={otherDetailsOpen}
-                /> */}
-                <CreateMain
-                  colletralCode={colletralCode}
-                  setCollettralCode={setCollettralCode}
-                  setOtherDetailsOpen={setOtherDetailsOpen}
-                  otherDetailsOpen={otherDetailsOpen}
-                />
-                {otherDetailsOpen && <OtherInformation data={pledgeData} error={pledgeError} />}
+                <CreatePledge />
               </React.Suspense>
             }
           />
+          <Route
+            path="/:colletralCode"
+            element={
+              <CreatePledge>
+                <OtherInformation />
+              </CreatePledge>
+            }
+          />
 
-
-          <Route path='/successPage' element={<CreateSuccessComponent/>} />
+          <Route path="/successPage" element={<CreateSuccessComponent />} />
         </Route>
       </Routes>
     </AppProvider>
