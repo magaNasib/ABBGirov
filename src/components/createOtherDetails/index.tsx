@@ -41,8 +41,10 @@ function OtherInformation({ data, error }) {
             </Heading>
           </GridItem>
 
-          {data.data[0].questions.map((question, index) =>
-            question.type === 'select' ? (
+          {data.data[0].questions.map((question, index) =>{
+            console.log();
+            
+            return question.type === 'select' ? (
               <GridItem key={index} colSpan={1}>
                 <Controller
                   control={control}
@@ -77,16 +79,16 @@ function OtherInformation({ data, error }) {
                   rules={{
                     required: 'This field is required'
                   }}
-                  name="Mülkiyyətçi"
+                  name={question.value}
                   render={({ field }) => <MyInput {...field} placeholder="Daxil edin" label={question.value} />}
                 />
-                {errors['Mülkiyyətçi'] && (
+                {errors[question.value] && (
                   <Text color={'red'} fontSize={'14px'}>
-                    {errors['Mülkiyyətçi'].message}
+                    {errors[question.value].message}
                   </Text>
                 )}
               </GridItem>
-            )
+            )}
           )}
         </Grid>
 
