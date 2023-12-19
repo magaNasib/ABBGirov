@@ -45,7 +45,7 @@ module.exports = (_, { mode }) => {
     entry: path.join(SRC_DIR, 'index'),
     output: {
       filename: '[name].[contenthash].js',
-      publicPath: '/abb-mf-remote/',
+      publicPath: '/abb-mf-pledge/',
       path: BUILD_DIR
     },
     devtool: 'source-map',
@@ -63,7 +63,7 @@ module.exports = (_, { mode }) => {
       hot: true,
       https: false,
       allowedHosts: 'all',
-      historyApiFallback: true,
+      historyApiFallback: { index: '/abb-mf-pledge/' },
       port: 3001,
       headers: {
         'Access-Control-Allow-Origin': '*',
