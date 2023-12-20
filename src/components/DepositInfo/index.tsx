@@ -1,4 +1,4 @@
-import { Select } from '@chakra-ui/react';
+import { RadioGroup, Select, Stack } from '@chakra-ui/react';
 //Güllü Amal
 import { Box, Radio, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 import { FormControl, FormLabel, Input } from '@chakra-ui/react';
@@ -13,34 +13,39 @@ function DepositInfo() {
       <Box pt={6}>
         <Text fontSize="18px">Əmanəti seçin</Text>
         <TableContainer>
-          <Table my={3}>
-            <Thead>
-              <Tr>
-                <Th w={3}></Th>
-                <Th>Filial</Th>
-                <Th>Əmanət referensi</Th>
-                <Th>Əmanətin valyutası</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              <Tr>
-                <Td>
-                  <Radio value="option1" id="radio1" />
-                </Td>
-                <Td>121</Td>
-                <Td>1231239102391212312</Td>
-                <Td>AZN</Td>
-              </Tr>
-              <Tr>
-                <Td>
-                  <Radio value="option2" id="radio2" />
-                </Td>
-                <Td>121</Td>
-                <Td>1231239102391212312</Td>
-                <Td>AZN</Td>
-              </Tr>
-            </Tbody>
-          </Table>
+          <RadioGroup defaultValue='1'>
+            <Stack>
+
+              <Table my={3}>
+                <Thead>
+                  <Tr>
+                    <Th w={3}></Th>
+                    <Th>Filial</Th>
+                    <Th>Əmanət referensi</Th>
+                    <Th>Əmanətin valyutası</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  <Tr>
+                    <Td>
+                      <Radio value="option1" ></Radio>
+                    </Td>
+                    <Td>121</Td>
+                    <Td>1231239102391212312</Td>
+                    <Td>AZN</Td>
+                  </Tr>
+                  <Tr>
+                    <Td>
+                      <Radio value="option2" ></Radio>
+                    </Td>
+                    <Td>121</Td>
+                    <Td>1231239102391212312</Td>
+                    <Td>AZN</Td>
+                  </Tr>
+                </Tbody>
+              </Table>
+            </Stack>
+          </RadioGroup>
         </TableContainer>
         <Box display="flex">
           <Text>Sətir sayı</Text>

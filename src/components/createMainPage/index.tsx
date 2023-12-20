@@ -1,5 +1,4 @@
-import { Box, FormControl, FormErrorMessage, FormLabel, Grid, GridItem, Heading, Input, InputGroup, InputRightElement, Select, Spinner } from '@chakra-ui/react';
-
+import { Box, FormControl, FormErrorMessage, FormLabel, Grid, GridItem, Heading, Select } from '@chakra-ui/react';
 import { useAppContext } from 'context';
 import { Footer } from 'Layout/Footer';
 import { IFormValues } from 'pages/Create';
@@ -7,6 +6,8 @@ import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import useSWR from 'swr';
+import MyDatePicker from 'components/UI/MyDatePicker';
+import { MyInput } from 'components/UI/MyInput';
 
 // interface IFormValues {
 //   customerId: number;
@@ -21,28 +22,6 @@ import useSWR from 'swr';
 // }
 
 export interface IProps { }
-
-
-export type InputProps = {
-  placeholder?: string;
-  type?: string;
-  label: string;
-  disabled?: boolean;
-  value?: string | number;
-  onChange: any;
-  isLoading?: boolean;
-  // onBlur: Noop
-};
-
-export const MyInput = ({ label, isLoading, ...props }: InputProps) => (
-  <>
-    <FormLabel>{label}</FormLabel>
-    <InputGroup display={'flex'} flexDirection={'column'} >
-      <Input {...props} />
-      {isLoading && <InputRightElement children={<Spinner thickness='4px' speed='.65s' emptyColor='gray.200' color='blue.500' />} />}
-    </InputGroup>
-  </>
-);
 
 const fetchCustomerData = async (url) => {
   const response = await fetch(url);
@@ -63,8 +42,10 @@ const CreateMain: React.FC<IProps> = () => {
   const category = methods.watch('category');
   const customerId = methods.watch('customerId');
 
-  const apiUrl = `http://localhost:8082/customers/flex-customer-reader/v3/individual-customer-controller/getIndividualCustomerByCifUsingGET_1/${customerId}`;
+  const apiUrl = `http://localhost:8082/customers/flex-customer-reader/v3/individual-customer-controller/getIndividualCustomerByCifUsingGET_1/${customerId}`
+  ;
   const { data, error, isLoading: isCustomerIdLoading } = useSWR(customerId ? apiUrl : null, fetchCustomerData);
+
   const {
     data: productData,
     error: productDataError,
@@ -250,7 +231,7 @@ const CreateMain: React.FC<IProps> = () => {
                 }}
                 name="startDate"
                 render={({ field }) => (
-                  <MyInput placeholder="Daxil edin" {...field} type="datetime-local" label="Başlama tarixi" />
+                  <MyDatePicker field={field} label="Başlama tarixi" />
                 )}
               />
               <FormErrorMessage color={'red'} fontSize={'14px'}>
@@ -267,7 +248,7 @@ const CreateMain: React.FC<IProps> = () => {
                 }}
                 name="endDate"
                 render={({ field }) => (
-                  <MyInput placeholder="Daxil edin" {...field} type="datetime-local" label="Bitmə tarixi" />
+                  <MyDatePicker field={field} label="Bitmə tarixi"/>
                 )}
               />
               <FormErrorMessage color={'red'} fontSize={'14px'}>
@@ -277,7 +258,7 @@ const CreateMain: React.FC<IProps> = () => {
           </GridItem>
         </Grid>
       </Box >
-      {!colletralCode && <Footer onSubmitHandler={onSubmitHandler} isCreateMode={!!colletralCode} />
+      {!colletralCode && <Footer onSubmitHandler={onSubmitHandler} isCreateMode={!!colletralCode}/>
       }
     </>
   );
