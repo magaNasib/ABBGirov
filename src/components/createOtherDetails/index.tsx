@@ -1,6 +1,7 @@
-import { Box, Grid, GridItem, Heading, Select, Text } from '@chakra-ui/react';
-import { IProps, MyInput } from 'components/createMainPage';
+import { Box, FormControl, FormErrorMessage, FormLabel, Grid, GridItem, Heading, Select } from '@chakra-ui/react';
+import { IProps } from 'components/createMainPage';
 import DepositInfo from 'components/DepositInfo';
+import { MyInput } from 'components/UI/MyInput';
 // import DepositInfo from 'components/DepositInfo';
 import { Footer } from 'Layout/Footer';
 import React from 'react';
@@ -33,11 +34,10 @@ const OtherInformation: React.FC<IProps> = () => {
   const onSubmitHandler = methods.handleSubmit((data) => {
     console.log({ data });
   });
-  console.log(pledgeData  );
 
   return (
     <>
-      {pledgeData?.data[0].deposit.length && <DepositInfo />}
+      {pledgeData?.data[0].deposit.length ?<DepositInfo />:''}
       <Box padding="24px" w={'100%'} bg="white" borderRadius="12px" margin="0 auto">
         <Grid templateColumns="repeat(3, 1fr)" gap="24px">
           <GridItem colSpan={3}>
@@ -47,36 +47,36 @@ const OtherInformation: React.FC<IProps> = () => {
           </GridItem>
 
           {pledgeData?.data[0].questions.map((question, index) => {
-            console.log();
-
+              console.log(pledgeData?.data[0]);
+              
             return question.type === 'select' ? (
               <GridItem key={index} colSpan={1}>
-                <Controller
-                  control={methods.control}
-                  rules={{
-                    required: 'This field is required'
-                  }}
-                  //
-                  name={question.key}
-                  render={({ field }) => (
-                    <>
-                      <label>{question.value}</label>
-                      <Select placeholder="Seçin" {...field}>
-                        {question.items.map(({ key, value }) => (
-                          <option key={key}>{value}</option>
-                        ))}
-                      </Select>
-                    </>
-                  )}
-                />
-                {methods.formState.errors['Daşınmaz əmlakın növü'] && (
-                  <Text color={'red'} fontSize={'14px'}>
-                    {methods.formState.errors['Daşınmaz əmlakın növü'].message}
-                  </Text>
-                )}
+                <FormControl isInvalid={!!methods.formState.errors[question.key]}>
+                  <Controller
+                    control={methods.control}
+                    rules={{
+                      required: 'This field is required'
+                    }}
+                    name={question.key}
+                    render={({ field }) => (
+                      <>
+                        <FormLabel>{question.value}</FormLabel>
+                        <Select placeholder="Seçin" {...field}>
+                          {question.items.map(({ key, value }) => (
+                            <option key={key}>{value}</option>
+                          ))}
+                        </Select>
+                      </>
+                    )}
+                  />
+                    <FormErrorMessage color={'red'} fontSize={'14px'}>
+                      {methods.formState.errors[question.key]?.message}
+                    </FormErrorMessage>
+                </FormControl>
               </GridItem>
             ) : (
               <GridItem key={index} colSpan={1}>
+                <FormControl isInvalid={!!methods.formState.errors[question.key]}>
                 <Controller
                   control={methods.control}
                   rules={{
@@ -84,19 +84,18 @@ const OtherInformation: React.FC<IProps> = () => {
                   }}
                   name={question.key}
                   render={({ field }) => <MyInput {...field} placeholder="Daxil edin" label={question.value} />}
+            
                 />
-                {methods.formState.errors[question.value] && (
-                  <Text color={'red'} fontSize={'14px'}>
-                    {methods.formState.errors[question.value].message}
-                  </Text>
-                )}
+                  <FormErrorMessage color={'red'} fontSize={'14px'}>
+                  {methods.formState.errors[question.key]?.message}
+                  </FormErrorMessage>
+                </FormControl>
               </GridItem>
             );
           })}
         </Grid>
       </Box>
-
-      <Footer onSubmitHandler={onSubmitHandler} isCreateMode={!!colletralCode} />
+      <Footer onSubmitHandler={onSubmitHandler}  isCreateMode={!!colletralCode}/>
     </>
   );
 };
