@@ -1,8 +1,18 @@
-import { Box, FormControl, FormErrorMessage, FormLabel, Grid, GridItem, Heading, Input, Select } from '@chakra-ui/react';
+import {
+  Box,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Grid,
+  GridItem,
+  Heading,
+  Input,
+  Select
+} from '@chakra-ui/react';
 import { useAppContext } from 'context';
 import { Footer } from 'Layout/Footer';
 import React from 'react';
-import { Controller } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import useSWR from 'swr';
 
@@ -18,9 +28,7 @@ import useSWR from 'swr';
 //   endDate: string;
 // }
 
-export interface IProps {
-  methods?: any
-}
+export interface IProps {}
 
 export type InputProps = {
   placeholder?: string;
@@ -29,7 +37,7 @@ export type InputProps = {
   disabled?: boolean;
   value?: string | number;
   onChange: any;
-  isLoading?: boolean
+  isLoading?: boolean;
   // onBlur: Noop
 };
 
@@ -50,9 +58,9 @@ const fetchProductData = async (url) => {
   return await response.json();
 };
 
-const CreateMain: React.FC<IProps> = ({ methods }) => {
-
+const CreateMain: React.FC<IProps> = () => {
   const { colletralCode } = useParams();
+  const methods = useFormContext();
 
   const navigate = useNavigate();
 
@@ -61,10 +69,11 @@ const CreateMain: React.FC<IProps> = ({ methods }) => {
 
   const apiUrl = `http://localhost:8082/customers/flex-customer-reader/v3/individual-customer-controller/getIndividualCustomerByCifUsingGET_1/${customerId}`;
   const { data, error, isLoading: isCustomerIdLoading } = useSWR(customerId ? apiUrl : null, fetchCustomerData);
-  const { data: productData, error: productDataError, isLoading: isCategoryLoading } = useSWR(
-    category ? `http://localhost:8082/products/product-code/${category}` : null,
-    fetchProductData
-  );
+  const {
+    data: productData,
+    error: productDataError,
+    isLoading: isCategoryLoading
+  } = useSWR(category ? `http://localhost:8082/products/product-code/${category}` : null, fetchProductData);
   //   const [{ isCreateButttonExist }] = useAppContext();
   const [{ setIsCreateButtonExist }] = useAppContext();
 
@@ -92,7 +101,7 @@ const CreateMain: React.FC<IProps> = ({ methods }) => {
                   required: 'This field is required',
                   pattern: /^\d{7}$/,
                   minLength: { value: 7, message: 'Customer number must be 7 digits long' },
-                  maxLength: { value: 7, message: 'Customer number must be 7 digits long' },
+                  maxLength: { value: 7, message: 'Customer number must be 7 digits long' }
                 }}
                 name="customerId"
                 render={({ field }) => (
@@ -166,15 +175,14 @@ const CreateMain: React.FC<IProps> = ({ methods }) => {
               <Controller
                 control={methods.control}
                 name="product"
-
                 render={({ field }) => (
-                    <MyInput
-                      {...field}
-                      disabled={true}
-                      isLoading={isCategoryLoading}
-                      value={productData ? productData.product : 'Məhsul'}
-                      label="Məhsul"
-                    />
+                  <MyInput
+                    {...field}
+                    disabled={true}
+                    isLoading={isCategoryLoading}
+                    value={productData ? productData.product : 'Məhsul'}
+                    label="Məhsul"
+                  />
                 )}
               />
               <FormErrorMessage color={'red'} fontSize={'14px'}>
@@ -199,7 +207,6 @@ const CreateMain: React.FC<IProps> = ({ methods }) => {
           </GridItem>
           <GridItem colSpan={1}>
             <FormControl isInvalid={!!methods.formState.errors.description}>
-
               <Controller
                 control={methods.control}
                 rules={{

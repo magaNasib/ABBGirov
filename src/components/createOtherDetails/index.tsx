@@ -4,9 +4,8 @@ import DepositInfo from 'components/DepositInfo';
 // import DepositInfo from 'components/DepositInfo';
 import { Footer } from 'Layout/Footer';
 import React from 'react';
-import { Controller } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-
 // interface IFormValues {
 //   'Daşınmaz əmlakın növü': string;
 //   Mülkiyyətçi: string;
@@ -19,7 +18,6 @@ import { useParams } from 'react-router-dom';
 //   'Tikintinin layihəsi': string;
 //   'Torpaq təyinatı': string;
 // }
-
 import useSWR from 'swr';
 
 const fetchPledgesData = async (url) => {
@@ -27,16 +25,15 @@ const fetchPledgesData = async (url) => {
   return await response.json();
 };
 
-const OtherInformation: React.FC<IProps> = ({ methods }) => {
+const OtherInformation: React.FC<IProps> = () => {
+  const methods = useFormContext();
   const { colletralCode } = useParams();
   const { data: pledgeData } = useSWR(`http://localhost:8082/pledges/${colletralCode}`, fetchPledgesData);
-
 
   const onSubmitHandler = methods.handleSubmit((data) => {
     console.log({ data });
   });
   console.log(methods.getValues());
-  
 
   return (
     <>
@@ -99,9 +96,9 @@ const OtherInformation: React.FC<IProps> = ({ methods }) => {
         </Grid>
       </Box>
 
-      <Footer onSubmitHandler={onSubmitHandler} isCreateMode={!!colletralCode}/>
+      <Footer onSubmitHandler={onSubmitHandler} isCreateMode={!!colletralCode} />
     </>
   );
-}
+};
 
 export default OtherInformation;
