@@ -58,6 +58,10 @@ function EditOtherInformation() {
                                     control={control}
                                     rules={{
                                         required: 'This field is required',
+                                        pattern: {
+                                            value: /^\d+$/,  
+                                            message: 'Please enter a valid number',
+                                          },
                                     }}
                                     name='Girov qoyanın ailə vəziyyəti'
                                     render={({ field: { onChange, onBlur, value } }) => (
