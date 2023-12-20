@@ -6,18 +6,18 @@ import { Footer } from 'Layout/Footer';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-// interface IFormValues {
-//   'Daşınmaz əmlakın növü': string;
-//   Mülkiyyətçi: string;
-//   'Əmlak - ümumi məlumat': string;
-//   'Tikinti şirkətinin adı': string;
-//   Şəhər: string;
-//   Rayon: string;
-//   Bələdiyyə: string;
-//   'Qəsəbə/Kənd': string;
-//   'Tikintinin layihəsi': string;
-//   'Torpaq təyinatı': string;
-// }
+interface IFormValues {
+  propertyType: string;
+  owner: string;
+  propertyDetail: string;
+  buildingCompany: string;
+  city: string;
+  district: string;
+  municipality: string;
+  'town/village': string;
+  'construction-project': string;
+  'land-designation': string;
+}
 import useSWR from 'swr';
 
 const fetchPledgesData = async (url) => {
@@ -26,14 +26,14 @@ const fetchPledgesData = async (url) => {
 };
 
 const OtherInformation: React.FC<IProps> = () => {
-  const methods = useFormContext();
+  const methods = useFormContext<IFormValues>();
   const { colletralCode } = useParams();
   const { data: pledgeData } = useSWR(`http://localhost:8082/pledges/${colletralCode}`, fetchPledgesData);
 
   const onSubmitHandler = methods.handleSubmit((data) => {
     console.log({ data });
   });
-  console.log(methods.getValues());
+  console.log(pledgeData  );
 
   return (
     <>

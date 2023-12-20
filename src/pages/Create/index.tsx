@@ -3,7 +3,7 @@ import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Outlet } from 'react-router-dom';
 
-interface IFormValues {
+export interface IFormValues {
   customerId: number;
   customerName: string;
   product: string;

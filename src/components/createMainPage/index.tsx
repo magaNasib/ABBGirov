@@ -1,16 +1,8 @@
-import {
-  Box,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Grid,
-  GridItem,
-  Heading,
-  Input,
-  Select
-} from '@chakra-ui/react';
+import { Box, FormControl, FormErrorMessage, FormLabel, Grid, GridItem, Heading, Input, InputGroup, InputRightElement, Select, Spinner } from '@chakra-ui/react';
+
 import { useAppContext } from 'context';
 import { Footer } from 'Layout/Footer';
+import { IFormValues } from 'pages/Create';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -28,7 +20,8 @@ import useSWR from 'swr';
 //   endDate: string;
 // }
 
-export interface IProps {}
+export interface IProps { }
+
 
 export type InputProps = {
   placeholder?: string;
@@ -41,10 +34,13 @@ export type InputProps = {
   // onBlur: Noop
 };
 
-export const MyInput = ({ label, ...props }: InputProps) => (
+export const MyInput = ({ label, isLoading, ...props }: InputProps) => (
   <>
     <FormLabel>{label}</FormLabel>
-    <Input {...props} />
+    <InputGroup display={'flex'} flexDirection={'column'} >
+      <Input {...props} />
+      {isLoading && <InputRightElement children={<Spinner thickness='4px' speed='.65s' emptyColor='gray.200' color='blue.500' />} />}
+    </InputGroup>
   </>
 );
 
@@ -60,7 +56,7 @@ const fetchProductData = async (url) => {
 
 const CreateMain: React.FC<IProps> = () => {
   const { colletralCode } = useParams();
-  const methods = useFormContext();
+  const methods = useFormContext<IFormValues>();
 
   const navigate = useNavigate();
 
@@ -130,8 +126,8 @@ const CreateMain: React.FC<IProps> = () => {
                     {...field}
                     value={data ? data.fullname : 'Müştəri'}
                     placeholder="Ad Soyad Ata adı"
-                    disabled
                     isLoading={isCustomerIdLoading}
+                    disabled
                     label="Müştərinin adı"
                   />
                 )}
@@ -195,7 +191,11 @@ const CreateMain: React.FC<IProps> = () => {
               <Controller
                 control={methods.control}
                 rules={{
-                  required: 'This field is required'
+                  required: 'This field is required',
+                  pattern: {
+                    value: /^[0-9]+$/,
+                    message: 'Please enter a valid number',
+                  },
                 }}
                 name="value"
                 render={({ field }) => <MyInput {...field} placeholder="Daxil edin" label="Girovun dəyəri" />}
@@ -276,8 +276,9 @@ const CreateMain: React.FC<IProps> = () => {
             </FormControl>
           </GridItem>
         </Grid>
-      </Box>
-      {!colletralCode && <Footer onSubmitHandler={onSubmitHandler} isCreateMode={!!colletralCode} />}
+      </Box >
+      {!colletralCode && <Footer onSubmitHandler={onSubmitHandler} isCreateMode={!!colletralCode} />
+      }
     </>
   );
 };
