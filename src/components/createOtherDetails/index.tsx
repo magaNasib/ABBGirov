@@ -7,6 +7,7 @@ import { Footer } from 'Layout/Footer';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
+
 interface IFormValues {
   propertyType: string;
   owner: string;
@@ -37,7 +38,7 @@ const OtherInformation: React.FC<IProps> = () => {
 
   return (
     <>
-      {pledgeData?.data[0].deposit.length ?<DepositInfo />:''}
+      {pledgeData?.data[0].deposit.length ? <DepositInfo /> : ''}
       <Box padding="24px" w={'100%'} bg="white" borderRadius="12px" margin="0 auto">
         <Grid templateColumns="repeat(3, 1fr)" gap="24px">
           <GridItem colSpan={3}>
@@ -47,8 +48,6 @@ const OtherInformation: React.FC<IProps> = () => {
           </GridItem>
 
           {pledgeData?.data[0].questions.map((question, index) => {
-              console.log(pledgeData?.data[0]);
-              
             return question.type === 'select' ? (
               <GridItem key={index} colSpan={1}>
                 <FormControl isInvalid={!!methods.formState.errors[question.key]}>
@@ -69,25 +68,24 @@ const OtherInformation: React.FC<IProps> = () => {
                       </>
                     )}
                   />
-                    <FormErrorMessage color={'red'} fontSize={'14px'}>
-                      {methods.formState.errors[question.key]?.message}
-                    </FormErrorMessage>
+                  <FormErrorMessage color={'red'} fontSize={'14px'}>
+                    {methods.formState.errors[question.key]?.message}
+                  </FormErrorMessage>
                 </FormControl>
               </GridItem>
             ) : (
               <GridItem key={index} colSpan={1}>
                 <FormControl isInvalid={!!methods.formState.errors[question.key]}>
-                <Controller
-                  control={methods.control}
-                  rules={{
-                    required: 'This field is required'
-                  }}
-                  name={question.key}
-                  render={({ field }) => <MyInput {...field} placeholder="Daxil edin" label={question.value} />}
-            
-                />
+                  <Controller
+                    control={methods.control}
+                    rules={{
+                      required: 'This field is required'
+                    }}
+                    name={question.key}
+                    render={({ field }) => <MyInput {...field} placeholder="Daxil edin" label={question.value} />}
+                  />
                   <FormErrorMessage color={'red'} fontSize={'14px'}>
-                  {methods.formState.errors[question.key]?.message}
+                    {methods.formState.errors[question.key]?.message}
                   </FormErrorMessage>
                 </FormControl>
               </GridItem>
@@ -95,7 +93,7 @@ const OtherInformation: React.FC<IProps> = () => {
           })}
         </Grid>
       </Box>
-      <Footer onSubmitHandler={onSubmitHandler}  isCreateMode={!!colletralCode}/>
+      <Footer onSubmitHandler={onSubmitHandler} isCreateMode={!!colletralCode} />
     </>
   );
 };
