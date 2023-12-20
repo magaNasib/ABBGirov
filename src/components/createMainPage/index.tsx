@@ -68,7 +68,8 @@ const CreateMain: React.FC<IProps> = () => {
 
   const onSubmitHandler = methods.handleSubmit((data) => {
     setIsCreateButtonExist(true);
-    navigate(`${data?.category}`);
+    navigate(`${productData?.category}`);
+
   });
 
   return (
