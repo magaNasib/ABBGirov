@@ -1,4 +1,4 @@
-import { Box, FormControl, FormLabel, Grid, GridItem, Heading, Input, Select, Text } from '@chakra-ui/react';
+import { Box, FormControl, FormErrorMessage, FormLabel, Grid, GridItem, Heading, Input, Select } from '@chakra-ui/react';
 import { useAppContext } from 'context';
 import { Footer } from 'Layout/Footer';
 import React from 'react';
@@ -18,7 +18,7 @@ interface IFormValues {
   endDate: string;
 }
 
-interface IProps {}
+interface IProps { }
 
 export type InputProps = {
   placeholder?: string;
@@ -31,10 +31,10 @@ export type InputProps = {
 };
 
 export const MyInput = ({ label, ...props }: InputProps) => (
-  <FormControl>
+  <>
     <FormLabel>{label}</FormLabel>
     <Input {...props} />
-  </FormControl>
+  </>
 );
 
 const fetchCustomerData = async (url) => {
@@ -84,133 +84,144 @@ const CreateMain: React.FC<IProps> = () => {
               </Heading>
             </GridItem>
             <GridItem colSpan={1}>
-              <Controller
-                control={methods.control}
-                rules={{
-                  required: 'This field is required',
-                  pattern: /^\d{7}$/,
-                  minLength: { value: 7, message: 'Customer number must be 7 digits long' },
-                  maxLength: { value: 7, message: 'Customer number must be 7 digits long' }
-                }}
-                name="customerId"
-                render={({ field: { onChange } }) => (
-                  <MyInput
-                    label="Müştəri nömrəsi"
-                    placeholder="Daxil edin"
-                    onChange={(e) => {
-                      onChange(e);
-                    }}
-                  />
-                )}
-              />
-              {error && <div style={{ color: 'red' }}>Belə istifadəçi yoxdur</div>}
-              {methods.formState.errors['Müştəri nömrəsi'] && (
-                <Text color={'red'} fontSize={'14px'}>
-                  {methods.formState.errors['Müştəri nömrəsi'].message}
-                </Text>
-              )}
+              <FormControl isInvalid={!!methods.formState.errors.customerId}>
+                <Controller
+                  control={methods.control}
+                  rules={{
+                    required: 'This field is required',
+                    pattern: /^\d{7}$/,
+                    minLength: { value: 7, message: 'Customer number must be 7 digits long' },
+                    maxLength: { value: 7, message: 'Customer number must be 7 digits long' }
+                  }}
+                  name="customerId"
+                  render={({ field }) => (
+                    <MyInput
+                      {...field}
+                      label="Müştəri nömrəsi"
+                      placeholder="Daxil edin"
+                      onChange={(e) => {
+                        field.onChange(e);
+                      }}
+                    />
+                  )}
+                />
+                {error && <div style={{ color: 'red' }}>Belə istifadəçi yoxdur</div>}
+                <FormErrorMessage color={'red'} fontSize={'14px'}>
+                  {methods.formState.errors.customerId?.message}
+                </FormErrorMessage>
+              </FormControl>
             </GridItem>
             <GridItem colSpan={1}>
-              <Controller
-                control={methods.control}
-                name="customerName"
-                render={({ field }) => (
-                  <MyInput
-                    {...field}
-                    value={data ? data.fullname : 'Müştəri'}
-                    placeholder="Ad Soyad Ata adı"
-                    disabled
-                    label="Müştərinin adı"
-                  />
-                )}
-              />
-              {methods.formState.errors['Müştərinin adı'] && (
-                <Text color={'red'} fontSize={'14px'}>
-                  {methods.formState.errors['Müştərinin adı'].message}
-                </Text>
-              )}
+              <FormControl isInvalid={!!methods.formState.errors.customerName}>
+                <Controller
+                  control={methods.control}
+                  rules={{
+                    required: 'This field is required',
+                    pattern: /^\d{7}$/,
+                    minLength: { value: 7, message: 'Customer number must be 7 digits long' },
+                    maxLength: { value: 7, message: 'Customer number must be 7 digits long' }
+                  }}
+                  name="customerName"
+                  render={({ field }) => (
+                    <MyInput
+                      {...field}
+                      value={data ? data.fullname : 'Müştəri'}
+                      placeholder="Ad Soyad Ata adı"
+                      disabled
+                      label="Müştərinin adı"
+                    />
+                  )}
+                />
+                {error && <div style={{ color: 'red' }}>Belə istifadəçi yoxdur</div>}
+
+                <FormErrorMessage color={'red'} fontSize={'14px'}>
+                  {methods.formState.errors.customerName?.message}
+                </FormErrorMessage>
+              </FormControl>
             </GridItem>
             <GridItem colSpan={1}>
-              <FormControl>
-                <FormLabel>Girovun kateqoriyası</FormLabel>
+              <FormLabel>Girovun kateqoriyası</FormLabel>
+              <FormControl isInvalid={!!methods.formState.errors.category}>
                 <Controller
                   control={methods.control}
                   rules={{
                     required: 'This field is required'
                   }}
                   name="category"
-                  render={({ field: { onChange } }) => (
+                  render={({ field }) => (
                     <Select
                       placeholder="Seçin"
                       onChange={(e) => {
-                        onChange(e);
+                        field.onChange(e);
                       }}
+                      {...field}
                     >
                       <option value={'99743'}>99743</option>
                       <option value={'99745'}>99745</option>
                     </Select>
                   )}
                 />
-                {methods.formState.errors['Girovun kateqoriyası'] && (
-                  <Text color={'red'} fontSize={'14px'}>
-                    {methods.formState.errors['Girovun kateqoriyası'].message}
-                  </Text>
-                )}
+                <FormErrorMessage color={'red'} fontSize={'14px'}>
+                  {methods.formState.errors.category?.message}
+                </FormErrorMessage>
               </FormControl>
             </GridItem>
             <GridItem colSpan={1}>
-              <Controller
-                control={methods.control}
-                name="product"
-                render={({ field }) => (
-                  <MyInput
-                    {...field}
-                    disabled={true}
-                    value={productData ? productData.product : 'Müştəri'}
-                    label="Məhsul"
-                  />
-                )}
-              />
-              {methods.formState.errors.product && (
-                <Text color={'red'} fontSize={'14px'}>
-                  {methods.formState.errors.product.message}
-                </Text>
-              )}
+              <FormControl isInvalid={!!methods.formState.errors.product}>
+                <Controller
+                  control={methods.control}
+                  name="product"
+                  rules={{
+                    required: 'This field is required'
+                  }}
+                  render={({ field }) => (
+                    <MyInput
+                      {...field}
+                      disabled={true}
+                      value={productData ? productData.product : 'Məhsul'}
+                      label="Məhsul"
+                    />
+                  )}
+                />
+                <FormErrorMessage color={'red'} fontSize={'14px'}>
+                  {methods.formState.errors.product?.message}
+                </FormErrorMessage>
+              </FormControl>
             </GridItem>
             <GridItem colSpan={1}>
-              <Controller
-                control={methods.control}
-                rules={{
-                  required: 'This field is required'
-                }}
-                name="value"
-                render={({ field }) => <MyInput {...field} placeholder="Daxil edin" label="Girovun dəyəri" />}
-              />
-              {methods.formState.errors['value'] && (
-                <Text color={'red'} fontSize={'14px'}>
-                  {methods.formState.errors['value'].message}
-                </Text>
-              )}
+              <FormControl isInvalid={!!methods.formState.errors.value}>
+                <Controller
+                  control={methods.control}
+                  rules={{
+                    required: 'This field is required'
+                  }}
+                  name="value"
+                  render={({ field }) => <MyInput {...field} placeholder="Daxil edin" label="Girovun dəyəri" />}
+                />
+                <FormErrorMessage color={'red'} fontSize={'14px'}>
+                  {methods.formState.errors?.value?.message}
+                </FormErrorMessage>
+              </FormControl>
             </GridItem>
             <GridItem colSpan={1}>
-              <Controller
-                control={methods.control}
-                rules={{
-                  required: 'This field is required'
-                }}
-                name="description"
-                render={({ field }) => <MyInput placeholder="Daxil edin" {...field} label="Girovun təsviri" />}
-              />
-              {methods.formState.errors['description'] && (
-                <Text color={'red'} fontSize={'14px'}>
-                  {methods.formState.errors['description'].message}
-                </Text>
-              )}
-            </GridItem>
-            <GridItem colSpan={1}>
-              <FormControl>
-                <FormLabel>Girovun valyutası</FormLabel>
+              <FormControl isInvalid={!!methods.formState.errors.description}>
 
+                <Controller
+                  control={methods.control}
+                  rules={{
+                    required: 'This field is required'
+                  }}
+                  name="description"
+                  render={({ field }) => <MyInput placeholder="Daxil edin" {...field} label="Girovun təsviri" />}
+                />
+                <FormErrorMessage color={'red'} fontSize={'14px'}>
+                  {methods.formState.errors['description']?.message}
+                </FormErrorMessage>
+              </FormControl>
+            </GridItem>
+            <GridItem colSpan={1}>
+              <FormLabel>Girovun valyutası</FormLabel>
+              <FormControl isInvalid={!!methods.formState.errors.currency}>
                 <Controller
                   control={methods.control}
                   rules={{
@@ -224,46 +235,44 @@ const CreateMain: React.FC<IProps> = () => {
                     </Select>
                   )}
                 />
-                {methods.formState.errors['currency'] && (
-                  <Text color={'red'} fontSize={'14px'}>
-                    {methods.formState.errors['currency'].message}
-                  </Text>
-                )}
+                <FormErrorMessage color={'red'} fontSize={'14px'}>
+                  {methods.formState.errors['currency']?.message}
+                </FormErrorMessage>
               </FormControl>
             </GridItem>
             <GridItem colSpan={1}>
-              <Controller
-                control={methods.control}
-                rules={{
-                  required: 'This field is required'
-                }}
-                name="startDate"
-                render={({ field }) => (
-                  <MyInput placeholder="Daxil edin" {...field} type="datetime-local" label="Başlama tarixi" />
-                )}
-              />
-              {methods.formState.errors['startDate'] && (
-                <Text color={'red'} fontSize={'14px'}>
-                  {methods.formState.errors['startDate'].message}
-                </Text>
-              )}
+              <FormControl isInvalid={!!methods.formState.errors.startDate}>
+                <Controller
+                  control={methods.control}
+                  rules={{
+                    required: 'This field is required'
+                  }}
+                  name="startDate"
+                  render={({ field }) => (
+                    <MyInput placeholder="Daxil edin" {...field} type="datetime-local" label="Başlama tarixi" />
+                  )}
+                />
+                <FormErrorMessage color={'red'} fontSize={'14px'}>
+                  {methods.formState.errors.startDate?.message}
+                </FormErrorMessage>
+              </FormControl>
             </GridItem>
             <GridItem colSpan={1}>
-              <Controller
-                control={methods.control}
-                rules={{
-                  required: 'This field is required'
-                }}
-                name="endDate"
-                render={({ field }) => (
-                  <MyInput placeholder="Daxil edin" {...field} type="datetime-local" label="Bitmə tarixi" />
-                )}
-              />
-              {methods.formState.errors['endDate'] && (
-                <Text color={'red'} fontSize={'14px'}>
-                  {methods.formState.errors['endDate'].message}
-                </Text>
-              )}
+              <FormControl isInvalid={!!methods.formState.errors.endDate}>
+                <Controller
+                  control={methods.control}
+                  rules={{
+                    required: 'This field is required'
+                  }}
+                  name="endDate"
+                  render={({ field }) => (
+                    <MyInput placeholder="Daxil edin" {...field} type="datetime-local" label="Bitmə tarixi" />
+                  )}
+                />
+                <FormErrorMessage color={'red'} fontSize={'14px'}>
+                  {methods.formState.errors.endDate?.message}
+                </FormErrorMessage>
+              </FormControl>
             </GridItem>
           </Grid>
         </Box>
