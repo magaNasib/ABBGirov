@@ -2,9 +2,48 @@ import { Box, FormControl, FormLabel, Grid, GridItem, Heading, Input, Select, Te
 import { useAppContext } from 'context';
 import { Footer } from 'Layout/Footer';
 import React from 'react';
+// import DatePicker from 'react-date-picker';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import useSWR from 'swr';
+
+import DatePicker from 'react-datepicker';
+import { chakra } from '@chakra-ui/react';
+import 'react-datepicker/dist/react-datepicker.css';
+import PropTypes from 'prop-types';
+
+const ChakraDatePicker = chakra(DatePicker, {
+  baseStyle: {
+    _placeholder: {
+      color: '#0D0D19',
+      fontWeight: '500',
+
+    },
+    width:"100%",
+    marginTop: '32px',
+    padding: '6px',
+    ':focus': {
+      outline: '3px solid blue',
+      borderRadius: '2px',
+      boxShadow: '0 0 5px rgba(0, 0, 0, 0.8)',
+      border: 'none'
+    },
+    border: '2px solid #d3d3d3',
+    borderRadius: '5px'
+    
+  },
+});
+const CustomDatePicker = ({ className, ...props }) => {
+  return (
+    <ChakraDatePicker
+      onChange={undefined} className={`custom-datepicker ${className || ''}`}
+      {...props}
+    />
+  );
+};
+CustomDatePicker.propTypes = {
+  className: PropTypes.string,
+};
 
 interface IFormValues {
   customerId: number;
@@ -18,7 +57,7 @@ interface IFormValues {
   endDate: string;
 }
 
-interface IProps {}
+interface IProps { }
 
 export type InputProps = {
   placeholder?: string;
@@ -73,6 +112,7 @@ const CreateMain: React.FC<IProps> = () => {
 
   return (
     <>
+
       {productDataError && <div>Error !</div>}
 
       <FormProvider {...methods}>
@@ -239,7 +279,18 @@ const CreateMain: React.FC<IProps> = () => {
                 }}
                 name="startDate"
                 render={({ field }) => (
-                  <MyInput placeholder="Daxil edin" {...field} type="datetime-local" label="Başlama tarixi" />
+                  <CustomDatePicker
+                    className="text-black"
+                    onChange={(date: unknown) => console.log(date)}
+                    selected={field.value}
+                    placeholderText="Başlama tarixi"
+                    {...field}
+                    type="datetime-local"
+                    showYearDropdown
+                    scrollableMonthYearDropdown
+                    showMonthDropdown
+                  />
+
                 )}
               />
               {methods.formState.errors['startDate'] && (
@@ -256,7 +307,17 @@ const CreateMain: React.FC<IProps> = () => {
                 }}
                 name="endDate"
                 render={({ field }) => (
-                  <MyInput placeholder="Daxil edin" {...field} type="datetime-local" label="Bitmə tarixi" />
+                  <CustomDatePicker
+                    className="text-black"
+                    onChange={(date: unknown) => console.log(date)}
+                    selected={field.value}
+                    placeholderText="Bitmə tarixi"
+                    {...field}
+                    type="datetime-local"
+                    showYearDropdown
+                    showMonthDropdown
+                    scrollableMonthYearDropdown
+                  />
                 )}
               />
               {methods.formState.errors['endDate'] && (
