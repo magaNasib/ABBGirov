@@ -79,7 +79,7 @@ const pledgesData = [
                   type: 'select',
                   items: [
                     {
-                      key: 'City',
+                      key: 'CityBaku',
                       value: 'Baku'
                     },
                     {
