@@ -112,7 +112,7 @@ const CreateMain: React.FC<IProps> = () => {
               </FormControl>
             </GridItem>
             <GridItem colSpan={1}>
-              <FormControl isInvalid={!!methods.formState.errors.customerName}>
+              <FormControl isInvalid={!!methods.formState.errors.customerId}>
                 <Controller
                   control={methods.control}
                   rules={{
@@ -135,7 +135,7 @@ const CreateMain: React.FC<IProps> = () => {
                 {error && <div style={{ color: 'red' }}>Belə istifadəçi yoxdur</div>}
 
                 <FormErrorMessage color={'red'} fontSize={'14px'}>
-                  {methods.formState.errors.customerName?.message}
+                  {methods.formState.errors.customerId?.message}
                 </FormErrorMessage>
               </FormControl>
             </GridItem>
@@ -167,7 +167,7 @@ const CreateMain: React.FC<IProps> = () => {
               </FormControl>
             </GridItem>
             <GridItem colSpan={1}>
-              <FormControl isInvalid={!!methods.formState.errors.product}>
+              <FormControl isInvalid={!!methods.formState.errors.category}>
                 <Controller
                   control={methods.control}
                   name="product"
@@ -184,7 +184,7 @@ const CreateMain: React.FC<IProps> = () => {
                   )}
                 />
                 <FormErrorMessage color={'red'} fontSize={'14px'}>
-                  {methods.formState.errors.product?.message}
+                  {methods.formState.errors.category?.message}
                 </FormErrorMessage>
               </FormControl>
             </GridItem>
