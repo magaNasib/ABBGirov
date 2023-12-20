@@ -1,25 +1,23 @@
 import { Box, Grid, GridItem, Heading, Select, Text } from '@chakra-ui/react';
-import { MyInput } from 'components/createMainPage';
+import { IProps, MyInput } from 'components/createMainPage';
 import DepositInfo from 'components/DepositInfo';
 // import DepositInfo from 'components/DepositInfo';
 import { Footer } from 'Layout/Footer';
 import React from 'react';
-import { Controller, FormProvider, useForm } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-
 interface IFormValues {
-  'Daşınmaz əmlakın növü': string;
-  Mülkiyyətçi: string;
-  'Əmlak - ümumi məlumat': string;
-  'Tikinti şirkətinin adı': string;
-  Şəhər: string;
-  Rayon: string;
-  Bələdiyyə: string;
-  'Qəsəbə/Kənd': string;
-  'Tikintinin layihəsi': string;
-  'Torpaq təyinatı': string;
+  propertyType: string;
+  owner: string;
+  propertyDetail: string;
+  buildingCompany: string;
+  city: string;
+  district: string;
+  municipality: string;
+  'town/village': string;
+  'construction-project': string;
+  'land-designation': string;
 }
-
 import useSWR from 'swr';
 
 const fetchPledgesData = async (url) => {
@@ -27,18 +25,18 @@ const fetchPledgesData = async (url) => {
   return await response.json();
 };
 
-function OtherInformation() {
+const OtherInformation: React.FC<IProps> = () => {
+  const methods = useFormContext<IFormValues>();
   const { colletralCode } = useParams();
   const { data: pledgeData } = useSWR(`http://localhost:8082/pledges/${colletralCode}`, fetchPledgesData);
-
-  const methods = useForm<IFormValues>();
 
   const onSubmitHandler = methods.handleSubmit((data) => {
     console.log({ data });
   });
+  console.log(pledgeData  );
 
   return (
-    <FormProvider {...methods}>
+    <>
       {pledgeData?.data[0].deposit.length && <DepositInfo />}
       <Box padding="24px" w={'100%'} bg="white" borderRadius="12px" margin="0 auto">
         <Grid templateColumns="repeat(3, 1fr)" gap="24px">
@@ -98,9 +96,9 @@ function OtherInformation() {
         </Grid>
       </Box>
 
-      <Footer onSubmitHandler={onSubmitHandler} />
-    </FormProvider>
+      <Footer onSubmitHandler={onSubmitHandler} isCreateMode={!!colletralCode} />
+    </>
   );
-}
+};
 
 export default OtherInformation;
