@@ -29,7 +29,9 @@
     "react-hook-form": "^7.49.2",
     "react-i18next": "13.5.0",
     "react-router-dom": "6.19.0",
-    "swr": "^2.2.4"
+    "swr": "^2.2.4",
+    "uuid": "^9.0.1",
+    "uuidv4": "^6.2.13"
   },
   "devDependencies": {
     "@jest/expect": "29.7.0",
