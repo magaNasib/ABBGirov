@@ -115,12 +115,6 @@ const CreateMain: React.FC<IProps> = () => {
               <FormControl isInvalid={!!methods.formState.errors.customerId}>
                 <Controller
                   control={methods.control}
-                  rules={{
-                    required: 'This field is required',
-                    pattern: /^\d{7}$/,
-                    minLength: { value: 7, message: 'Customer number must be 7 digits long' },
-                    maxLength: { value: 7, message: 'Customer number must be 7 digits long' }
-                  }}
                   name="customerName"
                   render={({ field }) => (
                     <MyInput
@@ -171,9 +165,7 @@ const CreateMain: React.FC<IProps> = () => {
                 <Controller
                   control={methods.control}
                   name="product"
-                  rules={{
-                    required: 'This field is required'
-                  }}
+                
                   render={({ field }) => (
                     <MyInput
                       {...field}
