@@ -1,9 +1,11 @@
+import { useParams } from 'react-router-dom';
 import { Box, Button, Grid, GridItem, Heading, Image, Text } from '@chakra-ui/react';
 import React from 'react';
-
 import image1 from '../../icons/Modal-Success-icon.png';
 
 function CreateSuccessComponent() {
+  const { colletralCode } = useParams();
+
   return (
     <Box w={'100%'} padding="0 44px">
       <Heading as="h4" size="md" margin="32px 0">
@@ -26,7 +28,7 @@ function CreateSuccessComponent() {
         <Text color="black">
           Girov nömrəsi:{' '}
           <Text as="span" color="#3B8DD4">
-            111222333
+            {colletralCode}
           </Text>
         </Text>
       </Box>

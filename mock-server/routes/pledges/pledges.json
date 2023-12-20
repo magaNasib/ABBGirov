@@ -1,0 +1,144 @@
+[
+  {
+    "id": 1,
+    "customerCIF": "1234567",
+    "fullname": "Ismayil Hasanov Rashad",
+    "colletralCode": "99743",
+    "customerPledge": {
+      "describe": "12345",
+      "pledgesValue": 100,
+      "pledgedCurrency": "AZN",
+      "startDate": "2023-01-21T00:00:00.000Z",
+      "endDate": "2033-01-21T00:00:00.000Z"
+    },
+    "data": [
+      {
+        "productCode": "CKLL",
+        "deposit": [
+          { "branch": "120", "reference": "12345", "currency": "AZN" },
+          { "branch": "100", "reference": "12346", "currency": "USD" }
+        ],
+        "questions": [
+          {
+            "key": "propertyType",
+            "value": "Daşınmaz əmlakın növü",
+            "type": "select",
+            "items": [
+              { "key": "private", "value": "Fərdi yaşayış evi" },
+              { "key": "apartment", "value": "Mənzil" }
+            ]
+          },
+          { "key": "owner", "value": "Mülkiyyətçi", "type": "text", "items": [], "maxLenght": 60, "minLenght": 5 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "customerCIF": "7654321",
+    "fullname": "Ferid Hasanov Rashad",
+    "colletralCode": "99745",
+    "customerPledge": {
+      "describe": "12345",
+      "pledgesValue": 100,
+      "pledgedCurrency": "AZN",
+      "startDate": null,
+      "endDate": null
+    },
+    "data": [
+      {
+        "productCode": "CKLL",
+        "deposit": [],
+        "questions": [
+          {
+            "key": "familyStatus",
+            "value": "Girov Qoyanın Ailə Vəziyyəti",
+            "type": "select",
+            "items": [
+              { "key": "married", "value": "Evli" },
+              { "key": "single", "value": "Subay" }
+            ]
+          },
+          {
+            "key": "birthday",
+            "value": "Girov qoyanın doğum tarixi",
+            "type": "text",
+            "items": [],
+            "maxLenght": 60,
+            "minLenght": 5
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "customerCIF": "1234567",
+    "fullname": "Ismayil Hasanov Rashad",
+    "colletralCode": "99743",
+    "customerPledge": {
+      "describe": "reasd",
+      "pledgesValue": "12312",
+      "pledgedCurrency": "2",
+      "startDate": "2023-12-02T15:24:00.000Z",
+      "endDate": "2023-12-30T15:25:00.000Z"
+    },
+    "data": [{ "productCode": "CCL3", "deposit": [], "questions": [] }],
+    "id": "ed505164-1abd-4f7c-8aaf-fe6faa730a92"
+  },
+  {
+    "customerCIF": "1234567",
+    "fullname": "Ismayil Hasanov Rashad",
+    "colletralCode": "99745",
+    "customerPledge": {
+      "describe": "reasd",
+      "pledgesValue": "12312",
+      "pledgedCurrency": "1",
+      "startDate": "2023-12-01T15:26:00.000Z",
+      "endDate": "2023-12-24T15:26:00.000Z"
+    },
+    "data": [{ "productCode": "CCL6", "deposit": [], "questions": [] }],
+    "id": "c73d624c-2de8-43b4-9ee0-4305981894b4"
+  },
+  {
+    "customerCIF": "1234567",
+    "fullname": "Ismayil Hasanov Rashad",
+    "colletralCode": "99743",
+    "customerPledge": {
+      "describe": "reasd",
+      "pledgesValue": "12312",
+      "pledgedCurrency": "1",
+      "startDate": "2023-12-02T15:27:00.000Z",
+      "endDate": "2023-12-30T15:27:00.000Z"
+    },
+    "data": [{ "productCode": "CCL3", "deposit": [], "questions": [] }],
+    "id": "7c750a7a-8808-474c-b007-ce56f37dfbb5"
+  },
+  {
+    "customerCIF": "1234567",
+    "fullname": "Ismayil Hasanov Rashad",
+    "colletralCode": "99745",
+    "customerPledge": {
+      "describe": "reasd",
+      "pledgesValue": "12312",
+      "pledgedCurrency": "1",
+      "startDate": "2023-12-01T15:28:00.000Z",
+      "endDate": "2023-12-31T15:28:00.000Z"
+    },
+    "data": [{ "productCode": "CCL6", "deposit": [], "questions": [] }],
+    "id": "c73f2f03-68bd-4277-9886-462735b7bb35"
+  },
+  {
+    "customerCIF": "1234567",
+    "fullname": "Ismayil Hasanov Rashad",
+    "colletralCode": "99743",
+    "customerPledge": {
+      "describe": "reasd",
+      "pledgesValue": "12312",
+      "pledgedCurrency": "1",
+      "startDate": "2023-12-02T15:30:00.000Z",
+      "endDate": "2023-12-30T15:30:00.000Z"
+    },
+    "data": [{ "productCode": "CCL3", "deposit": [], "questions": [] }],
+    "id": "f2dfd6da-fc78-4ae1-8c79-a35177355d03"
+  }
+]

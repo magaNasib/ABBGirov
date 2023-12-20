@@ -1,0 +1,99 @@
+[
+  {
+    "customerCIF": "1234567",
+    "fullname": "Ismayil Hasanov Rashad",
+    "colletralCode": "99743",
+    "customerPledge": {
+      "describe": "12345",
+      "pledgesValue": 100.0,
+      "pledgedCurrency": "AZN",
+      "startDate": "2023-01-21T00:00:00.000Z",
+      "endDate": "2033-01-21T00:00:00.000Z"
+    },
+    "data": [
+      {
+        "productCode": "CKLL",
+        "deposit": [
+          {
+            "branch": "120",
+            "reference": "12345",
+            "currency": "AZN"
+          },
+          {
+            "branch": "100",
+            "reference": "12346",
+            "currency": "USD"
+          }
+        ],
+        "questions": [
+          {
+            "key": "propertyType",
+            "value": "Daşınmaz əmlakın növü",
+            "type": "select",
+            "items": [
+              {
+                "key": "private",
+                "value": "Fərdi yaşayış evi"
+              },
+              {
+                "key": "apartment",
+                "value": "Mənzil"
+              }
+            ]
+          },
+          {
+            "key": "owner",
+            "value": "Mülkiyyətçi",
+            "type": "text",
+            "items": [],
+            "maxLenght": 60,
+            "minLenght": 5
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "customerCIF": "7654321",
+    "fullname": "Ferid Hasanov Rashad",
+    "colletralCode": "99745",
+    "customerPledge": {
+      "describe": "12345",
+      "pledgesValue": 100.0,
+      "pledgedCurrency": "AZN",
+      "startDate": null,
+      "endDate": null
+    },
+    "data": [
+      {
+        "productCode": "CKLL",
+        "deposit": [],
+        "questions": [
+          {
+            "key": "familyStatus",
+            "value": "Girov Qoyanın Ailə Vəziyyəti",
+            "type": "select",
+            "items": [
+              {
+                "key": "married",
+                "value": "Evli"
+              },
+              {
+                "key": "single",
+                "value": "Subay"
+              }
+            ]
+          },
+          {
+            "key": "birthday",
+            "value": "Girov qoyanın doğum tarixi",
+            "type": "text",
+            "items": [],
+            "maxLenght": 60,
+            "minLenght": 5
+          }
+        ]
+      }
+    ]
+  }
+]

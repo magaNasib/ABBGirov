@@ -29,7 +29,7 @@ const App: React.FC = () => {
             }
           />
 
-          <Route path="/successPage" element={<CreateSuccessComponent />} />
+          <Route path="/:colletralCode/successPage" element={<CreateSuccessComponent />} />
         </Route>
       </Routes>
     </AppProvider>

@@ -1,4 +1,14 @@
-import { Box, FormControl, FormErrorMessage, FormLabel, Grid, GridItem, Heading, Input, Select } from '@chakra-ui/react';
+import {
+  Box,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Grid,
+  GridItem,
+  Heading,
+  Input,
+  Select
+} from '@chakra-ui/react';
 import { useAppContext } from 'context';
 import { Footer } from 'Layout/Footer';
 import React from 'react';
@@ -7,8 +17,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import useSWR from 'swr';
 
 interface IFormValues {
-  customerId: number;
-  customerName: string;
+  customerId: string;
+  fullname: string;
   product: string;
   value: number;
   description: string;
@@ -18,7 +28,7 @@ interface IFormValues {
   endDate: string;
 }
 
-interface IProps { }
+interface IProps {}
 
 export type InputProps = {
   placeholder?: string;
@@ -36,7 +46,7 @@ export const MyInput = ({ label, ...props }: InputProps) => (
     <Input {...props} />
   </>
 );
-
+const requiredMessage: string = 'This field is required';
 const fetchCustomerData = async (url) => {
   const response = await fetch(url);
   return await response.json();
@@ -56,19 +66,60 @@ const CreateMain: React.FC<IProps> = () => {
 
   const category = methods.watch('category');
   const customerId = methods.watch('customerId');
-
+  const isValidCustomerId = customerId && /^\d+$/.test(customerId) && customerId.length > 6 && customerId.length < 8;
   const apiUrl = `http://localhost:8082/customers/flex-customer-reader/v3/individual-customer-controller/getIndividualCustomerByCifUsingGET_1/${customerId}`;
-  const { data, error } = useSWR(customerId ? apiUrl : null, fetchCustomerData);
+  const { data, error } = useSWR(isValidCustomerId ? apiUrl : null, fetchCustomerData);
   const { data: productData, error: productDataError } = useSWR(
     category ? `http://localhost:8082/products/product-code/${category}` : null,
     fetchProductData
   );
   //   const [{ isCreateButttonExist }] = useAppContext();
   const [{ setIsCreateButtonExist }] = useAppContext();
+  const postFormattedData = async (formattedData) => {
+    try {
+      const response = await fetch('http://localhost:8082/pledges', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formattedData)
+      });
+      console.log(response);
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log(responseData);
+        return responseData;
+      }
+    } catch (error) {
+      console.error('Error posting data:', error);
+    }
+  };
 
-  const onSubmitHandler = methods.handleSubmit((data) => {
+  const onSubmitHandler = methods.handleSubmit(async (requestData) => {
+    const formattedData = {
+      customerCIF: requestData.customerId.toString(),
+      fullname: data.fullname,
+      colletralCode: requestData.category,
+      customerPledge: {
+        describe: requestData.description,
+        pledgesValue: requestData.value,
+        pledgedCurrency: requestData.currency,
+        startDate: new Date(requestData.startDate),
+        endDate: new Date(requestData.endDate)
+      },
+      data: [
+        {
+          productCode: productData.product,
+          deposit: [],
+          questions: []
+        }
+      ]
+    };
+
+    console.log(formattedData);
+    const response: any = await postFormattedData(formattedData);
     setIsCreateButtonExist(true);
-    navigate(`${data?.category}`);
+    navigate(`${response.data}/successPage`);
   });
 
   return (
@@ -88,7 +139,7 @@ const CreateMain: React.FC<IProps> = () => {
                 <Controller
                   control={methods.control}
                   rules={{
-                    required: 'This field is required',
+                    required: requiredMessage,
                     pattern: /^\d{7}$/,
                     minLength: { value: 7, message: 'Customer number must be 7 digits long' },
                     maxLength: { value: 7, message: 'Customer number must be 7 digits long' }
@@ -115,7 +166,7 @@ const CreateMain: React.FC<IProps> = () => {
               <FormControl isInvalid={!!methods.formState.errors.customerId}>
                 <Controller
                   control={methods.control}
-                  name="customerName"
+                  name="fullname"
                   render={({ field }) => (
                     <MyInput
                       {...field}
@@ -139,7 +190,7 @@ const CreateMain: React.FC<IProps> = () => {
                 <Controller
                   control={methods.control}
                   rules={{
-                    required: 'This field is required'
+                    required: requiredMessage
                   }}
                   name="category"
                   render={({ field }) => (
@@ -165,7 +216,6 @@ const CreateMain: React.FC<IProps> = () => {
                 <Controller
                   control={methods.control}
                   name="product"
-                
                   render={({ field }) => (
                     <MyInput
                       {...field}
@@ -185,7 +235,7 @@ const CreateMain: React.FC<IProps> = () => {
                 <Controller
                   control={methods.control}
                   rules={{
-                    required: 'This field is required'
+                    required: requiredMessage
                   }}
                   name="value"
                   render={({ field }) => <MyInput {...field} placeholder="Daxil edin" label="Girovun dəyəri" />}
@@ -197,11 +247,10 @@ const CreateMain: React.FC<IProps> = () => {
             </GridItem>
             <GridItem colSpan={1}>
               <FormControl isInvalid={!!methods.formState.errors.description}>
-
                 <Controller
                   control={methods.control}
                   rules={{
-                    required: 'This field is required'
+                    required: requiredMessage
                   }}
                   name="description"
                   render={({ field }) => <MyInput placeholder="Daxil edin" {...field} label="Girovun təsviri" />}
@@ -217,7 +266,7 @@ const CreateMain: React.FC<IProps> = () => {
                 <Controller
                   control={methods.control}
                   rules={{
-                    required: 'This field is required'
+                    required: requiredMessage
                   }}
                   name="currency"
                   render={({ field: { onChange, onBlur, value } }) => (
@@ -237,7 +286,7 @@ const CreateMain: React.FC<IProps> = () => {
                 <Controller
                   control={methods.control}
                   rules={{
-                    required: 'This field is required'
+                    required: requiredMessage
                   }}
                   name="startDate"
                   render={({ field }) => (
@@ -254,7 +303,7 @@ const CreateMain: React.FC<IProps> = () => {
                 <Controller
                   control={methods.control}
                   rules={{
-                    required: 'This field is required'
+                    required: requiredMessage
                   }}
                   name="endDate"
                   render={({ field }) => (
