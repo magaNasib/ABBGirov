@@ -18,7 +18,10 @@ interface IFormValues {
   endDate: string;
 }
 
-interface IProps { }
+interface IProps {
+ 
+  
+ }
 
 export type InputProps = {
   placeholder?: string;
@@ -27,6 +30,7 @@ export type InputProps = {
   disabled?: boolean;
   value?: string | number;
   onChange: any;
+
   // onBlur: Noop
 };
 
@@ -58,8 +62,8 @@ const CreateMain: React.FC<IProps> = () => {
   const customerId = methods.watch('customerId');
 
   const apiUrl = `http://localhost:8082/customers/flex-customer-reader/v3/individual-customer-controller/getIndividualCustomerByCifUsingGET_1/${customerId}`;
-  const { data, error } = useSWR(customerId ? apiUrl : null, fetchCustomerData);
-  const { data: productData, error: productDataError } = useSWR(
+  const { data,error:CustomerDataError} = useSWR(customerId ? apiUrl : null, fetchCustomerData);
+  const { data: productData } = useSWR(
     category ? `http://localhost:8082/products/product-code/${category}` : null,
     fetchProductData
   );
@@ -68,13 +72,21 @@ const CreateMain: React.FC<IProps> = () => {
 
   const onSubmitHandler = methods.handleSubmit((data) => {
     setIsCreateButtonExist(true);
-    navigate(`${productData?.colletralCode}`);
+    navigate(`${productData?.colletralCode}`,
+    {state:{data:productData,isChangedPage:true}})
 
   });
 
+  React.useEffect(() =>{
+    if(data)
+    {
+      console.log(CustomerDataError);
+      
+    }
+  },[])
   return (
     <>
-      {productDataError && <div>Error !</div>}
+      {CustomerDataError && <div>Error !</div>}
 
       <FormProvider {...methods}>
         <Box padding="24px" w={'100%'} bg="white" borderRadius="12px" margin="0 auto" mt="20px">
@@ -106,7 +118,7 @@ const CreateMain: React.FC<IProps> = () => {
                     />
                   )}
                 />
-                {error && <div style={{ color: 'red' }}>Belə istifadəçi yoxdur</div>}
+               
                 <FormErrorMessage color={'red'} fontSize={'14px'}>
                   {methods.formState.errors.customerId?.message}
                 </FormErrorMessage>
@@ -127,7 +139,6 @@ const CreateMain: React.FC<IProps> = () => {
                     />
                   )}
                 />
-                {error && <div style={{ color: 'red' }}>Belə istifadəçi yoxdur</div>}
 
                 <FormErrorMessage color={'red'} fontSize={'14px'}>
                   {methods.formState.errors.customerId?.message}
