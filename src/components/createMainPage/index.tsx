@@ -23,15 +23,8 @@ import { MyInput } from 'components/UI/MyInput';
 
 export interface IProps { }
 
-const fetchCustomerData = async (url) => {
-  const response = await fetch(url);
-  return await response.json();
-};
 
-const fetchProductData = async (url) => {
-  const response = await fetch(url);
-  return await response.json();
-};
+
 
 const CreateMain: React.FC<IProps> = () => {
   const { colletralCode } = useParams();
@@ -43,7 +36,17 @@ const CreateMain: React.FC<IProps> = () => {
   const customerId = methods.watch('customerId');
 
   const apiUrl = `http://localhost:8082/customers/flex-customer-reader/v3/individual-customer-controller/getIndividualCustomerByCifUsingGET_1/${customerId}`
-  ;
+    ;
+  const fetchProductData = async (url) => {
+    const response = await fetch(url);
+    return await response.json();
+  };
+  const fetchCustomerData = async (url) => {
+    if (customerId.toString().length !== 7) return
+    const response = await fetch(url);
+    return await response.json();
+  };
+
   const { data, error, isLoading: isCustomerIdLoading } = useSWR(customerId ? apiUrl : null, fetchCustomerData);
 
   const {
@@ -256,7 +259,7 @@ const CreateMain: React.FC<IProps> = () => {
                 }}
                 name="endDate"
                 render={({ field }) => (
-                  <MyDatePicker field={field} label="Bitmə tarixi"/>
+                  <MyDatePicker field={field} label="Bitmə tarixi" />
                 )}
               />
               <FormErrorMessage color={'red'} fontSize={'14px'}>
@@ -266,7 +269,7 @@ const CreateMain: React.FC<IProps> = () => {
           </GridItem>
         </Grid>
       </Box >
-      {!colletralCode && <Footer onSubmitHandler={onSubmitHandler} isCreateMode={!!colletralCode}/>
+      {!colletralCode && <Footer onSubmitHandler={onSubmitHandler} isCreateMode={!!colletralCode} />
       }
     </>
   );

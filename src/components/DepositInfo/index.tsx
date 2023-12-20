@@ -15,7 +15,6 @@ function DepositInfo() {
         <TableContainer>
           <RadioGroup defaultValue='1'>
             <Stack>
-
               <Table my={3}>
                 <Thead>
                   <Tr>
