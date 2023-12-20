@@ -113,15 +113,9 @@ const CreateMain: React.FC<IProps> = () => {
               </FormControl>
             </GridItem>
             <GridItem colSpan={1}>
-              <FormControl isInvalid={!!methods.formState.errors.customerName}>
+              <FormControl isInvalid={!!methods.formState.errors.customerId}>
                 <Controller
                   control={methods.control}
-                  rules={{
-                    required: 'This field is required',
-                    pattern: /^\d{7}$/,
-                    minLength: { value: 7, message: 'Customer number must be 7 digits long' },
-                    maxLength: { value: 7, message: 'Customer number must be 7 digits long' }
-                  }}
                   name="customerName"
                   render={({ field }) => (
                     <MyInput
@@ -136,7 +130,7 @@ const CreateMain: React.FC<IProps> = () => {
                 {error && <div style={{ color: 'red' }}>Belə istifadəçi yoxdur</div>}
 
                 <FormErrorMessage color={'red'} fontSize={'14px'}>
-                  {methods.formState.errors.customerName?.message}
+                  {methods.formState.errors.customerId?.message}
                 </FormErrorMessage>
               </FormControl>
             </GridItem>
@@ -168,13 +162,11 @@ const CreateMain: React.FC<IProps> = () => {
               </FormControl>
             </GridItem>
             <GridItem colSpan={1}>
-              <FormControl isInvalid={!!methods.formState.errors.product}>
+              <FormControl isInvalid={!!methods.formState.errors.category}>
                 <Controller
                   control={methods.control}
                   name="product"
-                  rules={{
-                    required: 'This field is required'
-                  }}
+                
                   render={({ field }) => (
                     <MyInput
                       {...field}
@@ -185,7 +177,7 @@ const CreateMain: React.FC<IProps> = () => {
                   )}
                 />
                 <FormErrorMessage color={'red'} fontSize={'14px'}>
-                  {methods.formState.errors.product?.message}
+                  {methods.formState.errors.category?.message}
                 </FormErrorMessage>
               </FormControl>
             </GridItem>
