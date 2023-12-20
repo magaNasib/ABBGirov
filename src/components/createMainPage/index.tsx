@@ -230,7 +230,11 @@ const CreateMain: React.FC<IProps> = () => {
               <Controller
                 control={methods.control}
                 rules={{
-                  required: 'This field is required'
+                  required: 'This field is required',
+                  pattern: {
+                    value: /^\d+$/,  
+                    message: 'Please enter a valid number',
+                  },
                 }}
                 name="startDate"
                 render={({ field }) => (
@@ -247,7 +251,11 @@ const CreateMain: React.FC<IProps> = () => {
               <Controller
                 control={methods.control}
                 rules={{
-                  required: 'This field is required'
+                  required: 'This field is required',
+                  pattern: {
+                    value: /^\d+$/,  
+                    message: 'Please enter a valid number',
+                  },
                 }}
                 name="endDate"
                 render={({ field }) => (
