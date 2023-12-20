@@ -2,6 +2,8 @@ import { Select } from '@chakra-ui/react';
 //Güllü Amal
 import { Box, Radio, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 import { FormControl, FormLabel, Input } from '@chakra-ui/react';
+import LeftIcon from 'icons/LeftIcon';
+import RightIcon from 'icons/RightIcon';
 import * as React from 'react';
 
 function DepositInfo() {
@@ -53,10 +55,12 @@ function DepositInfo() {
             <option value="1">6</option>
           </Select>
           <Box display="flex" pl="60%">
-            <Text>2-2 /</Text>
-            <Text color="#000000A3">1 </Text>
-            {/* <Image src={leftIcon} alt="Left Arrow" />
-      <Image src={rightIcon} alt="Right Arrow" /> */}
+            <Text mt="2px">2-2 /</Text>
+            <Text mt="2px" color="#000000A3">1 </Text>
+            <Box ml="24px" >
+              <LeftIcon width="20" height='20' />
+              <RightIcon width='20' height='20' />
+            </Box>
           </Box>
         </Box>
       </Box>
