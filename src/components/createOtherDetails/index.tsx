@@ -6,7 +6,7 @@ import { MyInput } from 'components/UI/MyInput';
 import { Footer } from 'Layout/Footer';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 interface IFormValues {
   propertyType: string;
@@ -29,10 +29,12 @@ const fetchPledgesData = async (url) => {
 
 const OtherInformation: React.FC<IProps> = () => {
   const methods = useFormContext<IFormValues>();
+  const navigate = useNavigate()
   const { colletralCode } = useParams();
   const { data: pledgeData } = useSWR(`http://localhost:8082/pledges/${colletralCode}`, fetchPledgesData);
 
   const onSubmitHandler = methods.handleSubmit((data) => {
+    navigate('/abb-mf-pledge/successPage')
     console.log({ data });
   });
 

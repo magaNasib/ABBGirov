@@ -20,8 +20,7 @@ const App: React.FC = () => {
               </React.Suspense>
             }
           >
-            <Route path=":colletralCode" element={<OtherInformation />}
-            />
+            <Route path=":colletralCode" element={<OtherInformation />} />
           </Route>
 
           <Route path="/successPage" element={<CreateSuccessComponent />} />
