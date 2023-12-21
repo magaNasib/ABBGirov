@@ -1,7 +1,11 @@
 import { Box, Button, Grid, GridItem } from '@chakra-ui/react';
 import React from 'react';
+import { useFormContext } from 'react-hook-form';
+import { IFormValues } from 'pages/Create';
 
 export const Footer = ({ onSubmitHandler, isCreateMode }) => {
+  const methods = useFormContext<IFormValues>();
+  
   return (
     <Box mt="20px" mb="20px" className="bottomBar" bg={'white'} borderRadius="12px" w="100%">
       <Grid
@@ -12,7 +16,9 @@ export const Footer = ({ onSubmitHandler, isCreateMode }) => {
         justifyContent="space-between"
       >
         <GridItem>
-          <Button padding={'.5rem 1rem'} color={'#fff'} bg={'red'} type="reset">
+          <Button padding={'.5rem 1rem'} color={'#fff'} bg={'red'} type="reset"onClick={()=>{
+            methods.reset()
+          }}>
             Ləvğ et
           </Button>
         </GridItem>

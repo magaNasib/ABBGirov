@@ -1,4 +1,4 @@
-import { Box, Grid, GridItem, Heading, Text, Divider, Select, Button } from "@chakra-ui/react";
+import { Box, Grid, GridItem, Heading, Text, Divider, Select, Button, Link } from "@chakra-ui/react";
 // import chevronLeft from "../../assets/chevronsImg/chevronLeft.svg"
 // import chevronRight from "../../assets/chevronsImg/chevronRight.svg"
 
@@ -61,7 +61,7 @@ export default function PladgeEditList() {
                     <Button mt={"12px"} color={"#fff"} bg={"red"}>Ləvğ et</Button>
                     </GridItem>
                     <GridItem display="flex" gap="16px" alignItems="center" justifyContent="end" >
-                    <Button  mt={"12px"}  border={"1px solid gray"} borderRadius={"5px"}>Başqa müştəri axtar</Button>
+                    <Button  mt={"12px"}  border={"1px solid gray"} borderRadius={"5px"}><Link href="/abb-mf-pledge/edit">Başqa müştəri axtar</Link> </Button>
                         <Button  mt={"12px"}  color={"#fff"} bg={"blue"}>Davam et</Button>
 
                     </GridItem>

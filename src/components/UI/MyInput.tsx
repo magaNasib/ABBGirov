@@ -1,5 +1,5 @@
 import { FormLabel, Input, InputGroup, InputRightElement, Spinner } from "@chakra-ui/react";
-import React from "react";
+import React, { forwardRef } from "react";
 export type InputProps = {
     placeholder?: string;
     type?: string;
@@ -11,12 +11,17 @@ export type InputProps = {
     // onBlur: Noop
 };
 
-export const MyInput = ({ label, isLoading, ...props }: InputProps) => (
-    <>
-        <FormLabel>{label}</FormLabel>
-        <InputGroup display={'flex'} flexDirection={'column'} >
-            <Input {...props} />
-            {isLoading && <InputRightElement children={<Spinner thickness='4px' speed='.65s' emptyColor='gray.200' color='blue.500' />} />}
-        </InputGroup>
-    </>
+export const MyInput = forwardRef<HTMLInputElement, InputProps>(
+    ({ label, isLoading, ...props }, forwardedRef) => (
+        <>
+            <FormLabel>{label}</FormLabel>
+            <InputGroup display={'flex'} flexDirection={'column'}>
+                <Input {...props} ref={forwardedRef} />
+                {isLoading && (
+                    <InputRightElement children={<Spinner thickness='4px' speed='.65s' emptyColor='gray.200' color='blue.500' />} />
+                )}
+            </InputGroup>
+        </>
+    )
 );
+MyInput.displayName = 'MyInput';

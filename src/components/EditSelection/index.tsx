@@ -7,9 +7,11 @@ import {
   Text,
   Grid,
   GridItem,
-  Button
+  Button,
+
 } from "@chakra-ui/react";
 import { Controller, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 export default function EditSelection() {
   interface IFormValues {
@@ -22,9 +24,12 @@ export default function EditSelection() {
     // },
   })
 
+  const navigate = useNavigate()
+
   const { handleSubmit, control, formState: { errors } } = methods;
 
   const onSubmit = (data: IFormValues) => {
+    navigate(`/abb-mf-pledge/edit/${data['Müştəri nömrəsi']}`)
     console.log(data);
   };
 
@@ -53,6 +58,7 @@ export default function EditSelection() {
             alignSelf="stretch"
             borderRadius="12px"
             padding="24px"
+            bg={'white'}
           >
             <Text
               color="var(--semantic-onSurface-primary, #0d0d19)"
