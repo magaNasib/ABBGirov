@@ -78,7 +78,9 @@ const pledgesData = [
             type: 'select',
             items: [
               {
-                key: 'City',
+
+                key: 'CityBaku',
+
                 value: 'Baku'
               },
               {
@@ -149,123 +151,113 @@ const pledgesData = [
       startDate: new Date(),
       endDate: new Date()
     },
-    data: [
-      {
-        productCode: 'CKLL',
-        deposit: [],
-        questions: [
-          {
-            key: 'familyStatus',
-            value: 'Girov Qoyanın Ailə Vəziyyəti',
-            type: 'select',
-            items: [
-              {
-                key: 'married',
-                value: 'Evli'
-              },
-              {
-                key: 'single',
-                value: 'Subay'
-              }
-            ]
-          },
-          {
-            key: 'birthday',
-            value: 'Girov qoyanın doğum tarixi',
-            type: 'text',
-            items: [],
-            maxLenght: 60,
-            minLenght: 5
-          },
-          {
-            key: 'IdCode',
-            value: 'Id kodu və ya VÖEN',
-            type: 'text',
-            items: [],
-            maxLenght: 60,
-            minLenght: 5
-          },
-          {
-            key: 'FIN',
-            value: 'Şəxsiyyət vəsiqəsinin fin kodu',
-            type: 'text',
-            items: [],
-            maxLenght: 60,
-            minLenght: 5
-          },
-
-          {
-            key: 'contractNumber',
-            value: 'Girov qoyanın doğum tarixi',
-            type: 'text',
-            items: [],
-            maxLenght: 60,
-            minLenght: 5
-          },
-          {
-            key: 'reference',
-            value: 'Dep. AeS-də referensi',
-            type: 'text',
-            items: [],
-            maxLenght: 60,
-            minLenght: 5
-          },
-          {
-            key: 'blockReference',
-            value: 'Dep. AeS-də blok referensi',
-            type: 'text',
-            items: [],
-            maxLenght: 60,
-            minLenght: 5
-          },
-          {
-            key: 'currentValue',
-            value: 'Blokda olan cari hesab',
-            type: 'text',
-            items: [],
-            maxLenght: 60,
-            minLenght: 5
-          },
-          {
-            key: 'amountValue',
-            value: 'Girovun məbləği',
-            type: 'text',
-            items: [],
-            maxLenght: 60,
-            minLenght: 5
-          },
-          {
-            key: 'liveStatus',
-            value: 'Məhkəmə/Vəfat edib',
-            type: 'text',
-            items: [],
-            maxLenght: 60,
-            minLenght: 5
-          }
-        ]
-      }
+    data:[
+        {
+            "productCode": "CKLL",
+            deposit:[],
+            questions: [
+                {
+                  key: 'familyStatus',
+                  value: 'Girov Qoyanın Ailə Vəziyyəti',
+                  type: 'select',
+                  items: [
+                    {
+                      key: 'married',
+                      value: 'Evli'
+                    },
+                    {
+                      key: 'single',
+                      value: 'Subay'
+                    }
+                  ]
+                },
+                {
+                  key: 'birthday',
+                  value: 'Girov qoyanın doğum tarixi',
+                  type: 'text',
+                  items: [],
+                  maxLenght: 60,
+                  minLenght: 5
+                },
+                {
+                  key: 'IdCode',
+                  value: 'Id kodu və ya VÖEN',
+                  type: 'text',
+                  items: [],
+                  maxLenght: 60,
+                  minLenght: 5
+                },
+                {
+                  key: 'FIN',
+                  value: 'Şəxsiyyət vəsiqəsinin fin kodu',
+                  type: 'text',
+                  items: [],
+                  maxLenght: 60,
+                  minLenght: 5
+                },
+             
+             
+                {
+                  key: 'contractNumber',
+                  value: 'Girov qoyanın doğum tarixi',
+                  type: 'text',
+                  items: [],
+                  maxLenght: 60,
+                  minLenght: 5
+                },
+                {
+                  key: 'reference',
+                  value: 'Dep. AeS-də referensi',
+                  type: 'text',
+                  items: [],
+                  maxLenght: 60,
+                  minLenght: 5
+                },
+                {
+                  key: 'blockReference',
+                  value: 'Dep. AeS-də blok referensi',
+                  type: 'text',
+                  items: [],
+                  maxLenght: 60,
+                  minLenght: 5
+                },
+                {
+                  key: 'currentValue',
+                  value: 'Blokda olan cari hesab',
+                  type: 'text',
+                  items: [],
+                  maxLenght: 60,
+                  minLenght: 5
+                },
+                {
+                  key: 'amountValue',
+                  value: 'Girovun məbləği',
+                  type: 'text',
+                  items: [],
+                  maxLenght: 60,
+                  minLenght: 5
+                },
+                {
+                  key: 'liveStatus',
+                  value: 'Məhkəmə/Vəfat edib',
+                  type: 'text',
+                  items: [],
+                  maxLenght: 60,
+                  minLenght: 5
+                },
+                
+              ]
+        }
     ]
   }
-];
-
-export const updatePledgesFile = (newPledgeData: any) => {
-  const data = fs.readFileSync(pledgesFilePath, 'utf-8');
-  const pledgesData = JSON.parse(data);
-  console.log(newPledgeData);
-  pledgesData.push(newPledgeData);
-  try {
-    fs.writeFileSync(pledgesFilePath, JSON.stringify(pledgesData), 'utf-8');
-    return { success: true, message: 'New pledge added successfully' };
-  } catch (error) {
-    return { success: false, error: 'Error updating pledges file' };
-  }
-};
+]
 
 router.get('/', (req, res) => {
   res.json(pledgesData);
 });
 
 router.get('/:colletralCode', (req, res) => {
+  
   const colletralCode = req.params.colletralCode;
   const pledge = pledgesData.find((p) => p.colletralCode === colletralCode);
 
@@ -274,17 +266,6 @@ router.get('/:colletralCode', (req, res) => {
   } else {
     res.status(404).json({ error: 'user not found' });
   }
-});
-
-router.post('/', async (req, res) => {
-  console.log(req, 'test');
-  const newPledgeData = req.body;
-  const id = uuidv4();
-  newPledgeData.id = id;
-  console.log(req.body, 'sdadd');
-  pledgesData.push(newPledgeData);
-  await updatePledgesFile(newPledgeData);
-  res.json({ message: 'New pledge added successfully', data: id });
 });
 
 export default router;

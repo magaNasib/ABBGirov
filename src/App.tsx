@@ -13,21 +13,16 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" key="/test" element={<Layout />}>
           <Route
-            index
+            path="/create"
             element={
               <React.Suspense fallback={<RouteLoading />}>
                 <CreatePledge />
               </React.Suspense>
             }
-          />
-          <Route
-            path="/:colletralCode"
-            element={
-              <CreatePledge>
-                <OtherInformation />
-              </CreatePledge>
-            }
-          />
+          >
+            <Route path=":colletralCode" element={<OtherInformation />}
+            />
+          </Route>
 
           <Route path="/:colletralCode/successPage" element={<CreateSuccessComponent />} />
         </Route>
