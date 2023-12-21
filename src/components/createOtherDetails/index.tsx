@@ -4,59 +4,63 @@ import DepositInfo from 'components/DepositInfo';
 import { MyInput } from 'components/UI/MyInput';
 // import DepositInfo from 'components/DepositInfo';
 import { Footer } from 'Layout/Footer';
-import React from 'react';
+import { IFormValues } from 'pages/Create';
+import React, { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 
-interface IFormValues {
-  propertyType: string;
-  owner: string;
-  propertyDetail: string;
-  buildingCompany: string;
-  city: string;
-  district: string;
-  municipality: string;
-  'town/village': string;
-  'construction-project': string;
-  'land-designation': string;
-}
+// interface IFormValues {
+//   propertyType: string;
+//   owner: string;
+//   propertyDetail: string;
+//   buildingCompany: string;
+//   city: string;
+//   district: string;
+//   municipality: string;
+//   'town/village': string;
+//   'construction-project': string;
+//   'land-designation': string;
+// }
 import useSWR from 'swr';
 
+// const fetchPledgesData = async (url) => {
+//   const response = httpClient.get(url);
+//   return await response
+// };
 const fetchPledgesData = async (url) => {
   const response = await fetch(url);
   return await response.json();
 };
 const postData = async (url = "", data = {}) => {
   const response = await fetch(url, {
-    method: "POST", 
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(data), 
+    body: JSON.stringify(data),
   });
-  return response.json(); 
+  return response.json();
 }
 
 const OtherInformation: React.FC<IProps> = () => {
   const methods = useFormContext<IFormValues>();
   const navigate = useNavigate()
   const { colletralCode } = useParams();
-  const { data: pledgeData } = useSWR(`http://localhost:8082/pledges/${colletralCode}`, fetchPledgesData);
+  const { data: pledgeData } = useSWR(`/pledges/${colletralCode}`, fetchPledgesData);
 
   const onSubmitHandler = methods.handleSubmit((data) => {
 
-    postData("http://localhost:8082/pledges", data).then((data) => {
-      console.log(data); 
+    postData("/pledges", data).then((data) => {
+      console.log(data);
     });
-    navigate('/abb-mf-pledge/successPage')
+    navigate('/abb-mf-pledge/success')
   });
 
 
-  window.onload = function () {
-    if (window.location.pathname !== '/') {
-      window.location.href = "/abb-mf-pledge/create";
-    }
-  };
+
+  useEffect(() => {
+    !methods.getValues('customerId') && navigate('/abb-mf-pledge/create')
+  }, [])
   return (
     <>
       {pledgeData?.data[0].deposit.length ? <DepositInfo /> : ''}
@@ -89,7 +93,7 @@ const OtherInformation: React.FC<IProps> = () => {
                       </>
                     )}
                   />
-                  <FormErrorMessage color={'red'} fontSize={'14px'}>
+                  <FormErrorMessage>
                     {methods.formState.errors[question.key]?.message}
                   </FormErrorMessage>
                 </FormControl>

@@ -72,7 +72,7 @@ module.exports = (_, { mode }) => {
       },
       proxy: [
         {
-          context: '/example/v1/list',
+          context:  ['**/customers/**','**/pledges/**','**/products/**'],
           target: 'http://127.0.0.1:8082'
         }
       ]

@@ -25,7 +25,7 @@ const App: React.FC = () => {
           >
             <Route path=":colletralCode" element={<OtherInformation />} />
           </Route>
-          <Route path="/successPage" element={<CreateSuccessComponent />} />
+          <Route path="/success" element={<CreateSuccessComponent />} />
           <Route path="/edit" element={<EditPage />} >
             <Route index element={<EditSelection />} />
             <Route path=":cif" element={<PladgeEditList />} />

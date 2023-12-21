@@ -35,7 +35,7 @@ const CreateMain: React.FC<IProps> = () => {
   const category = methods.watch('category');
   const customerId = methods.watch('customerId');
 
-  const apiUrl = `http://localhost:8082/customers/flex-customer-reader/v3/individual-customer-controller/getIndividualCustomerByCifUsingGET_1/${customerId}`
+  const apiUrl = `/customers/flex-customer-reader/v3/individual-customer-controller/getIndividualCustomerByCifUsingGET_1/${customerId}`
     ;
   const fetchProductData = async (url) => {
     const response = await fetch(url);
@@ -62,7 +62,7 @@ const CreateMain: React.FC<IProps> = () => {
     data: productData,
     error: productDataError,
     isLoading: isCategoryLoading
-  } = useSWR(category ? `http://localhost:8082/products/product-code/${category}` : null, fetchProductData);
+  } = useSWR(category ? ` /products/product-code/${category}` : null, fetchProductData);
   //   const [{ isCreateButttonExist }] = useAppContext();
   const [{ setIsCreateButtonExist }] = useAppContext();
 
