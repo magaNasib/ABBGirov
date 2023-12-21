@@ -1,27 +1,32 @@
-import { Box, FormControl, FormErrorMessage, FormLabel, Grid, GridItem, Heading, Select } from '@chakra-ui/react';
+import { Box, FormControl, FormErrorMessage, FormLabel, Grid, GridItem, Heading, Select, SkeletonCircle, SkeletonText } from '@chakra-ui/react';
 import { IProps } from 'components/createMainPage';
 import DepositInfo from 'components/DepositInfo';
 import { MyInput } from 'components/UI/MyInput';
 // import DepositInfo from 'components/DepositInfo';
 import { Footer } from 'Layout/Footer';
-import React from 'react';
+import { IFormValues } from 'pages/Create';
+import React, { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 
-interface IFormValues {
-  propertyType: string;
-  owner: string;
-  propertyDetail: string;
-  buildingCompany: string;
-  city: string;
-  district: string;
-  municipality: string;
-  'town/village': string;
-  'construction-project': string;
-  'land-designation': string;
-}
+// interface IFormValues {
+//   propertyType: string;
+//   owner: string;
+//   propertyDetail: string;
+//   buildingCompany: string;
+//   city: string;
+//   district: string;
+//   municipality: string;
+//   'town/village': string;
+//   'construction-project': string;
+//   'land-designation': string;
+// }
 import useSWR from 'swr';
 
+// const fetchPledgesData = async (url) => {
+//   const response = httpClient.get(url);
+//   return await response
+// };
 const fetchPledgesData = async (url) => {
   const response = await fetch(url);
   return await response.json();
@@ -41,7 +46,7 @@ const OtherInformation: React.FC<IProps> = () => {
   const methods = useFormContext<IFormValues>();
   const navigate = useNavigate()
   const { colletralCode } = useParams();
-  const { data: pledgeData } = useSWR(`http://localhost:8082/pledges/${colletralCode}`, fetchPledgesData, {
+  const { data: pledgeData,isLoading } = useSWR(`http://localhost:8082/pledges/${colletralCode}`, fetchPledgesData, {
     revalidateIfStale: false,
     revalidateOnFocus: false,
     revalidateOnReconnect: false
@@ -49,22 +54,27 @@ const OtherInformation: React.FC<IProps> = () => {
 
   const onSubmitHandler = methods.handleSubmit((data) => {
 
-    postData("http://localhost:8082/pledges", data).then((data) => {
+    postData("/pledges", data).then((data) => {
       console.log(data);
     });
+    navigate('/abb-mf-pledge/success')
     navigate('/abb-mf-pledge/success')
   });
 
 
-  window.onload = function () {
-    if (window.location.pathname !== '/') {
-      window.location.href = "/abb-mf-pledge/create";
-    }
-  };
+
+  useEffect(() => {
+    !methods.getValues('customerId') && navigate('/abb-mf-pledge/create')
+  }, [])
   return (
     <>
       {pledgeData?.data[0].deposit.length ? <DepositInfo /> : ''}
-      <Box padding="24px" w={'100%'} bg="white" borderRadius="12px" margin="0 auto">
+      {isLoading?
+       <Box padding='6' boxShadow='lg' bg='white' width="100%">
+       <SkeletonCircle size='10' />
+       <SkeletonText mt='4' noOfLines={4} spacing='4' skeletonHeight='2' />
+     </Box>:
+        <Box padding="24px" w={'100%'} bg="white" borderRadius="12px" margin="0 auto">
         <Grid templateColumns="repeat(3, 1fr)" gap="24px">
           <GridItem colSpan={3}>
             <Heading as="h3" size="lg">
@@ -93,7 +103,7 @@ const OtherInformation: React.FC<IProps> = () => {
                       </>
                     )}
                   />
-                  <FormErrorMessage color={'red'} fontSize={'14px'}>
+                  <FormErrorMessage>
                     {methods.formState.errors[question.key]?.message}
                   </FormErrorMessage>
                 </FormControl>
@@ -117,7 +127,8 @@ const OtherInformation: React.FC<IProps> = () => {
             );
           })}
         </Grid>
-      </Box>
+      </Box>  
+      }
       <Footer onSubmitHandler={onSubmitHandler} isCreateMode={!!colletralCode} />
     </>
   );
