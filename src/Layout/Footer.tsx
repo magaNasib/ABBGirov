@@ -12,13 +12,13 @@ export const Footer = ({ onSubmitHandler, isCreateMode }) => {
         justifyContent="space-between"
       >
         <GridItem>
-          <Button padding={'.5rem 1rem'} color={'#fff'} bg={'red'} type="reset">
+          <Button padding={'.5rem 1rem'} type="reset" colorScheme="red">
             Ləvğ et
           </Button>
         </GridItem>
         <GridItem display="flex" gap="16px" alignItems="center" justifyContent="end">
 
-          <Button padding={'.5rem 1rem'} color={'#fff'} bg={'blue'} type="submit" onClick={onSubmitHandler}>
+          <Button padding={'.5rem 1rem'} type="submit" onClick={onSubmitHandler}>
             {isCreateMode ? 'Yarat' : 'Next'}
           </Button>
 

@@ -1,7 +1,6 @@
-import { Box, Button, Grid, GridItem, Heading, Image, Text } from '@chakra-ui/react';
+import { Box, Button, Grid, GridItem, Heading, Text } from '@chakra-ui/react';
 import React from 'react';
-
-import image1 from '../../icons/Modal-Success-icon.png';
+import ModaLSuccess from 'icons/ModalSuccess';
 
 function CreateSuccessComponent() {
   return (
@@ -19,7 +18,7 @@ function CreateSuccessComponent() {
         alignItems="center"
         justifyContent="center"
       >
-        <Image src={image1} alt="accesIcon" />
+        <ModaLSuccess width='64' height='64'/>
         <Heading as="h4" size="md">
           Girov yaradıldı
         </Heading>
