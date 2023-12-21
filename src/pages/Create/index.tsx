@@ -13,6 +13,17 @@ export interface IFormValues {
   startDate: string;
   category: string;
   endDate: string;
+
+  propertyType: string;
+  owner: string;
+  propertyDetail: string;
+  buildingCompany: string;
+  city: string;
+  district: string;
+  municipality: string;
+  'town/village': string;
+  'construction-project': string;
+  'land-designation': string;
 }
 export const CreatePledge: React.FC<React.PropsWithChildren> = () => {
   const methods = useForm<IFormValues>();

@@ -35,7 +35,7 @@ const CreateMain: React.FC<IProps> = () => {
   const category = methods.watch('category');
   const customerId = methods.watch('customerId');
 
-  const apiUrl = `http://localhost:8082/customers/flex-customer-reader/v3/individual-customer-controller/getIndividualCustomerByCifUsingGET_1/${customerId}`
+  const apiUrl = `/customers/flex-customer-reader/v3/individual-customer-controller/getIndividualCustomerByCifUsingGET_1/${customerId}`
     ;
   const fetchProductData = async (url) => {
     const response = await fetch(url);
