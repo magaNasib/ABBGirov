@@ -8,6 +8,7 @@ export type InputProps = {
     value?: string | number;
     onChange: any;
     isLoading?: boolean;
+
     // onBlur: Noop
 };
 
@@ -16,7 +17,7 @@ export const MyInput = forwardRef<HTMLInputElement, InputProps>(
         <>
             <FormLabel>{label}</FormLabel>
             <InputGroup display={'flex'} flexDirection={'column'}>
-                <Input {...props} ref={forwardedRef} />
+                <Input {...props} ref={forwardedRef}  />
                 {isLoading && (
                     <InputRightElement children={<Spinner thickness='4px' speed='.65s' emptyColor='gray.200' color='blue.500' />} />
                 )}
