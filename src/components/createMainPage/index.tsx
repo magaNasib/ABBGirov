@@ -2,7 +2,7 @@ import { Box, FormControl, FormErrorMessage, FormLabel, Grid, GridItem, Heading,
 import { useAppContext } from 'context';
 import { Footer } from 'Layout/Footer';
 import { IFormValues } from 'pages/Create';
-import React from 'react';
+import React, { useRef } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import useSWR from 'swr';
@@ -43,11 +43,20 @@ const CreateMain: React.FC<IProps> = () => {
   };
   const fetchCustomerData = async (url) => {
     if (customerId.toString().length !== 7) return
+    // if (!res.ok) {
+    //   const error = new Error('An error occurred while fetching the data.')
+    //   // Attach extra info to the error object.
+    //   error.info = await res.json()
+    //   error.status = res.status
+    //   throw error
+    // }
+
     const response = await fetch(url);
     return await response.json();
   };
 
   const { data, error, isLoading: isCustomerIdLoading } = useSWR(customerId ? apiUrl : null, fetchCustomerData);
+
 
   const {
     data: productData,
@@ -61,6 +70,7 @@ const CreateMain: React.FC<IProps> = () => {
     setIsCreateButtonExist(true);
     navigate(`${data?.category}`);
   });
+  const ref = useRef(null);
 
   return (
     <>
@@ -86,15 +96,16 @@ const CreateMain: React.FC<IProps> = () => {
                 name="customerId"
                 render={({ field }) => (
                   <MyInput
-                    {...field}
-                    value={field.value}
-                    label="Müştəri nömrəsi"
-                    placeholder="Daxil edin"
-                    onChange={(e: { target: { value: string | unknown[]; }; }) => {
-                      const inputValue = e.target.value.slice(0, 7); 
-                      field.onChange(inputValue);
-                    }}
-                  />
+                      {...field}
+                      value={field.value}
+                      label="Müştəri nömrəsi"
+                      placeholder="Daxil edin"
+                      onChange={(e: { target: { value: string | unknown[]; }; }) => {
+                        const inputValue = e.target.value.slice(0, 7);
+                        field.onChange(inputValue);
+                      }}
+                      ref={ref}
+                    />
                 )}
               />
               {error && <div style={{ color: 'red' }}>Belə istifadəçi yoxdur</div>}
@@ -116,6 +127,7 @@ const CreateMain: React.FC<IProps> = () => {
                     isLoading={isCustomerIdLoading}
                     disabled
                     label="Müştərinin adı"
+                    ref={ref}
                   />
                 )}
               />
@@ -165,6 +177,7 @@ const CreateMain: React.FC<IProps> = () => {
                     isLoading={isCategoryLoading}
                     value={productData ? productData.product : 'Məhsul'}
                     label="Məhsul"
+                    ref={ref}
                   />
                 )}
               />
@@ -235,7 +248,7 @@ const CreateMain: React.FC<IProps> = () => {
                 rules={{
                   required: 'This field is required',
                   pattern: {
-                    value: /^\d+$/,  
+                    value: /^\d+$/,
                     message: 'Please enter a valid number',
                   },
                 }}
@@ -256,7 +269,7 @@ const CreateMain: React.FC<IProps> = () => {
                 rules={{
                   required: 'This field is required',
                   pattern: {
-                    value: /^\d+$/,  
+                    value: /^\d+$/,
                     message: 'Please enter a valid number',
                   },
                 }}
@@ -278,4 +291,4 @@ const CreateMain: React.FC<IProps> = () => {
   );
 };
 
-export default CreateMain;
+export default CreateMain;

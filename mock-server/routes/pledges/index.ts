@@ -260,4 +260,10 @@ router.get('/:colletralCode', (req, res) => {
   }
 });
 
+router.post('/', (req, res) => {
+  const customerData = req.body;
+  res.status(200).json({ message: 'Customer data received successfully', data: customerData });
+});
+
+
 export default router;

@@ -26,6 +26,16 @@ const fetchPledgesData = async (url) => {
   const response = await fetch(url);
   return await response.json();
 };
+const postData = async (url = "", data = {}) => {
+  const response = await fetch(url, {
+    method: "POST", 
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data), 
+  });
+  return response.json(); 
+}
 
 const OtherInformation: React.FC<IProps> = () => {
   const methods = useFormContext<IFormValues>();
@@ -34,10 +44,19 @@ const OtherInformation: React.FC<IProps> = () => {
   const { data: pledgeData } = useSWR(`http://localhost:8082/pledges/${colletralCode}`, fetchPledgesData);
 
   const onSubmitHandler = methods.handleSubmit((data) => {
+
+    postData("http://localhost:8082/pledges", data).then((data) => {
+      console.log(data); 
+    });
     navigate('/abb-mf-pledge/successPage')
-    console.log({ data });
   });
 
+
+  window.onload = function () {
+    if (window.location.pathname !== '/') {
+      window.location.href = "/abb-mf-pledge/create";
+    }
+  };
   return (
     <>
       {pledgeData?.data[0].deposit.length ? <DepositInfo /> : ''}
