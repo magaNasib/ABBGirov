@@ -90,7 +90,10 @@ const CreateMain: React.FC<IProps> = () => {
                     value={field.value}
                     label="Müştəri nömrəsi"
                     placeholder="Daxil edin"
-                    onChange={field.onChange}
+                    onChange={(e: { target: { value: string | unknown[]; }; }) => {
+                      const inputValue = e.target.value.slice(0, 7); 
+                      field.onChange(inputValue);
+                    }}
                   />
                 )}
               />
