@@ -28,27 +28,31 @@ const fetchPledgesData = async (url) => {
 };
 const postData = async (url = "", data = {}) => {
   const response = await fetch(url, {
-    method: "POST", 
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(data), 
+    body: JSON.stringify(data),
   });
-  return response.json(); 
+  return response.json();
 }
 
 const OtherInformation: React.FC<IProps> = () => {
   const methods = useFormContext<IFormValues>();
   const navigate = useNavigate()
   const { colletralCode } = useParams();
-  const { data: pledgeData } = useSWR(`http://localhost:8082/pledges/${colletralCode}`, fetchPledgesData);
+  const { data: pledgeData } = useSWR(`http://localhost:8082/pledges/${colletralCode}`, fetchPledgesData, {
+    revalidateIfStale: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false
+  });
 
   const onSubmitHandler = methods.handleSubmit((data) => {
 
     postData("http://localhost:8082/pledges", data).then((data) => {
-      console.log(data); 
+      console.log(data);
     });
-    navigate('/abb-mf-pledge/successPage')
+    navigate('/abb-mf-pledge/success')
   });
 
 
@@ -81,7 +85,7 @@ const OtherInformation: React.FC<IProps> = () => {
                     render={({ field }) => (
                       <>
                         <FormLabel>{question.value}</FormLabel>
-                        <Select placeholder="Seçin" {...field}>
+                        <Select placeholder="Seçin" value={field.value} onChange={field.onChange} {...field}>
                           {question.items.map(({ key, value }) => (
                             <option key={key}>{value}</option>
                           ))}

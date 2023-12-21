@@ -43,26 +43,28 @@ const CreateMain: React.FC<IProps> = () => {
   };
   const fetchCustomerData = async (url) => {
     if (customerId.toString().length !== 7) return
-    // if (!res.ok) {
-    //   const error = new Error('An error occurred while fetching the data.')
-    //   // Attach extra info to the error object.
-    //   error.info = await res.json()
-    //   error.status = res.status
-    //   throw error
-    // }
+
 
     const response = await fetch(url);
     return await response.json();
   };
 
-  const { data, error, isLoading: isCustomerIdLoading } = useSWR(customerId ? apiUrl : null, fetchCustomerData);
+  const { data, error, isLoading: isCustomerIdLoading } = useSWR(customerId ? apiUrl : null, fetchCustomerData, {
+    revalidateIfStale: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false
+  });
 
 
   const {
     data: productData,
     error: productDataError,
     isLoading: isCategoryLoading
-  } = useSWR(category ? `http://localhost:8082/products/product-code/${category}` : null, fetchProductData);
+  } = useSWR(category ? `http://localhost:8082/products/product-code/${category}` : null, fetchProductData, {
+    revalidateIfStale: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false
+  });
   //   const [{ isCreateButttonExist }] = useAppContext();
   const [{ setIsCreateButtonExist }] = useAppContext();
 
@@ -96,16 +98,16 @@ const CreateMain: React.FC<IProps> = () => {
                 name="customerId"
                 render={({ field }) => (
                   <MyInput
-                      {...field}
-                      value={field.value}
-                      label="Müştəri nömrəsi"
-                      placeholder="Daxil edin"
-                      onChange={(e: { target: { value: string | unknown[]; }; }) => {
-                        const inputValue = e.target.value.slice(0, 7);
-                        field.onChange(inputValue);
-                      }}
-                      ref={ref}
-                    />
+                    {...field}
+                    value={field.value}
+                    label="Müştəri nömrəsi"
+                    placeholder="Daxil edin"
+                    onChange={(e: { target: { value: string | unknown[]; }; }) => {
+                      const inputValue = e.target.value.slice(0, 7);
+                      field.onChange(inputValue);
+                    }}
+                    ref={ref}
+                  />
                 )}
               />
               {error && <div style={{ color: 'red' }}>Belə istifadəçi yoxdur</div>}
@@ -291,4 +293,4 @@ const CreateMain: React.FC<IProps> = () => {
   );
 };
 
-export default CreateMain;
+export default CreateMain;
