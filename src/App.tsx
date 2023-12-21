@@ -1,5 +1,5 @@
-import OtherInformation from 'components/createOtherDetails';
-import CreateSuccessComponent from 'components/createSuccess';
+import OtherInformation from 'components/CreateOtherDetails';
+import CreateSuccessComponent from './components/CreateSuccess';
 import { AppProvider } from 'context';
 import { Layout } from 'Layout';
 import { CreatePledge } from 'pages/Create';

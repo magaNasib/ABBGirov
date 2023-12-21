@@ -1,5 +1,5 @@
 import { Box, FormControl, FormErrorMessage, FormLabel, Grid, GridItem, Heading, Select } from '@chakra-ui/react';
-import { IProps } from 'components/createMainPage';
+import { IProps } from 'components/CreatePledge';
 import DepositInfo from 'components/DepositInfo';
 import { MyInput } from 'components/UI/MyInput';
 // import DepositInfo from 'components/DepositInfo';

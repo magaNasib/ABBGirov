@@ -1,4 +1,4 @@
-import CreateMain from 'components/createMainPage';
+import CreateMain from 'components/CreatePledge';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Outlet } from 'react-router-dom';
