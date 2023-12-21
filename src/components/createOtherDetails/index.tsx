@@ -1,4 +1,4 @@
-import { Box, FormControl, FormErrorMessage, FormLabel, Grid, GridItem, Heading, Select } from '@chakra-ui/react';
+import { Box, FormControl, FormErrorMessage, FormLabel, Grid, GridItem, Heading, Select, SkeletonCircle, SkeletonText } from '@chakra-ui/react';
 import { IProps } from 'components/createMainPage';
 import DepositInfo from 'components/DepositInfo';
 import { MyInput } from 'components/UI/MyInput';
@@ -46,7 +46,7 @@ const OtherInformation: React.FC<IProps> = () => {
   const methods = useFormContext<IFormValues>();
   const navigate = useNavigate()
   const { colletralCode } = useParams();
-  const { data: pledgeData } = useSWR(`/pledges/${colletralCode}`, fetchPledgesData);
+  const { data: pledgeData,isLoading } = useSWR(`/pledges/${colletralCode}`, fetchPledgesData);
 
   const onSubmitHandler = methods.handleSubmit((data) => {
 
@@ -64,7 +64,12 @@ const OtherInformation: React.FC<IProps> = () => {
   return (
     <>
       {pledgeData?.data[0].deposit.length ? <DepositInfo /> : ''}
-      <Box padding="24px" w={'100%'} bg="white" borderRadius="12px" margin="0 auto">
+      {isLoading?
+       <Box padding='6' boxShadow='lg' bg='white' width="100%">
+       <SkeletonCircle size='10' />
+       <SkeletonText mt='4' noOfLines={4} spacing='4' skeletonHeight='2' />
+     </Box>:
+        <Box padding="24px" w={'100%'} bg="white" borderRadius="12px" margin="0 auto">
         <Grid templateColumns="repeat(3, 1fr)" gap="24px">
           <GridItem colSpan={3}>
             <Heading as="h3" size="lg">
@@ -117,7 +122,8 @@ const OtherInformation: React.FC<IProps> = () => {
             );
           })}
         </Grid>
-      </Box>
+      </Box>  
+      }
       <Footer onSubmitHandler={onSubmitHandler} isCreateMode={!!colletralCode} />
     </>
   );
