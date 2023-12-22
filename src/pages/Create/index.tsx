@@ -13,7 +13,6 @@ export interface IFormValues {
   startDate: string;
   category: string;
   endDate: string;
-
   propertyType: string;
   owner: string;
   propertyDetail: string;

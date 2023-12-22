@@ -1,10 +1,38 @@
-import { Box, Grid, GridItem, Heading, Text, Divider, Select, Button, Link } from "@chakra-ui/react";
+import { Box, Grid, GridItem, Heading, Text, Divider, Select, Button, Spinner } from "@chakra-ui/react";
 // import chevronLeft from "../../assets/chevronsImg/chevronLeft.svg"
 // import chevronRight from "../../assets/chevronsImg/chevronRight.svg"
 
 import React from "react";
 import PledgeItem from "components/PledgeItem";
+import { useNavigate, useParams } from "react-router-dom";
+import { ICustomerData } from "components/createMainPage";
+import { httpClient } from "httpClient";
+import useSWR from "swr";
 export default function PladgeEditList() {
+    const { cif } = useParams();
+    const apiUrl = `/customers/flex-customer-reader/v3/individual-customer-controller/getIndividualCustomerByCifUsingGET_1/${cif}`;
+    const navigate = useNavigate()
+    const fetchCustomerData = async (url: string): Promise<ICustomerData> => {
+        const response: ICustomerData = await httpClient.get(url);
+        return response
+    };
+
+    const {
+        data: user,
+        error: userDataError,
+        isLoading: isUserLoading
+    } = useSWR(
+        cif ? apiUrl : null,
+        fetchCustomerData,
+        {
+            revalidateIfStale: false,
+            revalidateOnFocus: false,
+            revalidateOnReconnect: false
+        }
+    );
+    console.log(user);
+
+
     return (
         <Box backgroundColor="GhostWhite" pl="44px" pr="44px" className="container" >
             <Heading pb="32px" pt="32px" className="headingText"  >Girov seçimi</Heading>
@@ -12,11 +40,16 @@ export default function PladgeEditList() {
                 <Grid mb="24px" templateColumns="repeat(3, 1fr)" gap="24px">
                     <GridItem  >
                         <Text className="textWidthGreyColor" >Müştəri nömrəsi</Text>
-                        <Text className="textWidthBlackColor" >1231231</Text>
+                        <Text className="textWidthBlackColor" >
+                            {userDataError && <Text color={'red'}>User not found</Text>}
+                            {!isUserLoading ? (user?.CIF) : <Spinner />}</Text>
                     </GridItem >
                     <GridItem >
                         <Text className="textWidthGreyColor">Ad, Soy ad, Ata adı</Text>
-                        <Text className="textWidthBlackColor" >Bəsti İsmayılova Oruc qızı</Text>
+                        <Text className="textWidthBlackColor" >
+                            {userDataError && <Text color={'red'}>User not found</Text>}
+                            {!isUserLoading ? (user?.fullname) : <Spinner />}
+                        </Text> 
                     </GridItem >
                 </Grid>
                 <Heading className="secondHeading" >Düzəliş etmək istədiyiniz girovu seçin:</Heading>
@@ -32,10 +65,10 @@ export default function PladgeEditList() {
                     </GridItem>
                 </Grid>
                 <Divider />
-                <PledgeItem/>
-                <PledgeItem/>
-                <PledgeItem/>
-                <PledgeItem/>
+                <PledgeItem />
+                <PledgeItem />
+                <PledgeItem />
+                <PledgeItem />
                 <Divider />
                 <Grid templateColumns="1fr 2fr" p="16px 24px">
                     <GridItem display="flex" alignItems="center" gap="8px" >
@@ -58,11 +91,11 @@ export default function PladgeEditList() {
             <Box mt="20px" mb="20px" className="bottomBar"  >
                 <Grid templateColumns="2fr 2fr" display="flex" justifyContent="space-between" >
                     <GridItem>
-                    <Button mt={"12px"} color={"#fff"} bg={"red"}>Ləvğ et</Button>
+                        <Button mt={"12px"} color={"#fff"} bg={"red"}>Ləvğ et</Button>
                     </GridItem>
                     <GridItem display="flex" gap="16px" alignItems="center" justifyContent="end" >
-                    <Button  mt={"12px"}  border={"1px solid gray"} borderRadius={"5px"}><Link href="/abb-mf-pledge/edit">Başqa müştəri axtar</Link> </Button>
-                        <Button  mt={"12px"}  color={"#fff"} bg={"blue"}>Davam et</Button>
+                        <Button mt={"12px"} border={"1px solid gray"} borderRadius={"5px"} onClick={() => navigate("/abb-mf-pledge/edit")}>Başqa müştəri axtar </Button>
+                        <Button mt={"12px"} color={"#fff"} bg={"blue"}>Davam et</Button>
 
                     </GridItem>
                 </Grid>

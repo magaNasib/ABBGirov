@@ -28,8 +28,9 @@ interface IProductData {
   product: string;
 }
 
-interface ICustomerData {
+export interface ICustomerData {
   fullname: string;
+  CIF:number
 }
 
 
@@ -54,7 +55,6 @@ const CreateMain: React.FC<IProps> = () => {
   const fetchCustomerData = async (url:string): Promise<ICustomerData> => {
     if (customerId.toString().length !== 7) return
     const response: ICustomerData = await httpClient.get(url);  
-
     return response
   };
 
@@ -66,7 +66,7 @@ const CreateMain: React.FC<IProps> = () => {
 
 
   const {
-    data: productData, // Assuming 'data' is the correct property name
+    data: productData, 
     error: productDataError,
     isLoading: isCategoryLoading
   } = useSWR(
