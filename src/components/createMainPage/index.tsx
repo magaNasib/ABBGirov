@@ -8,6 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import useSWR from 'swr';
 import MyDatePicker from 'components/UI/MyDatePicker';
 import { MyInput } from 'components/UI/MyInput';
+import { httpClient } from 'httpClient';
 
 // interface IFormValues {
 //   customerId: number;
@@ -23,7 +24,13 @@ import { MyInput } from 'components/UI/MyInput';
 
 export interface IProps { }
 
+interface IProductData {
+  product: string;
+}
 
+interface ICustomerData {
+  fullname: string;
+}
 
 
 const CreateMain: React.FC<IProps> = () => {
@@ -35,18 +42,20 @@ const CreateMain: React.FC<IProps> = () => {
   const category = methods.watch('category');
   const customerId = methods.watch('customerId');
 
-  const apiUrl = `/customers/flex-customer-reader/v3/individual-customer-controller/getIndividualCustomerByCifUsingGET_1/${customerId}`
-    ;
-  const fetchProductData = async (url) => {
-    const response = await fetch(url);
-    return await response.json();
+  const apiUrl = `/customers/flex-customer-reader/v3/individual-customer-controller/getIndividualCustomerByCifUsingGET_1/${customerId}`;
+  const fetchProductData = async (url: string): Promise<IProductData> => {
+    const response: IProductData= await httpClient.get(url);
+    console.log(response);
+  
+    return response; // Return the entire Axios response object
   };
-  const fetchCustomerData = async (url) => {
+  
+
+  const fetchCustomerData = async (url:string): Promise<ICustomerData> => {
     if (customerId.toString().length !== 7) return
+    const response: ICustomerData = await httpClient.get(url);  
 
-
-    const response = await fetch(url);
-    return await response.json();
+    return response
   };
 
   const { data, error, isLoading: isCustomerIdLoading } = useSWR(customerId ? apiUrl : null, fetchCustomerData, {
@@ -57,15 +66,19 @@ const CreateMain: React.FC<IProps> = () => {
 
 
   const {
-    data: productData,
+    data: productData, // Assuming 'data' is the correct property name
     error: productDataError,
     isLoading: isCategoryLoading
-  } = useSWR(category ? `http://localhost:8082/products/product-code/${category}` : null, fetchProductData, {
-    revalidateIfStale: false,
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false
-  });
-  //   const [{ isCreateButttonExist }] = useAppContext();
+  } = useSWR(
+    category ? `http://localhost:8082/products/product-code/${category}` : null,
+    fetchProductData,
+    {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false
+    }
+  );
+  
   const [{ setIsCreateButtonExist }] = useAppContext();
 
   const onSubmitHandler = methods.handleSubmit((data) => {
@@ -124,7 +137,7 @@ const CreateMain: React.FC<IProps> = () => {
                 render={({ field }) => (
                   <MyInput
                     {...field}
-                    value={data ? data.fullname : 'Müştəri'}
+                    value={data ? data?.fullname : 'Müştəri'}
                     placeholder="Ad Soyad Ata adı"
                     isLoading={isCustomerIdLoading}
                     disabled
@@ -177,7 +190,7 @@ const CreateMain: React.FC<IProps> = () => {
                     {...field}
                     disabled={true}
                     isLoading={isCategoryLoading}
-                    value={productData ? productData.product : 'Məhsul'}
+                    value={productData ? productData?.product : 'Məhsul'}
                     label="Məhsul"
                     ref={ref}
                   />
