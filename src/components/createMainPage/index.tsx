@@ -106,7 +106,7 @@ const CreateMain: React.FC<IProps> = () => {
                   <>
                   <FormLabel>Müştəri nömrəsi</FormLabel>
                   <InputMask
-                    mask="9999999"
+                    mask="9999999999"
                     maskChar=""
                     alwaysShowMask={true}
                     value={field.value} 
@@ -250,25 +250,7 @@ const CreateMain: React.FC<IProps> = () => {
                   required: 'This field is required'
                 }}
                 name="description"
-                render={({ field }) => <>
-                <FormLabel>Girovun təsviri</FormLabel>
-                <InputMask
-                  mask="9999999"
-                  maskChar=""
-                  alwaysShowMask={true}
-                  value={field.value} 
-                  onChange={(e) => field.onChange(e.target.value)} 
-                >
-                  {() => (
-                  
-                     
-                    <InputGroup display={'flex'} flexDirection={'column'}>
-                      <Input {...field} ref={ref} placeholder='Daxil edin'/>
-                    </InputGroup>
-                
-                  )}
-                </InputMask>
-                </>}
+                render={({ field }) => <MyInput placeholder="Daxil edin" {...field} label="Girovun təsviri" />}
               />
               <FormErrorMessage color={'red'} fontSize={'14px'}>
                 {methods.formState.errors['description']?.message}
