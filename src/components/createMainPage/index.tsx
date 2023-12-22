@@ -1,4 +1,15 @@
-import { Box, FormControl, FormErrorMessage, FormLabel, Grid, GridItem, Heading, Select } from '@chakra-ui/react';
+import {
+  Box,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Grid,
+  GridItem,
+  Heading,
+  Input,
+  InputGroup,
+  Select
+} from '@chakra-ui/react';
 import { useAppContext } from 'context';
 import { Footer } from 'Layout/Footer';
 import { IFormValues } from 'pages/Create';
@@ -9,6 +20,7 @@ import useSWR from 'swr';
 import MyDatePicker from 'components/UI/MyDatePicker';
 import { MyInput } from 'components/UI/MyInput';
 import { httpClient } from 'httpClient';
+import InputMask from 'react-input-mask';
 
 // interface IFormValues {
 //   customerId: number;
@@ -110,17 +122,26 @@ const CreateMain: React.FC<IProps> = () => {
                 }}
                 name="customerId"
                 render={({ field }) => (
-                  <MyInput
-                    {...field}
-                    value={field.value}
-                    label="Müştəri nömrəsi"
-                    placeholder="Daxil edin"
-                    onChange={(e: { target: { value: string | unknown[]; }; }) => {
-                      const inputValue = e.target.value.slice(0, 7);
-                      field.onChange(inputValue);
-                    }}
-                    ref={ref}
-                  />
+              
+                  <>
+                  <FormLabel>Müştəri nömrəsi</FormLabel>
+                  <InputMask
+                    mask="9999999999"
+                    maskChar=""
+                    alwaysShowMask={true}
+                    value={field.value} 
+                    onChange={(e) => field.onChange(e.target.value)} 
+                  >
+                    {() => (
+                    
+                       
+                      <InputGroup display={'flex'} flexDirection={'column'}>
+                        <Input {...field} ref={ref} placeholder='Daxil edin'/>
+                      </InputGroup>
+                  
+                    )}
+                  </InputMask>
+                  </>
                 )}
               />
               {error && <div style={{ color: 'red' }}>Belə istifadəçi yoxdur</div>}
@@ -209,11 +230,32 @@ const CreateMain: React.FC<IProps> = () => {
                   required: 'This field is required',
                   pattern: {
                     value: /^[0-9]+$/,
-                    message: 'Please enter a valid number',
-                  },
+                    message: 'Please enter a valid number'
+                  }
                 }}
                 name="value"
-                render={({ field }) => <MyInput {...field} placeholder="Daxil edin" label="Girovun dəyəri" />}
+                render={({ field }) => (
+                  <>
+                  <FormLabel>Mehsulun Deyeri</FormLabel>
+                  <InputMask
+                    mask="9999999999"
+                    maskChar=""
+                    alwaysShowMask={true}
+                    value={field.value} 
+                    onChange={(e) => field.onChange(e.target.value)} 
+                  >
+                    {() => (
+                    
+                       
+                      <InputGroup display={'flex'} flexDirection={'column'}>
+                        <Input {...field} ref={ref} placeholder='Mehsul'/>
+                      </InputGroup>
+                  
+                    )}
+                  </InputMask>
+                  </>
+                )}
+
               />
               <FormErrorMessage color={'red'} fontSize={'14px'}>
                 {methods.formState.errors?.value?.message}
@@ -264,13 +306,11 @@ const CreateMain: React.FC<IProps> = () => {
                   required: 'This field is required',
                   pattern: {
                     value: /^\d+$/,
-                    message: 'Please enter a valid number',
-                  },
+                    message: 'Please enter a valid number'
+                  }
                 }}
                 name="startDate"
-                render={({ field }) => (
-                  <MyDatePicker field={field} label="Başlama tarixi" />
-                )}
+                render={({ field }) => <MyDatePicker field={field} label="Başlama tarixi" />}
               />
               <FormErrorMessage color={'red'} fontSize={'14px'}>
                 {methods.formState.errors.startDate?.message}
@@ -285,13 +325,11 @@ const CreateMain: React.FC<IProps> = () => {
                   required: 'This field is required',
                   pattern: {
                     value: /^\d+$/,
-                    message: 'Please enter a valid number',
-                  },
+                    message: 'Please enter a valid number'
+                  }
                 }}
                 name="endDate"
-                render={({ field }) => (
-                  <MyDatePicker field={field} label="Bitmə tarixi" />
-                )}
+                render={({ field }) => <MyDatePicker field={field} label="Bitmə tarixi" />}
               />
               <FormErrorMessage color={'red'} fontSize={'14px'}>
                 {methods.formState.errors.endDate?.message}
@@ -299,9 +337,8 @@ const CreateMain: React.FC<IProps> = () => {
             </FormControl>
           </GridItem>
         </Grid>
-      </Box >
-      {!colletralCode && <Footer onSubmitHandler={onSubmitHandler} isCreateMode={!!colletralCode} />
-      }
+      </Box>
+      {!colletralCode && <Footer onSubmitHandler={onSubmitHandler} isCreateMode={!!colletralCode} />}
     </>
   );
 };
