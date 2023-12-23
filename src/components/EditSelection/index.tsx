@@ -25,7 +25,7 @@ export default function EditSelection() {
   const onSubmit = methods.handleSubmit((data) => {
     if (customerId.toString().length !== 7) return
 
-    navigate(`/abb-mf-pledge/edit/${data.customerId}`)
+    navigate(`/abb-mf-pledge/pledgelist/${data.customerId}`)
   });
 
   return (

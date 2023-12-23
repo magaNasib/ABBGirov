@@ -1,6 +1,5 @@
 import { Box, FormControl, FormErrorMessage, FormLabel, Grid, GridItem, Heading, Select, SkeletonCircle, SkeletonText } from '@chakra-ui/react';
 // import { Box, Grid, GridItem, Heading,  SkeletonCircle, SkeletonText } from '@chakra-ui/react';
-import { IProps } from 'components/createMainPage';
 import { MyInput } from 'components/UI/MyInput';
 import { httpClient } from 'httpClient';
 import DepositInfo from 'components/DepositInfo';
@@ -10,9 +9,10 @@ import React, { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import useSWR from 'swr';
+import { IProps } from 'components/createMainPage';
 
 
-interface IPladge {
+export interface IPladge {
   colletralCode: string
   customerCIF: string
   fullname: string
@@ -44,6 +44,7 @@ interface IPladge {
   }[]
 }
 
+
 const fetchPledgesData = async (url: string): Promise<IPladge> => {
   const response: IPladge = await httpClient.get(url);
   return response;
@@ -53,7 +54,13 @@ const postData = async (url = "", data = {}) => {
   return response
 }
 
-const OtherInformation: React.FC<IProps> = () => {
+const editData = async (url = "", data = {}) => {
+  const response = await httpClient.put(url, data);
+  return response
+}
+
+const OtherInformation: React.FC<IProps> = ({ mode }) => {
+
   const methods = useFormContext<IFormValues>();
   const navigate = useNavigate()
   const { colletralCode } = useParams();
@@ -66,14 +73,18 @@ const OtherInformation: React.FC<IProps> = () => {
   const onSubmitHandler = methods.handleSubmit((data) => {
 
 
-    postData("/pledges", data).then((data) => {
+    mode === 'create' && postData("/pledges", data).then((data) => {
       console.log(data);
     });
+    mode === 'edit' && editData("/pledges/1", data).then((data) => {
+      console.log(data);
+
+    })
     navigate('/abb-mf-pledge/success')
   });
 
   useEffect(() => {
-    !methods.getValues('customerId') && navigate('/abb-mf-pledge/create')
+    // !methods.getValues('customerId') && navigate('/abb-mf-pledge/create')
   }, [])
 
   return (
@@ -139,7 +150,7 @@ const OtherInformation: React.FC<IProps> = () => {
           </Grid>
         </Box>
       }
-      <Footer onSubmitHandler={onSubmitHandler} isCreateMode={!!colletralCode} />
+      <Footer onSubmitHandler={onSubmitHandler} isCreateMode={!!colletralCode} mode={mode} />
     </>
   );
 };

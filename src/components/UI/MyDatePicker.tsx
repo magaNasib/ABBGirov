@@ -23,7 +23,7 @@ const ChakraDatePicker = chakra(DatePicker, {
     borderRadius: '5px'
   },
 });
-const MyDatePicker = ({ label, field }) => {
+const MyDatePicker = ({ label, field, disabled=false }) => {
   return (
     <>
       <FormLabel>{label}</FormLabel>
@@ -35,7 +35,10 @@ const MyDatePicker = ({ label, field }) => {
         scrollableMonthYearDropdown
         placeholderText={'dd/mm/yyyy'}
         selected={field.value}
+        _readOnly={disabled}
         {...field}
+        
+      
         type="datetime-local"
       />  
       <InputRightElement pointerEvents="none">

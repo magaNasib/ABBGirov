@@ -8,12 +8,26 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ICustomerData } from "components/createMainPage";
 import { httpClient } from "httpClient";
 import useSWR from "swr";
+
+interface IPledgeList {
+    CIF: number
+    pledgeList: {
+        code: string
+        desc: string
+        date: string
+    }[]
+}
 export default function PladgeEditList() {
     const { cif } = useParams();
     const apiUrl = `/customers/flex-customer-reader/v3/individual-customer-controller/getIndividualCustomerByCifUsingGET_1/${cif}`;
+    const apiUrlPledgeList = `/pledges/edit/${cif}`;
     const navigate = useNavigate()
     const fetchCustomerData = async (url: string): Promise<ICustomerData> => {
         const response: ICustomerData = await httpClient.get(url);
+        return response
+    };
+    const fetchPLedgesEditing = async (url: string): Promise<IPledgeList> => {
+        const response: IPledgeList = await httpClient.get(url);
         return response
     };
 
@@ -30,9 +44,23 @@ export default function PladgeEditList() {
             revalidateOnReconnect: false
         }
     );
-    console.log(user);
 
+    const {
+        data,
+        // error: pledgeError,
+        // isLoading: isPledgesLoading
+    } = useSWR(
+        cif ? apiUrlPledgeList : null,
+        fetchPLedgesEditing,
+        {
+            revalidateIfStale: false,
+            revalidateOnFocus: false,
+            revalidateOnReconnect: false
+        }
+    );
 
+    console.log(user)
+    console.log(data)
     return (
         <Box backgroundColor="GhostWhite" pl="44px" pr="44px" className="container" >
             <Heading pb="32px" pt="32px" className="headingText"  >Girov seçimi</Heading>
@@ -49,7 +77,7 @@ export default function PladgeEditList() {
                         <Text className="textWidthBlackColor" >
                             {userDataError && <Text color={'red'}>User not found</Text>}
                             {!isUserLoading ? (user?.fullname) : <Spinner />}
-                        </Text> 
+                        </Text>
                     </GridItem >
                 </Grid>
                 <Heading className="secondHeading" >Düzəliş etmək istədiyiniz girovu seçin:</Heading>
@@ -65,10 +93,13 @@ export default function PladgeEditList() {
                     </GridItem>
                 </Grid>
                 <Divider />
-                <PledgeItem />
-                <PledgeItem />
-                <PledgeItem />
-                <PledgeItem />
+                {
+                    data?.pledgeList.map((pledge) => {
+                        return (
+                            <PledgeItem {...pledge}/>
+                        )
+                    })
+                }
                 <Divider />
                 <Grid templateColumns="1fr 2fr" p="16px 24px">
                     <GridItem display="flex" alignItems="center" gap="8px" >
@@ -94,9 +125,9 @@ export default function PladgeEditList() {
                         <Button mt={"12px"} color={"#fff"} bg={"red"}>Ləvğ et</Button>
                     </GridItem>
                     <GridItem display="flex" gap="16px" alignItems="center" justifyContent="end" >
-                        <Button mt={"12px"} border={"1px solid gray"} borderRadius={"5px"} onClick={() => navigate("/abb-mf-pledge/edit")}>Başqa müştəri axtar </Button>
-                        <Button mt={"12px"} color={"#fff"} bg={"blue"}>Davam et</Button>
-
+                        <Button mt={"12px"} border={"1px solid gray"} borderRadius={"5px"} onClick={() => navigate("/abb-mf-pledge/pledgelist")}>Başqa müştəri axtar </Button>
+                        <Button mt={"12px"} color={"#fff"} bg={"blue"} onClick={()=>navigate(`/abb-mf-pledge/edit/99745`)}>Davam et</Button>
+                        {/* /?pledge=234343545245 */}
                     </GridItem>
                 </Grid>
             </Box>
