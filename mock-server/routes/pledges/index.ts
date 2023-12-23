@@ -281,8 +281,17 @@ router.get('/', (req, res) => {
   res.json(pledgesData);
 });
 
-router.get('/edit', (req, res) => {
-  res.json(pledgeEditData);
+router.get('/edit/:CIF', (req, res) => {
+  const CIF = req.params.CIF;
+  const data = pledgeEditData.find((item) => item.CIF === CIF);
+
+  
+  if (data) {
+    res.json(data);
+  } else {
+    res.status(404).json({ error: 'not found' });
+  }
+
 });
 
 
