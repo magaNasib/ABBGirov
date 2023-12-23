@@ -245,9 +245,47 @@ const pledgesData = [
   }
 ];
 
+
+const pledgeEditData = [
+  {
+    CIF:"1234567",
+    pledgeList: [
+      {
+        code:"234343545245",
+        desc:"lorem ipsum dolor me requens vita mein"
+      },
+      {
+        code:"234343545245",
+        desc:"lorem ipsum dolor me requens vita mein"
+      },
+      {
+        code:"234343545245",
+        desc:"lorem ipsum dolor me requens vita mein"
+      },
+      {
+        code:"234343545245",
+        desc:"lorem ipsum dolor me requens vita mein"
+      },
+      {
+        code:"234343545245",
+        desc:"lorem ipsum dolor me requens vita mein"
+      },
+        {
+        code:"234343545245",
+        desc:"lorem ipsum dolor me requens vita mein"
+      }
+    ]
+  }  
+]
 router.get('/', (req, res) => {
   res.json(pledgesData);
 });
+
+router.get('/edit', (req, res) => {
+  res.json(pledgeEditData);
+});
+
+
 
 router.get('/:colletralCode', (req, res) => {
   const colletralCode = req.params.colletralCode;
@@ -264,6 +302,15 @@ router.post('/', (req, res) => {
   const customerData = req.body;
   res.status(200).json({ message: 'Customer data received successfully', data: customerData });
 });
+
+
+router.put('/:id', (req, res) => {
+  const itemId = req.params.id;
+  const updatedData = req.body;
+
+  res.json({ id: itemId, ...updatedData });
+});
+
 
 
 export default router;
