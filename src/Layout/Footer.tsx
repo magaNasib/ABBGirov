@@ -3,9 +3,11 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { IFormValues } from 'pages/Create';
 
-export const Footer = ({ onSubmitHandler, isCreateMode }) => {
-  const methods = useFormContext<IFormValues>();
+export const Footer = ({ onSubmitHandler, isCreateMode, mode = 'create' }) => {
+  console.log(mode);
   
+  const methods = useFormContext<IFormValues>();
+  const isEdit = mode === 'edit'
   return (
     <Box mt="20px" mb="20px" className="bottomBar" bg={'white'} borderRadius="12px" w="100%">
       <Grid
@@ -16,7 +18,7 @@ export const Footer = ({ onSubmitHandler, isCreateMode }) => {
         justifyContent="space-between"
       >
         <GridItem>
-          <Button padding={'.5rem 1rem'} color={'#fff'} bg={'red'} type="reset"onClick={()=>{
+          <Button padding={'.5rem 1rem'} color={'#fff'} bg={'red'} type="reset" onClick={() => {
             methods.reset()
           }}>
             Ləvğ et
@@ -25,7 +27,7 @@ export const Footer = ({ onSubmitHandler, isCreateMode }) => {
         <GridItem display="flex" gap="16px" alignItems="center" justifyContent="end">
 
           <Button padding={'.5rem 1rem'} color={'#fff'} bg={'blue'} type="submit" onClick={onSubmitHandler}>
-            {isCreateMode ? 'Yarat' : 'Next'}
+          {isEdit?'Təsdiq et':(isCreateMode ? 'Yarat' : 'Növbəti')}
           </Button>
 
         </GridItem>

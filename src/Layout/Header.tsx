@@ -14,7 +14,7 @@ export const Header: React.FC = () => {
     >
       <Flex w={'100%'} gap={'2rem'}>
       <Link href='/abb-mf-pledge/create'>Girovun yaradılması</Link>
-      <Link href='/abb-mf-pledge/edit'>Girovun düzəlişi</Link></Flex>
+      <Link href='/abb-mf-pledge/pledgelist'>Girovun düzəlişi</Link></Flex>
       <Flex w="100%" alignItems="center" justifyContent="flex-end">
         <Flex
           w="120px"

@@ -22,7 +22,7 @@ function DepositInfo() {
                     <Th>Filial</Th>
                     <Th>Əmanət referensi</Th>
                     <Th>Əmanətin valyutası</Th>
-                  </Tr>
+                  </Tr> 
                 </Thead>
                 <Tbody>
                   <Tr>

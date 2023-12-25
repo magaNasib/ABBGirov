@@ -16,7 +16,7 @@ import { IEditFormValues } from "pages/Edit";
 
 
 export default function EditSelection() {
-  
+
   const navigate = useNavigate()
   const methods = useFormContext<IEditFormValues>();
   const { control, formState: { errors } } = methods;
@@ -25,7 +25,7 @@ export default function EditSelection() {
   const onSubmit = methods.handleSubmit((data) => {
     if (customerId.toString().length !== 7) return
 
-    navigate(`/abb-mf-pledge/edit/${data.customerId}`)
+    navigate(`/abb-mf-pledge/pledgelist/${data.customerId}`)
   });
 
   return (
