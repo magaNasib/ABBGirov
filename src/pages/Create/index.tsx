@@ -4,10 +4,10 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { Outlet } from 'react-router-dom';
 
 export interface IFormValues {
-  customerId: number;
+  customerId: string;
   customerName: string;
   product: string;
-  value: number;
+  value: string;
   description: string;
   currency: 'AZN' | 'USD';
   startDate: string;
@@ -25,7 +25,22 @@ export interface IFormValues {
   'land-designation': string;
 }
 export const CreatePledge: React.FC<React.PropsWithChildren<IProps>> = ({ mode }) => {
-  const methods = useForm<IFormValues>();
+  const methods = useForm<IFormValues>({
+    defaultValues:{
+      customerId:'',
+      value:'',
+      description:'',
+      propertyDetail: '',
+      buildingCompany: '',
+      city: '',
+      owner:'',
+      district: '',
+      municipality: '',
+      'town/village': '',
+      'construction-project': '',
+      'land-designation': '',
+    }
+  });
 
   return (
     <FormProvider {...methods}>

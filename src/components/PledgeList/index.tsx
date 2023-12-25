@@ -112,9 +112,9 @@ export default function PladgeEditList() {
                                 <RadioGroup {...field} value={field.value} onChange={field.onChange}>
                                     <Stack direction='column'>
                                         {
-                                            data?.pledgeList.map((pledge) => {
+                                            data?.pledgeList.map((pledge,key) => {
                                                 return (
-                                                    <PledgeItem {...pledge} />
+                                                    <PledgeItem {...pledge} key={key}/>
                                                 )
                                             })
                                         }

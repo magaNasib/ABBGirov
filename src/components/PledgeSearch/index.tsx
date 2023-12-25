@@ -84,10 +84,13 @@ export default function EditSelection() {
             }}
             render={({ field }) => (
               <Input
-                {...field}
-                type="number"
-                placeholder="Daxil edin"
-                width="351px !important"
+              value={field.value}
+              onChange={(e)=>field.onChange(e)}
+              onBlur={field.onBlur}
+              type="number"
+              placeholder="Daxil edin"
+              width="351px !important"
+              {...field}
               />
             )}
           />
