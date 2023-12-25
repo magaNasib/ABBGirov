@@ -23,12 +23,12 @@ const EditMain = () => {
 
     const methods = useForm<IFormValues>({
         defaultValues: {
-            customerId: 1234567,
+            customerId: '1234567',
             customerName: 'Ismayil',
             category: '99743',
             currency: 'AZN',
             product: 'KKl',
-            value: 55,
+            value: '55',
             description: 'Normal',
             // startDate:'22/12/2023',
             // endDate:'22/12/2023'
