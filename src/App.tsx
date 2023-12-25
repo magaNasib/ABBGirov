@@ -1,7 +1,7 @@
 import OtherInformation from 'components/OtherDetails';
 import CreateSuccessComponent from 'components/createSuccess';
-import EditSelection from 'components/EditSelection';
-import PladgeEditList from 'components/PledgeEdit';
+import EditSelection from 'components/PledgeSearch';
+import PladgeEditList from 'components/PledgeList';
 import { AppProvider } from 'context';
 import { Layout } from 'Layout';
 import { CreatePledge } from 'pages/Create';

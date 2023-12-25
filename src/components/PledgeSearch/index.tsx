@@ -16,7 +16,7 @@ import { IEditFormValues } from "pages/Edit";
 
 
 export default function EditSelection() {
-  
+
   const navigate = useNavigate()
   const methods = useFormContext<IEditFormValues>();
   const { control, formState: { errors } } = methods;

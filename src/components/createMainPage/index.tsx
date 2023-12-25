@@ -48,7 +48,7 @@ export interface ICustomerData {
 }
 
 
-const CreateMain: React.FC<IProps> = ({mode}) => {
+const CreateMain: React.FC<IProps> = ({ mode }) => {
   const { colletralCode } = useParams();
   const methods = useFormContext<IFormValues>();
 
@@ -60,8 +60,6 @@ const CreateMain: React.FC<IProps> = ({mode}) => {
   const apiUrl = `/customers/flex-customer-reader/v3/individual-customer-controller/getIndividualCustomerByCifUsingGET_1/${customerId}`;
   const fetchProductData = async (url: string): Promise<IProductData> => {
     const response: IProductData = await httpClient.get(url);
-    console.log(response);
-
     return response; // Return the entire Axios response object
   };
 
@@ -332,7 +330,7 @@ const CreateMain: React.FC<IProps> = ({mode}) => {
                 }}
                 name="endDate"
                 render={({ field }) => {
-                  return(
+                  return (
                     <MyDatePicker field={field} label="Bitmə tarixi" />
                   )
                 }}
@@ -344,7 +342,7 @@ const CreateMain: React.FC<IProps> = ({mode}) => {
           </GridItem>
         </Grid>
       </Box>
-      { !colletralCode && <Footer onSubmitHandler={onSubmitHandler} isCreateMode={!!colletralCode} />}
+      {!colletralCode && <Footer onSubmitHandler={onSubmitHandler} isCreateMode={!!colletralCode} />}
     </>
   );
 };
