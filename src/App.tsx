@@ -1,15 +1,11 @@
-import OtherInformation from 'components/OtherDetails';
-import CreateSuccessComponent from 'components/createSuccess';
-import EditSelection from 'components/PledgeSearch';
-import PladgeEditList from 'components/PledgeList';
+import OtherInformation from 'components/CreateOtherDetails';
+import CreateSuccessComponent from './components/CreateSuccess';
 import { AppProvider } from 'context';
 import { Layout } from 'Layout';
 import { CreatePledge } from 'pages/Create';
-import EditPage from 'pages/Edit';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { RouteLoading } from 'RouteLoading';
-import EditMain from 'components/EditMainPage';
 
 const App: React.FC = () => {
   return (
@@ -18,26 +14,17 @@ const App: React.FC = () => {
         <Route path="/" key="/test" element={<Layout />}>
           <Route
             path="/create"
-            element={
+            element={git 
               <React.Suspense fallback={<RouteLoading />}>
-                <CreatePledge mode='create' />
+                <CreatePledge />
               </React.Suspense>
             }
           >
-            <Route path=":colletralCode" element={<OtherInformation />} />
-          </Route>
-          <Route path="/success" element={<CreateSuccessComponent />} />
-          <Route path="/pledgelist" element={<EditPage />} >
-            <Route index element={<EditSelection />} />
-            <Route path=":cif" element={<PladgeEditList />} />
+            <Route path=":colletralCode" element={<OtherInformation />}
+            />
           </Route>
 
-          <Route path='/edit/:colletralCode' element={
-            <React.Suspense fallback={<RouteLoading />}>
-              <EditMain />
-            </React.Suspense>
-          }>
-          </Route>
+          <Route path="/successPage" element={<CreateSuccessComponent />} />
         </Route>
       </Routes>
     </AppProvider>
