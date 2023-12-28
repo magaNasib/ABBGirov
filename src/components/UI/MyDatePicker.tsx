@@ -1,17 +1,10 @@
 import DatePicker from 'react-datepicker';
-import { FormLabel, InputGroup, InputRightElement, chakra } from '@chakra-ui/react';
+import { FormErrorMessage, FormLabel, InputGroup, InputRightElement, chakra } from '@chakra-ui/react';
 import 'react-datepicker/dist/react-datepicker.css';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import { FaCalendar } from 'react-icons/fa';
-import { ControllerRenderProps } from 'react-hook-form';
-import { IFormValues } from 'pages/Create';
 
-interface IProps {
-  label: string
-  disabled?: boolean
-  field: ControllerRenderProps<IFormValues, any>
-}
 
 const ChakraDatePicker = chakra(DatePicker, {
   baseStyle: {
@@ -30,25 +23,47 @@ const ChakraDatePicker = chakra(DatePicker, {
     borderRadius: '5px'
   },
 });
-const MyDatePicker = ({ label, field, disabled = false }: IProps) => {
+
+const dateFormatRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+
+const MyDatePicker = ({ label, field }) => {
+  const [isInvalidDate, setIsInvalidDate] = useState(false);
+
+  const handleDateChange = (date) => {
+    const dateString = date.toLocaleDateString();
+
+    setIsInvalidDate(!dateFormatRegex.test(dateString));
+
+    if (dateFormatRegex.test(dateString)) {
+      field.onChange(date);
+    }
+  };
+
   return (
     <>
       <FormLabel>{label}</FormLabel>
       <InputGroup>
         <ChakraDatePicker
-          className='h-full bg-red'
-          toggleCalendarOnIconClick
-          placeholderText='mm/dd/yyyy'
+          //   className={className}
+          showYearDropdown
+          showMonthDropdown
+          scrollableMonthYearDropdown
+          placeholderText={'dd/mm/yyyy'}
           selected={field.value}
-          onChange={(date) => {
-            field.onChange(date)
-          }}
+          {...field}
+          type="datetime-local"
+          onChange={handleDateChange}
+          isInvalid={isInvalidDate}
         />
-
         <InputRightElement pointerEvents="none">
           <FaCalendar color="gray.300" />
         </InputRightElement>
       </InputGroup>
+      {isInvalidDate && (
+        <FormErrorMessage color={'red'} fontSize={'14px'}>
+          Please enter a valid date in the format
+        </FormErrorMessage>
+      )}
     </>
   );
 };
@@ -59,5 +74,8 @@ MyDatePicker.propTypes = {
 };
 
 export default MyDatePicker
+
+
+
 
 

@@ -1,26 +1,13 @@
-import {
-  Box,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Grid,
-  GridItem,
-  Heading,
-  Input,
-  InputGroup,
-  Select
-} from '@chakra-ui/react';
+import { Box, FormControl, FormErrorMessage, FormLabel, Grid, GridItem, Heading, Select } from '@chakra-ui/react';
 import { useAppContext } from 'context';
 import { Footer } from 'Layout/Footer';
 import { IFormValues } from 'pages/Create';
-import React, { useRef } from 'react';
+import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import useSWR from 'swr';
 import MyDatePicker from 'components/UI/MyDatePicker';
 import { MyInput } from 'components/UI/MyInput';
-import { httpClient } from 'httpClient';
-import InputMask from 'react-input-mask';
 
 // interface IFormValues {
 //   customerId: number;
@@ -34,21 +21,9 @@ import InputMask from 'react-input-mask';
 //   endDate: string;
 // }
 
-export interface IProps {
-  mode?: 'edit' | 'create'
-}
+export interface IProps { }
 
-interface IProductData {
-  product: string;
-}
-
-export interface ICustomerData {
-  fullname: string;
-  CIF: number
-}
-
-
-const CreateMain: React.FC<IProps> = ({ mode }) => {
+const CreateMain: React.FC<IProps> = () => {
   const { colletralCode } = useParams();
   const methods = useFormContext<IFormValues>();
 
@@ -57,47 +32,32 @@ const CreateMain: React.FC<IProps> = ({ mode }) => {
   const category = methods.watch('category');
   const customerId = methods.watch('customerId');
 
-  const apiUrl = `/customers/flex-customer-reader/v3/individual-customer-controller/getIndividualCustomerByCifUsingGET_1/${customerId}`;
-  const fetchProductData = async (url: string): Promise<IProductData> => {
-    const response: IProductData = await httpClient.get(url);
-    return response; // Return the entire Axios response object
+  const apiUrl = `http://localhost:8082/customers/flex-customer-reader/v3/individual-customer-controller/getIndividualCustomerByCifUsingGET_1/${customerId}`
+    ;
+  const fetchProductData = async (url) => {
+    const response = await fetch(url);
+    return await response.json();
   };
-
-
-  const fetchCustomerData = async (url: string): Promise<ICustomerData> => {
+  const fetchCustomerData = async (url) => {
     if (customerId.toString().length !== 7) return
-    const response: ICustomerData = await httpClient.get(url);
-    return response
+    const response = await fetch(url);
+    return await response.json();
   };
 
-  const { data, error, isLoading: isCustomerIdLoading } = useSWR(customerId ? apiUrl : null, fetchCustomerData, {
-    revalidateIfStale: false,
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false
-  });
-
+  const { data, error, isLoading: isCustomerIdLoading } = useSWR(customerId ? apiUrl : null, fetchCustomerData);
 
   const {
     data: productData,
     error: productDataError,
     isLoading: isCategoryLoading
-  } = useSWR(
-    category ? `http://localhost:8082/products/product-code/${category}` : null,
-    fetchProductData,
-    {
-      revalidateIfStale: false,
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false
-    }
-  );
-
+  } = useSWR(category ? `http://localhost:8082/products/product-code/${category}` : null, fetchProductData);
+  //   const [{ isCreateButttonExist }] = useAppContext();
   const [{ setIsCreateButtonExist }] = useAppContext();
 
   const onSubmitHandler = methods.handleSubmit((data) => {
     setIsCreateButtonExist(true);
     navigate(`${data?.category}`);
   });
-  const ref = useRef(null);
 
   return (
     <>
@@ -122,26 +82,17 @@ const CreateMain: React.FC<IProps> = ({ mode }) => {
                 }}
                 name="customerId"
                 render={({ field }) => (
+                  <MyInput
+                    {...field}
+                    value={field.value}
+                    label="Müştəri nömrəsi"
+                    placeholder="Daxil edin"
+                    onChange={(e: { target: { value: string | unknown[]; }; }) => {
+                      const inputValue = e.target.value.slice(0, 7);
+                      field.onChange(inputValue);
+                    }}
 
-                  <>
-                    <FormLabel>Müştəri nömrəsi</FormLabel>
-                    <InputMask
-                      mask="9999999999"
-                      maskChar=""
-                      alwaysShowMask={true}
-                      value={field.value}
-                      onChange={(e) => field.onChange(e.target.value)}
-                    >
-                      {() => (
-
-
-                        <InputGroup display={'flex'} flexDirection={'column'}>
-                          <Input {...field} ref={ref} placeholder='Daxil edin' />
-                        </InputGroup>
-
-                      )}
-                    </InputMask>
-                  </>
+                  />
                 )}
               />
               {error && <div style={{ color: 'red' }}>Belə istifadəçi yoxdur</div>}
@@ -158,12 +109,11 @@ const CreateMain: React.FC<IProps> = ({ mode }) => {
                 render={({ field }) => (
                   <MyInput
                     {...field}
-                    value={data ? data?.fullname : 'Müştəri'}
+                    value={data ? data.fullname : 'Müştəri'}
                     placeholder="Ad Soyad Ata adı"
                     isLoading={isCustomerIdLoading}
                     disabled
                     label="Müştərinin adı"
-                    ref={ref}
                   />
                 )}
               />
@@ -211,9 +161,8 @@ const CreateMain: React.FC<IProps> = ({ mode }) => {
                     {...field}
                     disabled={true}
                     isLoading={isCategoryLoading}
-                    value={productData ? productData?.product : 'Məhsul'}
+                    value={productData ? productData.product : 'Məhsul'}
                     label="Məhsul"
-                    ref={ref}
                   />
                 )}
               />
@@ -230,32 +179,11 @@ const CreateMain: React.FC<IProps> = ({ mode }) => {
                   required: 'This field is required',
                   pattern: {
                     value: /^[0-9]+$/,
-                    message: 'Please enter a valid number'
-                  }
+                    message: 'Please enter a valid number',
+                  },
                 }}
                 name="value"
-                render={({ field }) => (
-                  <>
-                    <FormLabel>Mehsulun Deyeri</FormLabel>
-                    <InputMask
-                      mask="9999999999"
-                      maskChar=""
-                      alwaysShowMask={true}
-                      value={field.value}
-                      onChange={(e) => field.onChange(e.target.value)}
-                    >
-                      {() => (
-
-
-                        <InputGroup display={'flex'} flexDirection={'column'}>
-                          <Input {...field} ref={ref} placeholder='Mehsul' />
-                        </InputGroup>
-
-                      )}
-                    </InputMask>
-                  </>
-                )}
-
+                render={({ field }) => <MyInput {...field} placeholder="Daxil edin" label="Girovun dəyəri" />}
               />
               <FormErrorMessage color={'red'} fontSize={'14px'}>
                 {methods.formState.errors?.value?.message}
@@ -306,11 +234,13 @@ const CreateMain: React.FC<IProps> = ({ mode }) => {
                   required: 'This field is required',
                   pattern: {
                     value: /^\d+$/,
-                    message: 'Please enter a valid number'
-                  }
+                    message: 'Please enter a valid number',
+                  },
                 }}
                 name="startDate"
-                render={({ field }) => <MyDatePicker field={field} label="Başlama tarixi" />}
+                render={({ field }) => (
+                  <MyDatePicker field={field} label="Başlama tarixi" />
+                )}
               />
               <FormErrorMessage color={'red'} fontSize={'14px'}>
                 {methods.formState.errors.startDate?.message}
@@ -325,15 +255,13 @@ const CreateMain: React.FC<IProps> = ({ mode }) => {
                   required: 'This field is required',
                   pattern: {
                     value: /^\d+$/,
-                    message: 'Please enter a valid number'
-                  }
+                    message: 'Please enter a valid number',
+                  },
                 }}
                 name="endDate"
-                render={({ field }) => {
-                  return (
-                    <MyDatePicker field={field} label="Bitmə tarixi" />
-                  )
-                }}
+                render={({ field }) => (
+                  <MyDatePicker field={field} label="Bitmə tarixi" />
+                )}
               />
               <FormErrorMessage color={'red'} fontSize={'14px'}>
                 {methods.formState.errors.endDate?.message}
@@ -341,8 +269,9 @@ const CreateMain: React.FC<IProps> = ({ mode }) => {
             </FormControl>
           </GridItem>
         </Grid>
-      </Box>
-      {!colletralCode && <Footer onSubmitHandler={onSubmitHandler} isCreateMode={!!colletralCode} />}
+      </Box >
+      {!colletralCode && <Footer onSubmitHandler={onSubmitHandler} isCreateMode={!!colletralCode} />
+      }
     </>
   );
 };
