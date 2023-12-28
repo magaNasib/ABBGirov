@@ -128,12 +128,11 @@ const CreateMain: React.FC<IProps> = ({ mode }) => {
                     <InputMask
                       mask="9999999999"
                       maskChar=""
-                      alwaysShowMask={true}
+                      alwaysShowMask
                       value={field.value}
                       onChange={(e) => field.onChange(e.target.value)}
                     >
                       {() => (
-
 
                         <InputGroup display={'flex'} flexDirection={'column'}>
                           <Input {...field} ref={ref} placeholder='Daxil edin' />

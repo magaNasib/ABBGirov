@@ -21,7 +21,7 @@ interface IFormValues {
   'land-designation': string;
 }
 import useSWR from 'swr';
-
+  
 const fetchPledgesData = async (url) => {
   const response = await fetch(url);
   return await response.json();

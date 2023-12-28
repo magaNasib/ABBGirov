@@ -18,7 +18,7 @@ const OtherInformation: React.FC<IProps> = ({ mode }) => {
   const methods = useFormContext<IFormValues>();
   const navigate = useNavigate()
   const { colletralCode } = useParams();
-  const { data: pledgeData } = useSWR(`http://localhost:8082/pledges/${colletralCode}`, fetchPledgesData, {
+  const { data: pledgeData, isLoading } = useSWR(`http://localhost:8082/pledges/${colletralCode}`, fetchPledgesData, {
     revalidateIfStale: false,
     revalidateOnFocus: false,
     revalidateOnReconnect: false
@@ -41,15 +41,19 @@ const OtherInformation: React.FC<IProps> = ({ mode }) => {
     !methods.getValues('customerId') && navigate('/abb-mf-pledge/create')
   }, [])
 
+  if (isLoading) {
+    return (
+      <Box padding='6' boxShadow='lg' bg='white' width="100%">
+        <SkeletonCircle size='10' />
+        <SkeletonText mt='4' noOfLines={4} spacing='4' skeletonHeight='2' />
+      </Box>
+    )
+  }
+
   return (
     <>
 
-      <React.Suspense fallback={
-        <Box padding='6' boxShadow='lg' bg='white' width="100%">
-          <SkeletonCircle size='10' />
-          <SkeletonText mt='4' noOfLines={4} spacing='4' skeletonHeight='2' />
-        </Box>
-      }>
+
         {pledgeData?.data[0].deposit.length ? <DepositInfo /> : ''}
         <Box padding="24px" w={'100%'} bg="white" borderRadius="12px" margin="0 auto">
           <Grid templateColumns="repeat(3, 1fr)" gap="24px">
@@ -105,7 +109,6 @@ const OtherInformation: React.FC<IProps> = ({ mode }) => {
             })}
           </Grid>
         </Box>
-      </React.Suspense>
 
       <Footer onSubmitHandler={onSubmitHandler} isCreateMode={!!colletralCode} mode={mode} />
     </>
