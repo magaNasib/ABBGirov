@@ -30,7 +30,7 @@ const EditMain = () => {
             product: 'KKl',
             value: '55',
             description: 'Normal',
-            // startDate:'22/12/2023',
+            // startDate: '22-11-2022',
             // endDate:'22/12/2023'
         }
     })
