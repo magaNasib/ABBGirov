@@ -20,11 +20,11 @@ const App: React.FC = () => {
             path="/create"
             element={
               <React.Suspense fallback={<RouteLoading />}>
-                <CreatePledge mode='create'/>
+                <CreatePledge mode='create' />
               </React.Suspense>
             }
           >
-            <Route path=":colletralCode" element={<OtherInformation/>} />
+            <Route path=":colletralCode" element={<OtherInformation />} />
           </Route>
           <Route path="/success" element={<CreateSuccessComponent />} />
           <Route path="/pledgelist" element={<EditPage />} >
