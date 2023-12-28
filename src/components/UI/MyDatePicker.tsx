@@ -1,10 +1,17 @@
 import DatePicker from 'react-datepicker';
-import {  FormLabel, InputGroup, InputRightElement, chakra } from '@chakra-ui/react';
+import { FormLabel, InputGroup, InputRightElement, chakra } from '@chakra-ui/react';
 import 'react-datepicker/dist/react-datepicker.css';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FaCalendar } from 'react-icons/fa';
+import { ControllerRenderProps } from 'react-hook-form';
+import { IFormValues } from 'pages/Create';
 
+interface IProps {
+  label: string
+  disabled?: boolean
+  field: ControllerRenderProps<IFormValues, any>
+}
 
 const ChakraDatePicker = chakra(DatePicker, {
   baseStyle: {
@@ -23,7 +30,7 @@ const ChakraDatePicker = chakra(DatePicker, {
     borderRadius: '5px'
   },
 });
-const MyDatePicker = ({ label, field, disabled = false }) => {
+const MyDatePicker = ({ label, field, disabled = false }: IProps) => {
   return (
     <>
       <FormLabel>{label}</FormLabel>
@@ -37,7 +44,7 @@ const MyDatePicker = ({ label, field, disabled = false }) => {
             field.onChange(date)
           }}
         />
-    
+
         <InputRightElement pointerEvents="none">
           <FaCalendar color="gray.300" />
         </InputRightElement>

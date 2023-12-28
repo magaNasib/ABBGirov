@@ -20,9 +20,9 @@ export interface IFormValues {
   city: string;
   district: string;
   municipality: string;
-  'town/village': string;
-  'construction-project': string;
-  'land-designation': string;
+  'townVillage': string;
+  'constructionProject': string;
+  'landDesignation': string;
 }
 export const CreatePledge: React.FC<React.PropsWithChildren<IProps>> = ({ mode }) => {
   const methods = useForm<IFormValues>({
@@ -36,9 +36,9 @@ export const CreatePledge: React.FC<React.PropsWithChildren<IProps>> = ({ mode }
       owner:'',
       district: '',
       municipality: '',
-      'town/village': '',
-      'construction-project': '',
-      'land-designation': '',
+      'townVillage': '',
+      'constructionProject': '',
+      'landDesignation': '',
     }
   });
 
