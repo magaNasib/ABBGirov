@@ -31,6 +31,7 @@ const App: React.FC = () => {
             <Route index element={<EditSelection />} />
             <Route path=":cif" element={<PladgeEditList />} />
           </Route>
+
           <Route path='/edit/:colletralCode' element={
             <React.Suspense fallback={<RouteLoading />}>
               <EditMain />

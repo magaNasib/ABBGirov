@@ -1,7 +1,6 @@
 import { Box, FormControl, FormErrorMessage, FormLabel, Grid, GridItem, Heading, Select, SkeletonCircle, SkeletonText } from '@chakra-ui/react';
 // import { Box, Grid, GridItem, Heading,  SkeletonCircle, SkeletonText } from '@chakra-ui/react';
 import { MyInput } from 'components/UI/MyInput';
-import { httpClient } from 'httpClient';
 import DepositInfo from 'components/DepositInfo';
 import { Footer } from 'Layout/Footer';
 import { IFormValues } from 'pages/Create';
@@ -10,54 +9,9 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import useSWR from 'swr';
 import { IProps } from 'components/createMainPage';
+import { editData, fetchPledgesData, postData } from 'utils';
 
 
-export interface IPladge {
-  colletralCode: string
-  customerCIF: string
-  fullname: string
-  customerPledge: {
-    describe: string
-    endDate: string
-    pledgedCurrency: string
-    pledgesValue: number
-    startDate: string
-  }
-  data: {
-    deposit: {
-      branch: string
-      currency: string
-      reference: string
-    }[]
-    productCode: string
-    questions: {
-      key: keyof IFormValues
-      value: string
-      type: string
-      maxLenght: number
-      minLenght: number
-      items: {
-        key: string
-        value: string
-      }[]
-    }[]
-  }[]
-}
-
-
-const fetchPledgesData = async (url: string): Promise<IPladge> => {
-  const response: IPladge = await httpClient.get(url);
-  return response;
-};
-const postData = async (url = "", data = {}) => {
-  const response = await httpClient.post(url, data);
-  return response
-}
-
-const editData = async (url = "", data = {}) => {
-  const response = await httpClient.put(url, data);
-  return response
-}
 
 const OtherInformation: React.FC<IProps> = ({ mode }) => {
 
@@ -84,7 +38,7 @@ const OtherInformation: React.FC<IProps> = ({ mode }) => {
   });
 
   useEffect(() => {
-    // !methods.getValues('customerId') && navigate('/abb-mf-pledge/create')
+    !methods.getValues('customerId') && navigate('/abb-mf-pledge/create')
   }, [])
 
   return (

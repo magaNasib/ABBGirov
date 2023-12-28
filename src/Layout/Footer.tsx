@@ -3,9 +3,14 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { IFormValues } from 'pages/Create';
 
-export const Footer = ({ onSubmitHandler, isCreateMode, mode = 'create' }) => {
-  console.log(mode);
-  
+interface IProps {
+  isCreateMode: boolean
+  mode?: string
+  onSubmitHandler: (e) => {}
+}
+
+export const Footer = ({ onSubmitHandler, isCreateMode, mode = 'create' }: IProps) => {
+
   const methods = useFormContext<IFormValues>();
   const isEdit = mode === 'edit'
   return (
@@ -27,7 +32,7 @@ export const Footer = ({ onSubmitHandler, isCreateMode, mode = 'create' }) => {
         <GridItem display="flex" gap="16px" alignItems="center" justifyContent="end">
 
           <Button padding={'.5rem 1rem'} color={'#fff'} bg={'blue'} type="submit" onClick={onSubmitHandler}>
-          {isEdit?'Təsdiq et':(isCreateMode ? 'Yarat' : 'Növbəti')}
+            {isEdit ? 'Təsdiq et' : (isCreateMode ? 'Yarat' : 'Növbəti')}
           </Button>
 
         </GridItem>
