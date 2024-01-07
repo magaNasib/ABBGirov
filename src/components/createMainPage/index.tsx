@@ -22,17 +22,6 @@ import { MyInput } from 'components/UI/MyInput';
 import { httpClient } from 'httpClient';
 import InputMask from 'react-input-mask';
 
-// interface IFormValues {
-//   customerId: number;
-//   customerName: string;
-//   product: string;
-//   value: number;
-//   description: string;
-//   currency: string;
-//   startDate: string;
-//   category: string;
-//   endDate: string;
-// }
 
 export interface IProps { }
 
@@ -76,6 +65,9 @@ const CreateMain: React.FC<IProps> = () => {
     revalidateOnReconnect: false
   });
 
+  
+  
+
 
   const {
     data: productData, 
@@ -98,6 +90,8 @@ const CreateMain: React.FC<IProps> = () => {
     navigate(`${data?.category}`);
   });
   const ref = useRef(null);
+
+  
 
   return (
     <>
@@ -126,7 +120,7 @@ const CreateMain: React.FC<IProps> = () => {
                   <>
                   <FormLabel>Müştəri nömrəsi</FormLabel>
                   <InputMask
-                    mask="9999999999"
+                    mask="9999999"
                     maskChar=""
                     alwaysShowMask={true}
                     value={field.value} 
@@ -242,6 +236,7 @@ const CreateMain: React.FC<IProps> = () => {
                     maskChar=""
                     alwaysShowMask={true}
                     value={field.value} 
+                    
                     onChange={(e) => field.onChange(e.target.value)} 
                   >
                     {() => (

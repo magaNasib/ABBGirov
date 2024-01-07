@@ -8,7 +8,6 @@ import { FaCalendar } from 'react-icons/fa';
 
 const ChakraDatePicker = chakra(DatePicker, {
   baseStyle: {
-    // marginTop: '32px',
     minWidth:'15rem',
     width:'100%',
     height:'2.5rem',
