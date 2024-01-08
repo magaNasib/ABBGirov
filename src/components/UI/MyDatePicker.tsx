@@ -1,6 +1,7 @@
 import DatePicker from 'react-datepicker';
 import { FormLabel, InputGroup, InputRightElement, chakra } from '@chakra-ui/react';
 import 'react-datepicker/dist/react-datepicker.css';
+
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FaCalendar } from 'react-icons/fa';

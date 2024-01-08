@@ -30,7 +30,7 @@ export default function EditSelection() {
 
   return (
     <>
-      <Box display="flex" p="0px 44px" flexDirection="column">
+      <Box display="flex"flexDirection="column" w={'100%'}>
         <Text display="flex"
           p="32px 0px"
           alignItems="flex-start"
@@ -52,6 +52,7 @@ export default function EditSelection() {
           alignSelf="stretch"
           borderRadius="12px"
           padding="24px"
+          w={'100%'}
           bg={'white'}
         >
           <Text
