@@ -1,4 +1,4 @@
-import { RadioGroup, Select, Stack } from '@chakra-ui/react';
+import { RadioGroup,  Stack } from '@chakra-ui/react';
 //Güllü Amal
 import { Box, Radio, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 import { FormControl, FormLabel, Input } from '@chakra-ui/react';
@@ -46,23 +46,7 @@ function DepositInfo() {
             </Stack>
           </RadioGroup>
         </TableContainer>
-        <Box display="flex">
-          <Text>Sətir sayı</Text>
-          <Select ms={'10px'} size="xs" maxW={16} defaultValue={6}>
-            <option value="1">1</option>
-            <option value="1">2</option>
-            <option value="1">3</option>
-            <option value="1">4</option>
-            <option value="1">5</option>
-            <option value="1">6</option>
-          </Select>
-          <Box display="flex" pl="60%">
-            <Text>2-2 /</Text>
-            <Text color="#000000A3">1 </Text>
-            {/* <Image src={leftIcon} alt="Left Arrow" />
-      <Image src={rightIcon} alt="Right Arrow" /> */}
-          </Box>
-        </Box>
+      
       </Box>
       <FormControl mt="24px">
         <FormLabel as="b" w="100%">

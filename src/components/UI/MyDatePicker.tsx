@@ -32,6 +32,8 @@ const ChakraDatePicker = chakra(DatePicker, {
   },
 });
 const MyDatePicker = ({ label, field, disabled = false }: IProps) => {
+  // const today = new Date();
+
   return (
     <>
       <FormLabel>{label}</FormLabel>
@@ -44,11 +46,12 @@ const MyDatePicker = ({ label, field, disabled = false }: IProps) => {
           onChange={(date) => {
             field.onChange(date)
           }}
+          // maxDate={today}
         />
 
         <InputRightElement pointerEvents="none">
           <FaCalendar color="gray.300" />
-        </InputRightElement>
+        </InputRightElement>  
       </InputGroup>
     </>
   );
