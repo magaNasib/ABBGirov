@@ -48,7 +48,7 @@ export interface ICustomerData {
 }
 
 
-const CreateMain: React.FC<IProps> = ({ mode }) => {
+const CreateMain: React.FC<IProps> = () => {
   const { colletralCode } = useParams();
   const methods = useFormContext<IFormValues>();
 
