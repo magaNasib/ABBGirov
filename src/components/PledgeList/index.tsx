@@ -1,9 +1,9 @@
-import { Box, Grid, GridItem, Heading, Text, Divider, Select, Button, Spinner, RadioGroup, Stack, FormControl, FormErrorMessage } from "@chakra-ui/react";
+import { Box, Grid, GridItem, Heading, Text, Divider, Button, Spinner, RadioGroup, Stack, FormControl, FormErrorMessage, Flex, Radio } from "@chakra-ui/react";
 // import chevronLeft from "../../assets/chevronsImg/chevronLeft.svg"
 // import chevronRight from "../../assets/chevronsImg/chevronRight.svg"
 
 import React from "react";
-import PledgeItem from "components/PledgeItem";
+// import PledgeItem from "components/PledgeItem";
 import { useNavigate, useParams } from "react-router-dom";
 import { ICustomerData } from "components/createMainPage";
 import { httpClient } from "httpClient";
@@ -18,8 +18,8 @@ interface IPledgeList {
         date: string
     }[]
 }
-interface IPledgeItem{
-    pledgeItemNumber:string
+interface IPledgeItem {
+    pledgeItemNumber: string
 }
 export default function PladgeEditList() {
     const { cif } = useParams();
@@ -67,10 +67,12 @@ export default function PladgeEditList() {
     );
     const onSubmitHandler = methods.handleSubmit((data) => {
         navigate(`/abb-mf-pledge/edit/99745`);
-      });
+    });
+
+   
     return (
         <FormProvider {...methods}>
-            <Box backgroundColor="GhostWhite" pl="44px" pr="44px" className="container" >
+            <Box backgroundColor="GhostWhite" pl="44px" pr="44px" pb={'20px'}>
                 <Heading pb="32px" pt="32px" className="headingText"  >Girov seçimi</Heading>
                 <Box backgroundColor="white" borderEndRadius="12px" className="secondContent" p="24px" borderRadius="12px" >
                     <Grid mb="24px" templateColumns="repeat(3, 1fr)" gap="24px">
@@ -106,15 +108,30 @@ export default function PladgeEditList() {
                             control={methods.control}
                             rules={{
                                 required: 'This field is required'
-                              }}
+                            }}
                             name='pledgeItemNumber'
                             render={({ field }) => (
                                 <RadioGroup {...field} value={field.value} onChange={field.onChange}>
                                     <Stack direction='column'>
                                         {
-                                            data?.pledgeList.map((pledge,key) => {
+                                            data?.pledgeList.map((pledge, key) => {
+                                                const { code, date, desc } = pledge
                                                 return (
-                                                    <PledgeItem {...pledge} key={key}/>
+                                                    <Grid p="11px 24px 10px 24px" key={key} templateColumns="1fr 2fr 1fr" gap="8px" cursor={'pointer'} onClick={() => field.onChange(code)} >
+                                                        <GridItem className="contributionCode" >
+                                                            <Flex>
+                                                                <Radio me={"10px"} value={code} isChecked={field.value === code}></Radio>
+                                                                <Text>{code}</Text>
+                                                            </Flex>
+                                                        </GridItem>
+                                                        <GridItem>
+                                                            <Text>{desc}</Text>
+                                                        </GridItem>
+                                                        <GridItem>
+                                                            <Text>{date}</Text>
+                                                        </GridItem>
+                                                    </Grid>
+                                                    // <PledgeItem {...pledge} key={key}/>
                                                 )
                                             })
                                         }
@@ -129,23 +146,7 @@ export default function PladgeEditList() {
                     </FormControl>
 
                     <Divider />
-                    <Grid templateColumns="1fr 2fr" p="16px 24px">
-                        <GridItem display="flex" alignItems="center" gap="8px" >
-                            <Text>Sətir sayı</Text>
-                            <Select className="selectorChoose">
-                                <option value='option1'>3</option>
-                                <option value='option2'>6</option>
-                                <option value='option3'>12</option>
-                            </Select>
-                        </GridItem>
-                        <GridItem display="flex" justifyContent="flex-end" alignItems="center" gap="24px" flex="1 0 0" >
-                            <Text>1-6 / 50</Text>
-                            <Box display="flex" alignItems="center" gap="8px" >
-                                {/* <img src={chevronLeft} alt="" />
-                            <img src={chevronRight} alt="" /> */}
-                            </Box>
-                        </GridItem>
-                    </Grid>
+               
                 </Box>
                 <Box mt="20px" mb="20px" className="bottomBar"  >
                     <Grid templateColumns="2fr 2fr" display="flex" justifyContent="space-between" >
