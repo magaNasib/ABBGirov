@@ -18,7 +18,7 @@ export const Footer = ({ onSubmitHandler, isCreateMode, mode = 'create' }: IProp
   const navigate=useNavigate();
 
   return (
-    <Box mt="20px" mb="20px" className="bottomBar" bg={'white'} borderRadius="12px" w="100%">
+    <Box mt="20px" mb="20px" className="bottomBar" bg={'white'} borderRadius="12px" w="100%" >
       <Grid
         templateColumns="2fr 2fr"
         alignItems={'center'}
@@ -36,7 +36,7 @@ export const Footer = ({ onSubmitHandler, isCreateMode, mode = 'create' }: IProp
         </GridItem>
         <GridItem display="flex" gap="16px" alignItems="center" justifyContent="end">
 
-          <Button padding={'.5rem 1rem'} color={'#fff'} bg={'blue'} type="submit" onClick={onSubmitHandler}>
+          <Button padding={'.5rem 1rem'} color={'#fff'} bg={'blue'} type="submit" onClick={onSubmitHandler} position={'relative'} zIndex={'0'}>
             {isEdit ? 'Təsdiq et' : (isCreateMode ? 'Yarat' : 'Növbəti')}
           </Button>
 

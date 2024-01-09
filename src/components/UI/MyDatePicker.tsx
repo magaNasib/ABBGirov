@@ -1,13 +1,12 @@
 import DatePicker from 'react-datepicker';
 import { FormLabel, InputGroup, InputRightElement, chakra } from '@chakra-ui/react';
 import 'react-datepicker/dist/react-datepicker.css';
-
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FaCalendar } from 'react-icons/fa';
 import { ControllerRenderProps } from 'react-hook-form';
 import { IFormValues } from 'pages/Create';
-
+import './datePicker.css'
 interface IProps {
   label: string
   disabled?: boolean
@@ -16,9 +15,9 @@ interface IProps {
 
 const ChakraDatePicker = chakra(DatePicker, {
   baseStyle: {
+    w:'100%',
     // marginTop: '32px',
     minWidth: '15rem',
-    width: '100%',
     height: '2.5rem',
     padding: '0 7px',
     ':focus': {
@@ -29,9 +28,9 @@ const ChakraDatePicker = chakra(DatePicker, {
     },
     border: '1px solid #d3d3d3',
     borderRadius: '5px',
-    position:'relative',
-    zIndex:52
-    
+    position: 'relative',
+    zIndex: 55
+
   },
 });
 const MyDatePicker = ({ label, field, disabled = false }: IProps) => {
@@ -40,23 +39,24 @@ const MyDatePicker = ({ label, field, disabled = false }: IProps) => {
   return (
     <>
       <FormLabel>{label}</FormLabel>
-      <InputGroup>
+      <InputGroup w={'100%'}>
         <ChakraDatePicker
-          className='h-full bg-red'
+          className='h-full bg-red customDatePckr'
           toggleCalendarOnIconClick
           placeholderText='mm/dd/yyyy'
           selected={field.value}
           onChange={(date) => {
             field.onChange(date)
           }}
-          // maxDate={today}
+        // maxDate={today}
         />
 
         <InputRightElement pointerEvents="none">
           <FaCalendar color="gray.300" />
-        </InputRightElement>  
+        </InputRightElement>
       </InputGroup>
     </>
+
   );
 };
 MyDatePicker.propTypes = {
