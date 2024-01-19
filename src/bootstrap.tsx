@@ -1,8 +1,7 @@
-import { ChakraProvider } from '@chakra-ui/react';
+import { ABBBackooficeUIProvider } from '@abb/backoffice-ui';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
-import theme from 'theme';
 
 import App from './App';
 
@@ -26,7 +25,7 @@ const container = document.getElementById('root') as HTMLElement;
 const root = createRoot(container);
 
 root.render(
-  <ChakraProvider theme={theme}>
+  <ABBBackooficeUIProvider>
     <RouterProvider router={APPRouter} />
-  </ChakraProvider>
+  </ABBBackooficeUIProvider>
 );

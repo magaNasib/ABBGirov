@@ -1,5 +1,5 @@
-import { AvatarGroup } from '@chakra-ui/react';
-import { Avatar, Badge, Button, Center, Code, Heading, Stack, Text, VStack } from '@chakra-ui/react';
+import { AvatarGroup } from '@abb/backoffice-ui';
+import { Avatar, Badge, Button, Center, Code, Heading, Stack, Text, VStack } from '@abb/backoffice-ui';
 // import { AlertHexagon } from '@abb/uikit/icons/outline/alerts';
 // import { AlertHexagon as AlertHexagonS } from '@abb/uikit/icons/solid/alerts';
 import { SWR_CONFIG } from 'consts';

@@ -1,4 +1,4 @@
-import { Grid } from '@chakra-ui/react';
+import { Grid } from '@abb/backoffice-ui';
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 

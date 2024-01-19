@@ -1,7 +1,7 @@
 import { RadioGroup,  Stack } from '@chakra-ui/react';
 //Güllü Amal
-import { Box, Radio, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
-import { FormControl, FormLabel, Input } from '@chakra-ui/react';
+import { Box, Radio, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from '@abb/backoffice-ui';
+import { FormControl, FormLabel, Input } from '@abb/backoffice-ui';
 import * as React from 'react';
 
 function DepositInfo() {

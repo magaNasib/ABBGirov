@@ -1,4 +1,4 @@
-import { Flex, Link } from '@chakra-ui/react';
+import { Flex, Link } from '@abb/backoffice-ui';
 import React from 'react';
 
 export const Header: React.FC = () => {

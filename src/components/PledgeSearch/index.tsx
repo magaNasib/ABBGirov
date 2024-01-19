@@ -9,7 +9,7 @@ import {
   GridItem,
   Button,
   FormErrorMessage,
-} from "@chakra-ui/react";
+} from "@abb/backoffice-ui";
 import { Controller, useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { IEditFormValues } from "pages/Edit";

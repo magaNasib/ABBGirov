@@ -1,4 +1,4 @@
-import { Box, Button, Grid, GridItem, Heading, Image, Text } from '@chakra-ui/react';
+import { Box, Button, Grid, GridItem, Heading, Image, Text } from '@abb/backoffice-ui';
 import React from 'react';
 
 import image1 from '../../icons/Modal-Success-icon.png';

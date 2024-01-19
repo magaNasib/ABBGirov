@@ -9,7 +9,7 @@ import {
   Input,
   InputGroup,
   Select
-} from '@chakra-ui/react';
+} from '@abb/backoffice-ui';
 import { useAppContext } from 'context';
 import { Footer } from 'Layout/Footer';
 import { IFormValues } from 'pages/Create';

@@ -1,4 +1,4 @@
-import { Box, Button, Grid, GridItem } from '@chakra-ui/react';
+import { Box, Button, Grid, GridItem } from '@abb/backoffice-ui';
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { IFormValues } from 'pages/Create';

@@ -1,4 +1,4 @@
-import { Box, FormControl, FormErrorMessage, FormLabel, Grid, GridItem, Heading, Select } from '@chakra-ui/react';
+import { Box, FormControl, FormErrorMessage, FormLabel, Grid, GridItem, Heading, Select } from '@abb/backoffice-ui';
 import { IProps } from 'components/createMainPage';
 import DepositInfo from 'components/DepositInfo';
 import { MyInput } from 'components/UI/MyInput';

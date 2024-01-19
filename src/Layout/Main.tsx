@@ -1,4 +1,4 @@
-import { Box, Container, VStack } from '@chakra-ui/react';
+import { Box, Container, VStack } from '@abb/backoffice-ui';
 import React from 'react';
 
 export const Main: React.FC<React.PropsWithChildren> = ({ children }) => {

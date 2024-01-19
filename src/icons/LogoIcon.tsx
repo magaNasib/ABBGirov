@@ -1,4 +1,4 @@
-import { Icon } from '@chakra-ui/react';
+import { Icon } from '@abb/backoffice-ui';
 import { motion } from 'framer-motion';
 import React from 'react';
 

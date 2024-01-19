@@ -1,4 +1,4 @@
-import { FormLabel, Input, InputGroup, InputRightElement, Spinner } from "@chakra-ui/react";
+import { FormLabel, Input, InputGroup, InputRightElement, Spinner } from "@abb/backoffice-ui";
 import React, { forwardRef } from "react";
 export type InputProps = {
     placeholder?: string;
