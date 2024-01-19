@@ -35,7 +35,7 @@ function CreateSuccessComponent() {
       <Box mt="20px" mb="20px" className="bottomBar">
         <Grid templateColumns="2fr 2fr" display="flex" justifyContent="space-between">
           <GridItem display="flex" gap="16px" alignItems="center" justifyContent="end">
-            <Button mt={'12px'} color={'#fff'} bg={'blue'} onClick={()=>navigate('/abb-mf-pledge/create')}>
+            <Button mt={'12px'} color={'#fff'} bg={'blue'} onClick={()=>navigate('/app/pledge/create')}>
               Son
             </Button>
           </GridItem>

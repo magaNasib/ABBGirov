@@ -19,8 +19,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import useSWR from 'swr';
 import MyDatePicker from 'components/UI/MyDatePicker';
 import { MyInput } from 'components/UI/MyInput';
-import { httpClient } from 'httpClient';
 import InputMask from 'react-input-mask';
+import { useFrameworkServices } from 'hooks';
 
 
 export interface IProps {
@@ -40,13 +40,14 @@ export interface ICustomerData {
 const CreateMain: React.FC<IProps> = () => {
   const { colletralCode } = useParams();
   const methods = useFormContext<IFormValues>();
+  const {httpClient} = useFrameworkServices();
 
   const navigate = useNavigate();
 
   const category = methods.watch('category');
   const customerId = methods.watch('customerId');
 
-  const apiUrl = `/customers/flex-customer-reader/v3/individual-customer-controller/getIndividualCustomerByCifUsingGET_1/${customerId}`;
+  const apiUrl = `/api/customers/flex-customer-reader/v3/individual-customer-controller/getIndividualCustomerByCifUsingGET_1/${customerId}`;
   const fetchProductData = async (url: string): Promise<IProductData> => {
     const response: IProductData = await httpClient.get(url);
     return response; // Return the entire Axios response object
@@ -74,7 +75,7 @@ const CreateMain: React.FC<IProps> = () => {
     error: productDataError,
     isLoading: isCategoryLoading
   } = useSWR(
-    category ? `http://localhost:8082/products/product-code/${category}` : null,
+    category ? `/api/products/product-code/${category}` : null,
     fetchProductData,
     {
       revalidateIfStale: false,

@@ -15,7 +15,7 @@ const App: React.FC = () => {
   return (
     <AppProvider>
       <Routes>
-        <Route path="/" key="/test" element={<Layout />}>
+        <Route path="/" key="/pledge" element={<Layout />}>
           <Route
             path="/create"
             element={

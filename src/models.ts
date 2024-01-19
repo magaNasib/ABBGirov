@@ -1,4 +1,3 @@
-import { httpClient } from "httpClient"
 import { IFormValues } from "pages/Create"
 
 export interface IPladge {
@@ -31,17 +30,4 @@ export interface IPladge {
             }[]
         }[]
     }[]
-}
-export const fetchPledgesData = async (url: string): Promise<IPladge> => {
-    const response: IPladge = await httpClient.get(url);
-    return response;
-};
-export const postData = async (url = "", data = {}) => {
-    const response = await httpClient.post(url, data);
-    return response
-}
-
-export const editData = async (url = "", data = {}) => {
-    const response = await httpClient.put(url, data);
-    return response
 }

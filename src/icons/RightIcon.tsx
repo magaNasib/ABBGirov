@@ -1,4 +1,4 @@
-import { Icon } from '@chakra-ui/react';
+import { Icon } from '@abb/backoffice-ui';
 import React from 'react';
 interface IProps {
     width: string;

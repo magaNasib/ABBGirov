@@ -2,15 +2,11 @@ import express from 'express';
 
 const router = express.Router();
 
-
-
 const customers = [
   { fullname:"Ismayil Hasanov Rashad",CIF:1234567, },
   { fullname:"Ferid Hasanov Rashad",CIF:7654321 },
 
 ];
-
-
 
 
 router.get('/', (req, res) => {

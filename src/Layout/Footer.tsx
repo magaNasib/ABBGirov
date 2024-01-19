@@ -29,7 +29,7 @@ export const Footer = ({ onSubmitHandler, isCreateMode, mode = 'create' }: IProp
         <GridItem>
           <Button padding={'.5rem 1rem'} color={'#fff'} bg={'red'} type="reset" onClick={() => {
             methods.reset()
-            navigate('/abb-mf-pledge')
+            navigate('/')
           }}>
             Ləvğ et
           </Button>

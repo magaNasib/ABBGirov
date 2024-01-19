@@ -4,10 +4,13 @@ import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 
 import App from './App';
+import { buildServices, ServicesProvider } from '@abb/services';
+
+const services = buildServices({baseURL: '/', domain: 'framework'})
 
 export const dashboardRemoteAppRoutes = () => [
   {
-    path: 'abb-mf-pledge/*',
+    path: 'abb-backoffice-pledge-mf/*',
     element: <App />
   }
 ];
@@ -25,7 +28,9 @@ const container = document.getElementById('root') as HTMLElement;
 const root = createRoot(container);
 
 root.render(
+  <ServicesProvider services={services}>
   <ABBBackooficeUIProvider>
     <RouterProvider router={APPRouter} />
   </ABBBackooficeUIProvider>
+  </ServicesProvider>
 );

@@ -10,7 +10,7 @@ import {
     Input,
     InputGroup,
     Select
-} from '@chakra-ui/react';
+} from '@abb/backoffice-ui';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import MyDatePicker from 'components/UI/MyDatePicker';
 import { MyInput } from 'components/UI/MyInput';

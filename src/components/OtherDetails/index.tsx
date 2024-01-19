@@ -1,5 +1,5 @@
-import { Box, FormControl, FormErrorMessage, FormLabel, Grid, GridItem, Heading, Select, SkeletonCircle, SkeletonText } from '@chakra-ui/react';
-// import { Box, Grid, GridItem, Heading,  SkeletonCircle, SkeletonText } from '@chakra-ui/react';
+import { Box, FormControl, FormErrorMessage, FormLabel, Grid, GridItem, Heading, Select, SkeletonCircle, SkeletonText } from '@abb/backoffice-ui';
+// import { Box, Grid, GridItem, Heading,  SkeletonCircle, SkeletonText } from '@abb/backoffice-ui';
 import { MyInput } from 'components/UI/MyInput';
 import DepositInfo from 'components/DepositInfo';
 import { Footer } from 'Layout/Footer';
@@ -9,7 +9,9 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import useSWR from 'swr';
 import { IProps } from 'components/createMainPage';
-import { editData, fetchPledgesData, postData } from 'utils';
+import { IPladge } from 'models';
+import { SWR_CONFIG } from 'consts';
+import { useFrameworkServices } from 'hooks';
 
 
 
@@ -18,27 +20,25 @@ const OtherInformation: React.FC<IProps> = ({ mode }) => {
   const methods = useFormContext<IFormValues>();
   const navigate = useNavigate()
   const { colletralCode } = useParams();
-  const { data: pledgeData, isLoading } = useSWR(`http://localhost:8082/pledges/${colletralCode}`, fetchPledgesData, {
-    revalidateIfStale: false,
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false
-  });
+  console.log({colletralCode});
+  const {httpClient} = useFrameworkServices();
+  
+  const { data: pledgeData, isLoading } = useSWR<IPladge>(`/api/pledges/${colletralCode}`, httpClient.get, SWR_CONFIG);
 
   const onSubmitHandler = methods.handleSubmit((data) => {
-
-
-    mode === 'create' && postData("/pledges", data).then((data) => {
+    mode === 'create' && httpClient.post("/api/pledges", data).then((data) => {
       console.log(data);
     });
-    mode === 'edit' && editData("/pledges/1", data).then((data) => {
+
+    mode === 'edit' && httpClient.put("/api/pledges/1", data).then((data) => {
       console.log(data);
 
     })
-    navigate('/abb-mf-pledge/success')
+    navigate('/app/pledge/success')
   });
 
   useEffect(() => {
-    !methods.getValues('customerId') && navigate('/abb-mf-pledge/create')
+    !methods.getValues('customerId') && navigate('/app/pledge/create')
   }, [])
 
   if (isLoading) {
@@ -52,8 +52,6 @@ const OtherInformation: React.FC<IProps> = ({ mode }) => {
 
   return (
     <>
-
-
         {pledgeData?.data[0].deposit.length ? <DepositInfo /> : ''}
         <Box padding="24px" w={'100%'} bg="white" borderRadius="12px" margin="0 auto">
           <Grid templateColumns="repeat(3, 1fr)" gap="24px">

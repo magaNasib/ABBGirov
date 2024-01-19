@@ -45,7 +45,7 @@ module.exports = (_, { mode }) => {
     entry: path.join(SRC_DIR, 'index'),
     output: {
       filename: '[name].[contenthash].js',
-      publicPath: '/abb-mf-pledge/',
+      publicPath: '/abb-backoffice-pledge-mf/',
       path: BUILD_DIR
     },
     devtool: 'source-map',
@@ -63,8 +63,8 @@ module.exports = (_, { mode }) => {
       hot: true,
       https: false,
       allowedHosts: 'all',
-      historyApiFallback: { index: '/abb-mf-pledge/' },
-      port: 3001,
+      historyApiFallback: { index: '/abb-backoffice-pledge-mf/' },
+      port: 3034,
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
@@ -73,7 +73,7 @@ module.exports = (_, { mode }) => {
       proxy: [
         {
           context:  ['**/customers/**','**/pledges/**','**/products/**'],
-          target: 'http://127.0.0.1:8082'
+          target: 'http://127.0.0.1:8093'
         }
       ]
     },
@@ -110,7 +110,7 @@ module.exports = (_, { mode }) => {
       ...conditionalWebpackPlugins,
       new ForkTsCheckerWebpackPlugin(),
       new ModuleFederationPlugin({
-        name: 'exampleRemote',
+        name: 'pledge',
         filename: 'remoteEntry.js',
         remotes: {
           host: `host@/remoteEntry.js?${+new Date()}`

@@ -1,17 +1,12 @@
-import { Grid } from '@abb/backoffice-ui';
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-import { Header } from './Header';
-import { Main } from './Main';
+import { VStack } from '@abb/backoffice-ui';
 
 export const Layout: React.FC = () => {
   return (
-    <Grid gridTemplateColumns="1fr" gridTemplateRows="64px 1fr" minH="100vh" bg="white" w={'100%'}>
-      <Header />
-     <Main>
+    <VStack spacing={'20px'} align={'start'} w={'100%'}>
         <Outlet />
-      </Main>
-    </Grid>
+    </VStack>
   );
 };

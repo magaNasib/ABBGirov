@@ -1,4 +1,4 @@
-import { Box, Grid, GridItem, Heading, Text, Divider, Button, Spinner, RadioGroup, Stack, FormControl, FormErrorMessage, Flex, Radio } from "@chakra-ui/react";
+import { Box, Grid, GridItem, Heading, Text, Divider, Button, Spinner, RadioGroup, Stack, FormControl, FormErrorMessage, Flex, Radio } from "@abb/backoffice-ui";
 // import chevronLeft from "../../assets/chevronsImg/chevronLeft.svg"
 // import chevronRight from "../../assets/chevronsImg/chevronRight.svg"
 
@@ -6,9 +6,9 @@ import React from "react";
 // import PledgeItem from "components/PledgeItem";
 import { useNavigate, useParams } from "react-router-dom";
 import { ICustomerData } from "components/createMainPage";
-import { httpClient } from "httpClient";
 import useSWR from "swr";
 import { Controller, FormProvider, useForm } from "react-hook-form";
+import { useFrameworkServices } from "hooks";
 
 interface IPledgeList {
     CIF: number
@@ -23,9 +23,10 @@ interface IPledgeItem {
 }
 export default function PladgeEditList() {
     const { cif } = useParams();
-    const apiUrl = `/customers/flex-customer-reader/v3/individual-customer-controller/getIndividualCustomerByCifUsingGET_1/${cif}`;
-    const apiUrlPledgeList = `/pledges/edit/${cif}`;
-    const navigate = useNavigate()
+    const apiUrl = `/api/customers/flex-customer-reader/v3/individual-customer-controller/getIndividualCustomerByCifUsingGET_1/${cif}`;
+    const apiUrlPledgeList = `/api/pledges/edit/${cif}`;
+    const navigate = useNavigate();
+    const {httpClient} = useFrameworkServices();
 
     const methods = useForm<IPledgeItem>();
 
@@ -66,7 +67,7 @@ export default function PladgeEditList() {
         }
     );
     const onSubmitHandler = methods.handleSubmit((data) => {
-        navigate(`/abb-mf-pledge/edit/99745`);
+        navigate(`/app/pledge/edit/99745`);
     });
 
    
@@ -151,10 +152,10 @@ export default function PladgeEditList() {
                 <Box mt="20px" mb="20px" className="bottomBar"  >
                     <Grid templateColumns="2fr 2fr" display="flex" justifyContent="space-between" >
                         <GridItem>
-                            <Button mt={"12px"} color={"#fff"} bg={"red"} onClick={()=>navigate('/abb-mf-pledge')}>Ləvğ et</Button>
+                            <Button mt={"12px"} color={"#fff"} bg={"red"} onClick={()=>navigate('/')}>Ləvğ et</Button>
                         </GridItem>
                         <GridItem display="flex" gap="16px" alignItems="center" justifyContent="end" >
-                            <Button mt={"12px"} border={"1px solid gray"} borderRadius={"5px"} onClick={() => navigate("/abb-mf-pledge/pledgelist")}>Başqa müştəri axtar </Button>
+                            <Button mt={"12px"} border={"1px solid gray"} borderRadius={"5px"} onClick={() => navigate("/app/pledge/pledgelist")}>Başqa müştəri axtar </Button>
                             <Button mt={"12px"} color={"#fff"} bg={"blue"} isDisabled={!methods.watch('pledgeItemNumber')} type="submit" onClick={onSubmitHandler}>Davam et</Button>
                             {/* /?pledge=234343545245 */}
                         </GridItem>

@@ -30,11 +30,14 @@ const fetchPledgesData = async (url) => {
 const OtherInformation: React.FC<IProps> = () => {
   const methods = useFormContext<IFormValues>();
   const { colletralCode } = useParams();
-  const { data: pledgeData } = useSWR(`http://localhost:8082/pledges/${colletralCode}`, fetchPledgesData);
+  debugger;
+  const { data: pledgeData } = useSWR(`/api/pledges/${colletralCode}`, fetchPledgesData);
 
   const onSubmitHandler = methods.handleSubmit((data) => {
     console.log({ data });
   });
+
+  console.log({pledgeData})
 
   return (
     <>
