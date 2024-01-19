@@ -16,7 +16,7 @@ import { IEditFormValues } from "pages/Edit";
 
 
 export default function EditSelection() {
-  
+
   const navigate = useNavigate()
   const methods = useFormContext<IEditFormValues>();
   const { control, formState: { errors } } = methods;
@@ -25,12 +25,12 @@ export default function EditSelection() {
   const onSubmit = methods.handleSubmit((data) => {
     if (customerId.toString().length !== 7) return
 
-    navigate(`/abb-mf-pledge/edit/${data.customerId}`)
+    navigate(`/abb-mf-pledge/pledgelist/${data.customerId}`)
   });
 
   return (
     <>
-      <Box display="flex" p="0px 44px" flexDirection="column">
+      <Box display="flex"flexDirection="column" w={'100%'}>
         <Text display="flex"
           p="32px 0px"
           alignItems="flex-start"
@@ -52,6 +52,7 @@ export default function EditSelection() {
           alignSelf="stretch"
           borderRadius="12px"
           padding="24px"
+          w={'100%'}
           bg={'white'}
         >
           <Text
@@ -84,10 +85,13 @@ export default function EditSelection() {
             }}
             render={({ field }) => (
               <Input
-                {...field}
-                type="number"
-                placeholder="Daxil edin"
-                width="351px !important"
+              value={field.value}
+              onChange={(e)=>field.onChange(e)}
+              onBlur={field.onBlur}
+              type="number"
+              placeholder="Daxil edin"
+              width="351px !important"
+              {...field}
               />
             )}
           />
@@ -100,7 +104,7 @@ export default function EditSelection() {
       <Box w={"100%"} mt="20px" mb="20px" className="bottomBar" bg={'white'} borderRadius="12px" >
         <Grid templateColumns="2fr 2fr" alignItems={'center'} display="flex" padding={'1rem 2rem'} justifyContent="space-between" >
           <GridItem>
-            <Button padding={'.5rem 1rem'} color={"#fff"} bg={"red"}>Ləvğ et</Button>
+            <Button padding={'.5rem 1rem'} color={"#fff"} bg={"red"} onClick={()=>navigate('/abb-mf-pledge')}>Ləvğ et</Button>
           </GridItem>
           <GridItem display="flex" gap="16px" alignItems="center" justifyContent="end" >
             <Button padding={'.5rem 1rem'} color={"#fff"} bg={"blue"} type='submit' onClick={onSubmit}>Axtar</Button>

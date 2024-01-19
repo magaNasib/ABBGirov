@@ -23,7 +23,9 @@ import { httpClient } from 'httpClient';
 import InputMask from 'react-input-mask';
 
 
-export interface IProps { }
+export interface IProps {
+  mode?: 'edit' | 'create'
+}
 
 interface IProductData {
   product: string;
@@ -31,7 +33,7 @@ interface IProductData {
 
 export interface ICustomerData {
   fullname: string;
-  CIF:number
+  CIF: number
 }
 
 
@@ -46,16 +48,14 @@ const CreateMain: React.FC<IProps> = () => {
 
   const apiUrl = `/customers/flex-customer-reader/v3/individual-customer-controller/getIndividualCustomerByCifUsingGET_1/${customerId}`;
   const fetchProductData = async (url: string): Promise<IProductData> => {
-    const response: IProductData= await httpClient.get(url);
-    console.log(response);
-  
+    const response: IProductData = await httpClient.get(url);
     return response; // Return the entire Axios response object
   };
-  
 
-  const fetchCustomerData = async (url:string): Promise<ICustomerData> => {
+
+  const fetchCustomerData = async (url: string): Promise<ICustomerData> => {
     if (customerId.toString().length !== 7) return
-    const response: ICustomerData = await httpClient.get(url);  
+    const response: ICustomerData = await httpClient.get(url);
     return response
   };
 
@@ -70,7 +70,7 @@ const CreateMain: React.FC<IProps> = () => {
 
 
   const {
-    data: productData, 
+    data: productData,
     error: productDataError,
     isLoading: isCategoryLoading
   } = useSWR(
@@ -82,7 +82,7 @@ const CreateMain: React.FC<IProps> = () => {
       revalidateOnReconnect: false
     }
   );
-  
+
   const [{ setIsCreateButtonExist }] = useAppContext();
 
   const onSubmitHandler = methods.handleSubmit((data) => {
@@ -116,25 +116,24 @@ const CreateMain: React.FC<IProps> = () => {
                 }}
                 name="customerId"
                 render={({ field }) => (
-              
+
                   <>
-                  <FormLabel>Müştəri nömrəsi</FormLabel>
-                  <InputMask
-                    mask="9999999"
-                    maskChar=""
-                    alwaysShowMask={true}
-                    value={field.value} 
-                    onChange={(e) => field.onChange(e.target.value)} 
-                  >
-                    {() => (
-                    
-                       
-                      <InputGroup display={'flex'} flexDirection={'column'}>
-                        <Input {...field} ref={ref} placeholder='Daxil edin'/>
-                      </InputGroup>
-                  
-                    )}
-                  </InputMask>
+                    <FormLabel>Müştəri nömrəsi</FormLabel>
+                    <InputMask
+                      mask="9999999999"
+                      maskChar=""
+                      alwaysShowMask
+                      value={field.value}
+                      onChange={(e) => field.onChange(e.target.value)}
+                    >
+                      {() => (
+
+                        <InputGroup display={'flex'} flexDirection={'column'}>
+                          <Input {...field} ref={ref} placeholder='Daxil edin' />
+                        </InputGroup>
+
+                      )}
+                    </InputMask>
                   </>
                 )}
               />
@@ -230,24 +229,23 @@ const CreateMain: React.FC<IProps> = () => {
                 name="value"
                 render={({ field }) => (
                   <>
-                  <FormLabel>Mehsulun Deyeri</FormLabel>
-                  <InputMask
-                    mask="9999999999"
-                    maskChar=""
-                    alwaysShowMask={true}
-                    value={field.value} 
-                    
-                    onChange={(e) => field.onChange(e.target.value)} 
-                  >
-                    {() => (
-                    
-                       
-                      <InputGroup display={'flex'} flexDirection={'column'}>
-                        <Input {...field} ref={ref} placeholder='Mehsul'/>
-                      </InputGroup>
-                  
-                    )}
-                  </InputMask>
+                    <FormLabel>Mehsulun Deyeri</FormLabel>
+                    <InputMask
+                      mask="9999999999"
+                      maskChar=""
+                      alwaysShowMask={true}
+                      value={field.value}
+                      onChange={(e) => field.onChange(e.target.value)}
+                    >
+                      {() => (
+
+
+                        <InputGroup display={'flex'} flexDirection={'column'}>
+                          <Input {...field} ref={ref} placeholder='Mehsul' />
+                        </InputGroup>
+
+                      )}
+                    </InputMask>
                   </>
                 )}
 
@@ -324,7 +322,11 @@ const CreateMain: React.FC<IProps> = () => {
                   }
                 }}
                 name="endDate"
-                render={({ field }) => <MyDatePicker field={field} label="Bitmə tarixi" />}
+                render={({ field }) => {
+                  return (
+                    <MyDatePicker field={field} label="Bitmə tarixi" />
+                  )
+                }}
               />
               <FormErrorMessage color={'red'} fontSize={'14px'}>
                 {methods.formState.errors.endDate?.message}

@@ -4,13 +4,21 @@ import 'react-datepicker/dist/react-datepicker.css';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FaCalendar } from 'react-icons/fa';
-
+import { ControllerRenderProps } from 'react-hook-form';
+import { IFormValues } from 'pages/Create';
+import './datePicker.css'
+interface IProps {
+  label: string
+  disabled?: boolean
+  field: ControllerRenderProps<IFormValues, any>
+}
 
 const ChakraDatePicker = chakra(DatePicker, {
   baseStyle: {
-    minWidth:'15rem',
-    width:'100%',
-    height:'2.5rem',
+    w:'100%',
+    // marginTop: '32px',
+    minWidth: '15rem',
+    height: '2.5rem',
     padding: '0 7px',
     ':focus': {
       outline: '3px solid #0E86D4',
@@ -19,35 +27,42 @@ const ChakraDatePicker = chakra(DatePicker, {
       border: 'none',
     },
     border: '1px solid #d3d3d3',
-    borderRadius: '5px'
+    borderRadius: '5px',
+    position: 'relative',
+    zIndex: 55
+
   },
 });
-const MyDatePicker = ({ label, field }) => {
+const MyDatePicker = ({ label, field, disabled = false }: IProps) => {
+  // const today = new Date();
+
   return (
     <>
       <FormLabel>{label}</FormLabel>
-      <InputGroup>
-      <ChakraDatePicker
-        //   className={className}
-        showYearDropdown
-        showMonthDropdown
-        scrollableMonthYearDropdown
-        placeholderText={'dd/mm/yyyy'}
-        selected={field.value}
-        {...field}
-        type="datetime-local"
-      />  
-      <InputRightElement pointerEvents="none">
+      <InputGroup w={'100%'}>
+        <ChakraDatePicker
+          className='h-full bg-red customDatePckr'
+          toggleCalendarOnIconClick
+          placeholderText='mm/dd/yyyy'
+          selected={field.value}
+          onChange={(date) => {
+            field.onChange(date)
+          }}
+        // maxDate={today}
+        />
+
+        <InputRightElement pointerEvents="none">
           <FaCalendar color="gray.300" />
-         </InputRightElement>
+        </InputRightElement>
       </InputGroup>
     </>
+
   );
 };
 MyDatePicker.propTypes = {
   className: PropTypes.string,
-  label:PropTypes.string,
-  field:PropTypes.any
+  label: PropTypes.string,
+  field: PropTypes.any
 };
 
 export default MyDatePicker

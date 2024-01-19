@@ -1,15 +1,15 @@
-import CreateMain from 'components/createMainPage';
+import CreateMain, { IProps } from 'components/createMainPage';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Outlet } from 'react-router-dom';
 
 export interface IFormValues {
-  customerId: number;
+  customerId: string;
   customerName: string;
   product: string;
-  value: number;
+  value: string;
   description: string;
-  currency: string;
+  currency: 'AZN' | 'USD';
   startDate: string;
   category: string;
   endDate: string;
@@ -20,16 +20,31 @@ export interface IFormValues {
   city: string;
   district: string;
   municipality: string;
-  'town/village': string;
-  'construction-project': string;
-  'land-designation': string;
+  'townVillage': string;
+  'constructionProject': string;
+  'landDesignation': string;
 }
-export const CreatePledge: React.FC<React.PropsWithChildren> = () => {
-  const methods = useForm<IFormValues>();
+export const CreatePledge: React.FC<React.PropsWithChildren<IProps>> = ({ mode }) => {
+  const methods = useForm<IFormValues>({
+    defaultValues:{
+      customerId:'',
+      value:'',
+      description:'',
+      propertyDetail: '',
+      buildingCompany: '',
+      city: '',
+      owner:'',
+      district: '',
+      municipality: '',
+      'townVillage': '',
+      'constructionProject': '',
+      'landDesignation': '',
+    }
+  });
 
   return (
     <FormProvider {...methods}>
-      <CreateMain />
+      <CreateMain mode={mode} />
       <Outlet />
     </FormProvider>
   );

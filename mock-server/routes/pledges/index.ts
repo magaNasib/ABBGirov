@@ -245,8 +245,56 @@ const pledgesData = [
   }
 ];
 
+const pledgeEditData = [
+  {
+    CIF: '1234567',
+    pledgeList: [
+      {
+        code: '23434354524',
+        desc: 'lorem ipsum dolor me requens vita mein',
+        date: '22/12/2023'
+      },
+      {
+        code: '234343545245',
+        desc: 'lorem ipsum dolor me requens vita mein',
+        date: '22/12/2023'
+      },
+      {
+        code: '234343545246',
+        desc: 'lorem ipsum dolor me requens vita mein',
+        date: '22/12/2023'
+      },
+      {
+        code: '234343545247',
+        desc: 'lorem ipsum dolor me requens vita mein',
+        date: '22/12/2023'
+      },
+      {
+        code: '234343545248',
+        desc: 'lorem ipsum dolor me requens vita mein',
+        date: '22/12/2023'
+      },
+      {
+        code: '234343545249',
+        desc: 'lorem ipsum dolor me requens vita mein',
+        date: '22/12/2023'
+      }
+    ]
+  }
+];
 router.get('/', (req, res) => {
   res.json(pledgesData);
+});
+
+router.get('/edit/:CIF', (req, res) => {
+  const CIF = req.params.CIF;
+  const data = pledgeEditData.find((item) => item.CIF == CIF);
+
+  if (data) {
+    res.json(data);
+  } else {
+    res.status(404).json({ error: 'not found' });
+  }
 });
 
 router.get('/:colletralCode', (req, res) => {
@@ -265,5 +313,11 @@ router.post('/', (req, res) => {
   res.status(200).json({ message: 'Customer data received successfully', data: customerData });
 });
 
+router.put('/:id', (req, res) => {
+  const itemId = req.params.id;
+  const updatedData = req.body;
+
+  res.json({ id: itemId, ...updatedData });
+});
 
 export default router;
